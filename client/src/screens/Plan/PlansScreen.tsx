@@ -1,97 +1,48 @@
-import axios from "axios";
 import React from "react";
 import {
-	FlatList,
+	ActivityIndicator,
 	SafeAreaView,
 	ScrollView,
 	StyleSheet,
-	Text,
-	View,
+	TouchableOpacity,
 } from "react-native";
-import { IconButton } from "react-native-paper";
+import { IconButton, useTheme } from "react-native-paper";
 import { useQuery } from "react-query";
-import PlanCard from "../../components/PlanCard";
+import { AppTheme } from "../../../App";
+import PlanSection from "../../components/PlanSection";
 import routes from "../../constants/routes";
-import { Plan } from "../../models/planModels";
-
-const ItemSeparator = () => <View style={styles.separator} />;
+import { getAllPlans } from "../../services/planService";
 
 export default function PlansScreen({ navigation }) {
+	const theme = useTheme<AppTheme>();
 	const { data, isLoading, isError } = useQuery("getPlans", () =>
-		axios
-			.get<{ yourPlans: Plan[]; mostPopular: Plan[] }>(
-				"http://localhost:4000/plan"
-			)
-			.then((res) => res.data)
+		getAllPlans()
 	);
 
-	if (isLoading) return <></>;
-	if (isError) return <></>;
+	if (isLoading)
+		return <ActivityIndicator size="large" color={theme.colors.primary} />;
+	if (isError || !data) return <></>;
 
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView>
-				<Text style={styles.text}>Your plans</Text>
-				<FlatList
-					data={data?.yourPlans}
-					style={styles.list}
-					renderItem={({ item }) => <PlanCard value={item} />}
-					keyExtractor={(item) => item.id}
-					horizontal
-					pagingEnabled
-					showsHorizontalScrollIndicator={false}
-					ItemSeparatorComponent={ItemSeparator}
-				/>
-				<Text style={styles.text}>Favorite plans</Text>
-				<FlatList
-					data={data?.mostPopular}
-					style={styles.list}
-					renderItem={({ item }) => <PlanCard value={item} />}
-					keyExtractor={(item) => item.id}
-					horizontal
-					pagingEnabled
-					showsHorizontalScrollIndicator={false}
-					ItemSeparatorComponent={ItemSeparator}
-				/>
-				<Text style={styles.text}>Favorite plans</Text>
-				<FlatList
-					data={data?.mostPopular}
-					style={styles.list}
-					renderItem={({ item }) => <PlanCard value={item} />}
-					keyExtractor={(item) => item.id}
-					horizontal
-					pagingEnabled
-					scrollEnabled
-					showsHorizontalScrollIndicator={false}
-					ItemSeparatorComponent={ItemSeparator}
-				/>
+				<PlanSection value={data} />
+			</ScrollView>
+			<TouchableOpacity style={{ position: "absolute", bottom: 15, right: 0 }}>
 				<IconButton
 					icon="plus"
+					iconColor="white"
+					style={{
+						backgroundColor: theme.colors.primary,
+					}}
+					size={30}
 					onPress={() => navigation.navigate(routes.CREATE_PLAN)}
 				/>
-			</ScrollView>
+			</TouchableOpacity>
 		</SafeAreaView>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: { height: "100%", margin: "10px" },
-	list: { marginBottom: "15px" },
-	text: {
-		fontSize: 16,
-		marginBottom: "10px",
-		alignContent: "center",
-		fontWeight: "bold",
-	},
-	separator: { width: "10px" },
-	image: {
-		borderRadius: 4,
-	},
-	centeredText: {
-		textAlign: "center", // Centers the text horizontally
-		fontSize: 24,
-		color: "white",
-		backgroundColor: "rgba(0, 0, 0, 0.6)", // Adding a semi-transparent background to improve text visibility
-		padding: 10,
-	},
 });

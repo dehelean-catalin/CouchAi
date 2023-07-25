@@ -9,25 +9,22 @@ import {
 import { Plan } from "../models/planModels";
 
 export default function PlanCard({ value }: { value: Plan }) {
-	const { width: screenWidth, height: screenHeight } = useWindowDimensions();
-	const minWidth = 220;
-	const maxWidth = 440;
-	const minHeight = 124;
-	const maxHeight = 247.5;
+	const { width: screenWidth } = useWindowDimensions();
+	const minWidth = 260;
+	const maxWidth = 400;
 
 	const containerWidth = Math.min(
 		Math.max(screenWidth * 0.6, minWidth),
 		maxWidth
 	);
-	const containerHeight = Math.min(
-		Math.max(screenWidth * 0.4, minHeight),
-		maxHeight
-	);
 
 	return (
 		<ImageBackground
 			source={{ uri: "https://picsum.photos/700" }}
-			style={{ width: containerWidth, height: containerHeight }}
+			style={{
+				width: containerWidth,
+				aspectRatio: 16 / 9,
+			}}
 			imageStyle={styles.image}
 		>
 			<View style={styles.container}>
@@ -41,17 +38,19 @@ export default function PlanCard({ value }: { value: Plan }) {
 
 const styles = StyleSheet.create({
 	image: {
-		borderRadius: 4,
+		borderRadius: 6,
 	},
 	container: {
 		height: "100%",
-		borderRadius: 4,
-		padding: "10px",
+		borderRadius: 6,
+		padding: "16px",
+		display: "flex",
+		justifyContent: "center",
 		backgroundColor: "rgba(0, 0, 0, 0.5)",
 	},
 	text: {
 		color: "white",
-		fontWeight: "bold",
-		fontSize: 20,
+		fontWeight: "600",
+		fontSize: 18,
 	},
 });

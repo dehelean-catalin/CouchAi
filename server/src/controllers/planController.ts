@@ -13,7 +13,10 @@ export const getAllPlans: RequestHandler = async (req, res, next) => {
 			take: 6,
 		});
 
-		res.status(200).json({ yourPlans, mostPopular });
+		res.status(200).json([
+			{ title: "Your plans", data: yourPlans },
+			{ title: "Most popular", data: mostPopular },
+		]);
 	} catch (error) {
 		next(error);
 	}
