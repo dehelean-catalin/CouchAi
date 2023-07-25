@@ -1,40 +1,97 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import axios from "axios";
 import React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
-import { IconButton, Text, useTheme } from "react-native-paper";
+import {
+	FlatList,
+	SafeAreaView,
+	ScrollView,
+	StyleSheet,
+	Text,
+	View,
+} from "react-native";
+import { IconButton } from "react-native-paper";
 import { useQuery } from "react-query";
+import PlanCard from "../../components/PlanCard";
 import routes from "../../constants/routes";
 import { Plan } from "../../models/planModels";
 
-const Stack = createNativeStackNavigator();
+const ItemSeparator = () => <View style={styles.separator} />;
 
 export default function PlansScreen({ navigation }) {
-	const theme = useTheme();
 	const { data, isLoading, isError } = useQuery("getPlans", () =>
-		axios.get<Plan[]>("http://localhost:4000/plan").then((res) => res.data)
+		axios
+			.get<{ yourPlans: Plan[]; mostPopular: Plan[] }>(
+				"http://localhost:4000/plan"
+			)
+			.then((res) => res.data)
 	);
-	const onPress = () => {
-		axios.post("http://localhost:4000/plan").then((res) => res.data);
-	};
 
 	if (isLoading) return <></>;
 	if (isError) return <></>;
 
 	return (
-		<SafeAreaView
-			style={{ backgroundColor: theme.colors.primaryContainer, height: "100%" }}
-		>
-			<Text>PlansScreen</Text>
-			<IconButton
-				icon="plus"
-				onPress={() => navigation.navigate(routes.CREATE_PLAN)}
-			/>
+		<SafeAreaView style={styles.container}>
+			<ScrollView>
+				<Text style={styles.text}>Your plans</Text>
+				<FlatList
+					data={data?.yourPlans}
+					style={styles.list}
+					renderItem={({ item }) => <PlanCard value={item} />}
+					keyExtractor={(item) => item.id}
+					horizontal
+					pagingEnabled
+					showsHorizontalScrollIndicator={false}
+					ItemSeparatorComponent={ItemSeparator}
+				/>
+				<Text style={styles.text}>Favorite plans</Text>
+				<FlatList
+					data={data?.mostPopular}
+					style={styles.list}
+					renderItem={({ item }) => <PlanCard value={item} />}
+					keyExtractor={(item) => item.id}
+					horizontal
+					pagingEnabled
+					showsHorizontalScrollIndicator={false}
+					ItemSeparatorComponent={ItemSeparator}
+				/>
+				<Text style={styles.text}>Favorite plans</Text>
+				<FlatList
+					data={data?.mostPopular}
+					style={styles.list}
+					renderItem={({ item }) => <PlanCard value={item} />}
+					keyExtractor={(item) => item.id}
+					horizontal
+					pagingEnabled
+					scrollEnabled
+					showsHorizontalScrollIndicator={false}
+					ItemSeparatorComponent={ItemSeparator}
+				/>
+				<IconButton
+					icon="plus"
+					onPress={() => navigation.navigate(routes.CREATE_PLAN)}
+				/>
+			</ScrollView>
 		</SafeAreaView>
 	);
 }
 
 const styles = StyleSheet.create({
-	plans: {},
-	addButton: {},
+	container: { height: "100%", margin: "10px" },
+	list: { marginBottom: "15px" },
+	text: {
+		fontSize: 16,
+		marginBottom: "10px",
+		alignContent: "center",
+		fontWeight: "bold",
+	},
+	separator: { width: "10px" },
+	image: {
+		borderRadius: 4,
+	},
+	centeredText: {
+		textAlign: "center", // Centers the text horizontally
+		fontSize: 24,
+		color: "white",
+		backgroundColor: "rgba(0, 0, 0, 0.6)", // Adding a semi-transparent background to improve text visibility
+		padding: 10,
+	},
 });

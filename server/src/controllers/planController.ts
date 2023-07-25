@@ -2,11 +2,18 @@ import { RequestHandler } from "express";
 import { prisma } from "..";
 
 export const getAllPlans: RequestHandler = async (req, res, next) => {
+	const { id } = req.params;
 	try {
-		const plans = await prisma.plan.findMany({
+		const yourPlans = await prisma.plan.findMany({
+			where: { user_id: id },
 			orderBy: { updated_at: "desc" },
 		});
-		res.status(200).json(plans);
+		const mostPopular = await prisma.plan.findMany({
+			orderBy: { like_count: "desc" },
+			take: 6,
+		});
+
+		res.status(200).json({ yourPlans, mostPopular });
 	} catch (error) {
 		next(error);
 	}
