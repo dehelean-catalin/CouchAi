@@ -8,10 +8,10 @@ import {
 } from "react-native";
 import { IconButton, useTheme } from "react-native-paper";
 import { useQuery } from "react-query";
-import { AppTheme } from "../../../App";
-import PlanSection from "../../components/PlanSection";
-import routes from "../../constants/routes";
-import { getAllPlans } from "../../services/planService";
+import PlanSection from "../components/PlanSection";
+import routes from "../constants/routes";
+import { AppTheme } from "../constants/theme";
+import { getAllPlans } from "../services/planService";
 
 export default function PlansScreen({ navigation }) {
 	const theme = useTheme<AppTheme>();

@@ -1,15 +1,13 @@
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
-import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { Button, Card, Dialog, Portal, TextInput } from "react-native-paper";
-const ImageUrl = require("../../../assets/barbell.png");
+import { Image, SafeAreaView, StyleSheet, View } from "react-native";
+import { Button, TextInput } from "react-native-paper";
+import Slider from "../components/Slider";
+
+const ImageUrl = require("../../assets/barbell.png");
 
 export default function CreatePlanScreen() {
 	const [planTitle, setPlanTitle] = useState("");
-	const [visible, setVisible] = useState(false);
-
-	const hideDialog = () => setVisible(false);
-	const onPress = () => setVisible(true);
 
 	const [image, setImage] = useState("");
 
@@ -41,35 +39,19 @@ export default function CreatePlanScreen() {
 					value={planTitle}
 					onChangeText={setPlanTitle}
 					placeholder="Enter workout name"
-					mode="outlined"
 				/>
 			</View>
-
-			<Card style={styles.card}>
-				<Card.Title title="Day 1" />
-				<Card.Content>
-					<Text>lala</Text>
-				</Card.Content>
-			</Card>
-			<Portal>
-				<Dialog visible={visible} onDismiss={hideDialog}>
-					<Dialog.Title>This is a title</Dialog.Title>
-					<Dialog.Content>
-						<Text>This is simple dialog</Text>
-					</Dialog.Content>
-				</Dialog>
-			</Portal>
+			<Slider />
 		</SafeAreaView>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		paddingTop: "10px",
 		padding: "10px",
 		height: "100%",
 		gap: 20,
 	},
-	card: { flex: 1 },
+
 	image: { width: 48, height: 48, marginBottom: "0px", marginTop: "0px" },
 });

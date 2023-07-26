@@ -36,4 +36,38 @@ model PlanItem {
   name   String @db.VarChar(60)
   Plan   Plan   @relation(fields: [planId], references: [id])
   planId String
+  day    Int
+}
+
+model PlanExercise {
+  id          String    @id @default(uuid())
+  Exercise    Exercise  @relation(fields: [exercise_id], references: [id])
+  exercise_id Int
+  PlanSet     PlanSet[]
+}
+
+model PlanSet {
+  id              String       @unique @default(uuid())
+  min_reps        Int          @default(0)
+  max_reps        Int          @default(0)
+  rest_time       DateTime     @db.Time()
+  PlanExercise    PlanExercise @relation(fields: [planexercise_id], references: [id])
+  planexercise_id String
+}
+
+model Exercise {
+  id           Int            @id @unique @default(autoincrement())
+  name         String
+  picture      String
+  category     String
+  description  String
+  PlanExercise PlanExercise[]
+}
+
+model SetInProgress {
+  id        String @id @default(uuid())
+  weight    Int
+  reps      Int
+  notes     String @db.Text
+  dificulty String
 }

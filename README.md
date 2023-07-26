@@ -2,10 +2,11 @@
 
 # Day 3:
 
+- Add plan item
 - save image to db
 - Save plan
-- add items and item title
-- remove item, reoreder item
+- remove, reoreder, duplicate plan items
+- delete, edit plan
 
 # Pagina plans
 

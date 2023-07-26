@@ -7,4 +7,26 @@ export type Plan = {
 	user_id: number;
 	like_count: number;
 	picture: string;
+	items: PlanItem[];
+};
+
+export type PlanItem = {
+	id: string;
+	name: string;
+	exercises: PlanExercise[];
+};
+
+export type PlanExercise = Exercise & {
+	id: number;
+	restTime: string;
+	minReps: number;
+	maxReps: number;
+};
+
+export type Exercise = {
+	id: number;
+	name: string;
+	picture: string;
+	category: string;
+	description: String;
 };
