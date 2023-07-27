@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import cors from "cors";
 import express, { json } from "express";
+import exerciseRoutes from "./routes/exerciseRoutes";
 import planRoutes from "./routes/planRoutes";
 import userRoutes from "./routes/userRoutes";
 
@@ -11,6 +12,7 @@ const app = express();
 app.use(json(), cors());
 app.use(userRoutes);
 app.use(planRoutes);
+app.use(exerciseRoutes);
 
 app.all("*", (req, res) => {
 	res.status(404).json({ code: 404, message: "Not found" });

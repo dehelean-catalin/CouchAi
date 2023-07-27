@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import ExercisesScreen from "../screens/ExercisesScreen";
+import ExercisesScreen from "../screens/ExerciseScreen/ExercisesScreen";
 import HomeScreen from "../screens/HomeScreen";
 import StatisticsScreen from "../screens/StatisticsScreen";
 import PlanNavigator from "./PlanNavigator";

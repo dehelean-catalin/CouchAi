@@ -18,6 +18,16 @@ model User {
   Plan     Plan[]
 }
 
+model Exercise {
+  id           String         @id @unique @default(uuid())
+  name         String
+  picture      String
+  category     String
+  description  String
+  author_id    String?
+  PlanExercise PlanExercise[]
+}
+
 model Plan {
   id         String     @id @default(uuid())
   name       String     @db.VarChar(60)
@@ -42,7 +52,7 @@ model PlanItem {
 model PlanExercise {
   id          String    @id @default(uuid())
   Exercise    Exercise  @relation(fields: [exercise_id], references: [id])
-  exercise_id Int
+  exercise_id String
   PlanSet     PlanSet[]
 }
 
@@ -53,15 +63,6 @@ model PlanSet {
   rest_time       DateTime     @db.Time()
   PlanExercise    PlanExercise @relation(fields: [planexercise_id], references: [id])
   planexercise_id String
-}
-
-model Exercise {
-  id           Int            @id @unique @default(autoincrement())
-  name         String
-  picture      String
-  category     String
-  description  String
-  PlanExercise PlanExercise[]
 }
 
 model SetInProgress {
