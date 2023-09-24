@@ -1,7 +1,5 @@
-import axios from "axios";
+import { AxiosInstance } from "axios";
+import { Exercise } from "../models/exerciseModels";
 
-export const getAllExercises = async () => {
-	return await axios
-		.get<any[]>("http://localhost:4000/exercise")
-		.then((res) => res.data);
-};
+export const getAllExercises = (axios: AxiosInstance) =>
+	axios.get<Exercise[]>("/Exercise").then((res) => res.data);

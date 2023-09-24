@@ -3,9 +3,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import ExercisesScreen from "../screens/ExerciseScreen/ExercisesScreen";
 import HomeScreen from "../screens/HomeScreen";
 import StatisticsScreen from "../screens/StatisticsScreen";
+import ExerciseNavigator from "./ExerciseNavigator";
 import PlanNavigator from "./PlanNavigator";
 
 const Tab = createBottomTabNavigator();
@@ -13,14 +13,12 @@ const Tab = createBottomTabNavigator();
 export default function BottomTabNavigator() {
 	return (
 		<NavigationContainer>
-			<Tab.Navigator
-				initialRouteName="Account"
-				screenOptions={{ headerShown: false }}
-			>
+			<Tab.Navigator initialRouteName="Account">
 				<Tab.Screen
 					name="Home"
 					component={HomeScreen}
 					options={{
+						headerShown: false,
 						tabBarLabel: "Home",
 						tabBarIcon: ({ color }) => (
 							<MaterialCommunityIcons name="home" color={color} size={26} />
@@ -31,6 +29,7 @@ export default function BottomTabNavigator() {
 					name="Plans"
 					component={PlanNavigator}
 					options={{
+						headerShown: false,
 						tabBarIcon: ({ color }) => (
 							<MaterialCommunityIcons
 								name="calendar-blank"
@@ -42,9 +41,9 @@ export default function BottomTabNavigator() {
 				/>
 				<Tab.Screen
 					name="Exercises"
-					component={ExercisesScreen}
+					component={ExerciseNavigator}
 					options={{
-						tabBarLabel: "Exercises",
+						headerShown: false,
 						tabBarIcon: ({ color }) => (
 							<MaterialCommunityIcons name="dumbbell" color={color} size={26} />
 						),

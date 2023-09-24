@@ -19,13 +19,14 @@ model User {
 }
 
 model Exercise {
-  id           String         @id @unique @default(uuid())
-  name         String
-  picture      String
-  category     String
-  description  String
-  author_id    String?
-  PlanExercise PlanExercise[]
+  id            String           @id @unique @default(uuid())
+  picture       String
+  name          String
+  instructions  String           @db.VarChar(200)
+  category      ExerciseCategory @default(WeightAndReps)
+  target_muscle TargetMuscle
+  author_id     String?
+  PlanExercise  PlanExercise[]
 }
 
 model Plan {
@@ -71,4 +72,31 @@ model SetInProgress {
   reps      Int
   notes     String @db.Text
   dificulty String
+}
+
+enum TargetMuscle {
+  Neck
+  Traps
+  Shoulders
+  Biceps
+  Triceps
+  Forearms
+  Chest
+  Abs
+  Lats
+  MiddleBack
+  LowerBack
+  Glutes
+  Aductors
+  Qudriceps
+  Hamstring
+  Calves
+  Cardio
+}
+
+enum ExerciseCategory {
+  WeightAndReps
+  Reps
+  DistanceAndTime
+  Time
 }

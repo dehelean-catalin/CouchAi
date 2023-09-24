@@ -1,19 +1,12 @@
 # Gym-Planner
 
-# General:
-
-- axios config
-- exercise model
-- useAppTheme and useFetchQuery
-
 # Pagina Exercises:
 
-- status: public, local
-- author_id
-- rol de exercise creator
-- panou de aprobare exercitii create ??
+- useFetchQuery
+- getAllExercises and authorid
 - search, filter by category
 - exercise details
+- recent viewed
 
 # Pagina plans
 
