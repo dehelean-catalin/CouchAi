@@ -1,5 +1,11 @@
 # Gym-Planner
 
+# First Page:
+
+- password auth;
+- forget password;
+- define objectives: like weight, sesions per-week, muscle imbalances
+
 # Pagina Exercises:
 
 - useFetchQuery

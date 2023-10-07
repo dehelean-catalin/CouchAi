@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { useTheme } from "react-native-paper";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { IconButton, useTheme } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import routes from "../constants/routes";
 import { AppTheme } from "../constants/theme";
@@ -36,8 +36,17 @@ export default function ExerciseNavigator() {
 				name={routes.EXERCISE_DETAILS}
 				component={ExerciseDetailsScreen}
 				options={{
-					headerTitle: "Create",
-					headerRight: () => <Text>"haha"</Text>,
+					headerTitle: "",
+					headerRight: () => (
+						<TouchableOpacity style={{ marginRight: 16, flexDirection: "row" }}>
+							<IconButton icon="pencil" size={20} style={{}} />
+							<IconButton
+								icon="dots-vertical"
+								size={20}
+								onPress={() => console.log("Pressed")}
+							/>
+						</TouchableOpacity>
+					),
 				}}
 			/>
 			<Stack.Screen
@@ -47,13 +56,7 @@ export default function ExerciseNavigator() {
 					headerTitle: "Create",
 					headerRight: () => (
 						<TouchableOpacity style={{ marginRight: 16 }}>
-							<Icon
-								name="check"
-								size={20}
-								style={{
-									color: "white",
-								}}
-							/>
+							<Icon name="check" size={20} style={{}} />
 						</TouchableOpacity>
 					),
 				}}

@@ -1,22 +1,17 @@
+import { RootState } from "@/redux/store";
 import React, { useLayoutEffect } from "react";
-import {
-	FlatList,
-	ScrollView,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-} from "react-native";
+import { FlatList, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { useSelector } from "react-redux";
 import ExerciseCard from "../../components/ExerciseCard";
-import routes from "../../constants/routes";
-import { useAxios } from "../../hooks/useAxios";
-import { useFetchQuery } from "../../hooks/useFetchQuery";
+import routes, { RouteValues } from "../../constants/routes";
 import { Exercise } from "../../models/exerciseModels";
-import { getAllExercises } from "../../services/exerciseService";
 
 export default function ExercisesScreen({ navigation }) {
-	const axios = useAxios();
-	const navigateToAnotherScreen = () => {
-		navigation.navigate(routes.CREATE_EXERCISE);
+	const data = useSelector<RootState>((s) => s.exercise.value);
+
+	const navigateToRoute = (route: RouteValues) => {
+		console.log(route);
+		navigation.navigate(route);
 	};
 
 	useLayoutEffect(() => {
@@ -24,7 +19,7 @@ export default function ExercisesScreen({ navigation }) {
 			headerRight: () => (
 				<TouchableOpacity
 					style={{ marginRight: 12 }}
-					onPress={navigateToAnotherScreen}
+					onPress={() => navigateToRoute(routes.CREATE_EXERCISE)}
 				>
 					<Text style={styles.rightHeader}>CREATE</Text>
 				</TouchableOpacity>
@@ -32,22 +27,19 @@ export default function ExercisesScreen({ navigation }) {
 		});
 	}, [navigation]);
 
-	const { data, isLoading, isError } = useFetchQuery("getAllExercises", () =>
-		getAllExercises(axios)
-	);
-
-	if (isLoading) return <></>;
-	if (isError) return <></>;
-
 	return (
-		<ScrollView>
-			<FlatList<Exercise>
-				data={data}
-				renderItem={({ index, item }) => (
-					<ExerciseCard key={index} data={item} />
-				)}
-			/>
-		</ScrollView>
+		<FlatList<Exercise>
+			data={Object.values(data)}
+			renderItem={({ item }) => (
+				<ExerciseCard
+					key={item.id}
+					data={item}
+					onClick={() =>
+						navigation.navigate(routes.EXERCISE_DETAILS, { id: item.id })
+					}
+				/>
+			)}
+		/>
 	);
 }
 

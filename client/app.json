@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "gym-planner",
-    "slug": "gym-planner",
+    "name": "app-with-realm",
+    "slug": "app-with-realm",
+    "scheme": "app-with-realm",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,18 +22,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.appwithrealm"
     },
     "web": {
+      "bundler": "metro",
       "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "The app accesses your photos to let you share them with your friends."
-        }
-      ]
-    ]
+    }
   }
 }

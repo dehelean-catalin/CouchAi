@@ -44,5 +44,5 @@ export default function PlansScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-	container: { height: "100%", margin: "10px" },
+	container: { height: "100%", margin: 10 },
 });

@@ -11,19 +11,25 @@ import {
 	View,
 } from "react-native";
 import { useTheme } from "react-native-paper";
+import uuid from "react-native-uuid";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { useDispatch } from "react-redux";
+import routes from "../../constants/routes";
 import { AppTheme } from "../../constants/theme";
-import { useAxios } from "../../hooks/useAxios";
 import {
 	Exercise,
 	ExerciseCategory,
 	TargetMuscle,
 } from "../../models/exerciseModels";
+import { addExercise } from "../../redux/exerciseReducer";
 
-export default function CreateExerciseScreen({ navigation }) {
-	const axios = useAxios();
+const CreateExerciseScreen = ({ navigation }) => {
 	const { colors } = useTheme<AppTheme>();
-	const [exerciseValues, setExerciseValues] = useState<Omit<Exercise, "id">>({
+	const dispatch = useDispatch();
+	const id = uuid.v4().toString();
+
+	const [exerciseValues, setExerciseValues] = useState<Exercise>({
+		id,
 		picture: null,
 		name: "",
 		instructions: "",
@@ -31,24 +37,19 @@ export default function CreateExerciseScreen({ navigation }) {
 		targetMuscle: TargetMuscle.None,
 		authorId: "",
 	});
+
 	const [error, setError] = useState(false);
 
 	const targetMuscleOptions = Object.values(TargetMuscle);
 	const categoryOptions = Object.values(ExerciseCategory);
 
 	const handleSubmit = async () => {
-		console.log(exerciseValues.name);
 		if (!exerciseValues.name) {
 			setError(true);
 			return;
 		}
-		const formData = new FormData();
-		formData.append("file", exerciseValues.picture);
-		formData.append("data", JSON.stringify({ ...exerciseValues, picture: "" }));
-
-		await axios.post("/Exercise", formData, {
-			headers: { "Content-Type": "multipart/form-data" },
-		});
+		dispatch(addExercise(exerciseValues));
+		navigation.goBack(routes.EXERCISE);
 	};
 
 	useLayoutEffect(() => {
@@ -139,7 +140,8 @@ export default function CreateExerciseScreen({ navigation }) {
 			</Picker>
 		</View>
 	);
-}
+};
+export default CreateExerciseScreen;
 
 const styles = StyleSheet.create({
 	container: {

@@ -1,15 +1,20 @@
 import React, { FC } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import { AppTheme } from "../constants/theme";
 import { Exercise } from "../models/exerciseModels";
 
-const Card: FC<{ data: Exercise }> = ({ data }) => {
+type CardModel = {
+	data: Exercise;
+	onClick: () => void;
+};
+
+const Card: FC<CardModel> = ({ data, onClick }) => {
 	const initialLetter = data.name.slice(0, 1).toUpperCase();
 	const { colors } = useTheme<AppTheme>();
 
 	return (
-		<View style={styles.card}>
+		<TouchableOpacity style={styles.card} onPress={onClick}>
 			{!!data.picture ? (
 				<Image
 					source={{
@@ -28,7 +33,7 @@ const Card: FC<{ data: Exercise }> = ({ data }) => {
 					{data.targetMuscle}
 				</Text>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 };
 
