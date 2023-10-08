@@ -1,11 +1,12 @@
 export type Exercise = {
 	id: string;
-	picture: any | null;
 	name: string;
 	instructions: string;
 	exerciseCategory: ExerciseCategory;
 	targetMuscle: TargetMuscle;
 	authorId: String;
+	standardResolutionUrl: string | null;
+	thumbnailUrl: string | null;
 };
 
 export enum TargetMuscle {

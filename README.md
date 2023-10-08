@@ -2,17 +2,12 @@
 
 # First Page:
 
-- password auth;
-- forget password;
-- define objectives: like weight, sesions per-week, muscle imbalances
+- goals: sesions per-week, number of steps, gym/home training.
+- personal details: age, sex, height, weight.
 
-# Pagina Exercises:
+# Exercise Page:
 
-- useFetchQuery
-- getAllExercises and authorid
-- search, filter by category
-- exercise details
-- recent viewed
+- add search and filter functionalities
 
 # Pagina plans
 

@@ -2,16 +2,24 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { NavigatorColors } from "../constants/theme";
 import HomeScreen from "../screens/HomeScreen";
 import StatisticsScreen from "../screens/StatisticsScreen";
 import ExerciseNavigator from "./ExerciseNavigator";
 import PlanNavigator from "./PlanNavigator";
 
+export type RootStackParamList = {
+	Home: undefined;
+	Exercises: undefined;
+	ExerciseDetails: { id: string };
+	CreateExercise: undefined;
+};
+
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
 	return (
-		<NavigationContainer>
+		<NavigationContainer theme={{ dark: true, colors: NavigatorColors }}>
 			<Tab.Navigator initialRouteName="Account">
 				<Tab.Screen
 					name="Home"

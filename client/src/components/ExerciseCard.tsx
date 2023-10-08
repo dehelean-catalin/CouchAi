@@ -15,10 +15,10 @@ const Card: FC<CardModel> = ({ data, onClick }) => {
 
 	return (
 		<TouchableOpacity style={styles.card} onPress={onClick}>
-			{!!data.picture ? (
+			{!!data.thumbnailUrl ? (
 				<Image
 					source={{
-						uri: data.picture,
+						uri: data.thumbnailUrl,
 					}}
 					style={styles.tinyLogo}
 				/>
@@ -56,12 +56,12 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	tinyLogo: {
-		width: 70,
-		height: 70,
+		width: 80,
+		height: 80,
 	},
 	imageContainer: {
-		width: 70,
-		height: 70,
+		width: 80,
+		height: 80,
 		backgroundColor: "white",
 		display: "flex",
 		alignItems: "center",

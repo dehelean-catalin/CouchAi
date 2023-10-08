@@ -1,19 +1,17 @@
+import { RootState } from "@/redux/store";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
 import React, { useLayoutEffect, useState } from "react";
 import {
-	Button,
 	Image,
+	ImageBackground,
+	Pressable,
 	StyleSheet,
-	Text,
-	TextInput,
-	TouchableOpacity,
 	View,
 } from "react-native";
-import { useTheme } from "react-native-paper";
+import { IconButton, Text, TextInput, useTheme } from "react-native-paper";
 import uuid from "react-native-uuid";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import routes from "../../constants/routes";
 import { AppTheme } from "../../constants/theme";
 import {
@@ -21,85 +19,102 @@ import {
 	ExerciseCategory,
 	TargetMuscle,
 } from "../../models/exerciseModels";
-import { addExercise } from "../../redux/exerciseReducer";
+import { addExercise, updateExercise } from "../../redux/exerciseReducer";
 
-const CreateExerciseScreen = ({ navigation }) => {
+const CreateExerciseScreen = ({ navigation, route }) => {
 	const { colors } = useTheme<AppTheme>();
 	const dispatch = useDispatch();
 	const id = uuid.v4().toString();
-
-	const [exerciseValues, setExerciseValues] = useState<Exercise>({
-		id,
-		picture: null,
-		name: "",
-		instructions: "",
-		exerciseCategory: ExerciseCategory.WeightAndReps,
-		targetMuscle: TargetMuscle.None,
-		authorId: "",
-	});
-
-	const [error, setError] = useState(false);
-
 	const targetMuscleOptions = Object.values(TargetMuscle);
 	const categoryOptions = Object.values(ExerciseCategory);
+	const data = useSelector<RootState, Exercise>(
+		(s) => s.exercise.value[route.params.id]
+	);
 
-	const handleSubmit = async () => {
-		if (!exerciseValues.name) {
-			setError(true);
-			return;
+	const [exerciseValues, setExerciseValues] = useState<Exercise>(
+		data ?? {
+			id,
+			name: "",
+			instructions: "",
+			exerciseCategory: ExerciseCategory.WeightAndReps,
+			targetMuscle: TargetMuscle.None,
+			authorId: "local",
+			standardResolutionUrl: null,
+			thumbnailUrl: null,
 		}
-		dispatch(addExercise(exerciseValues));
-		navigation.goBack(routes.EXERCISE);
-	};
+	);
+	const [error, setError] = useState(false);
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
 			headerRight: () => (
-				<TouchableOpacity style={{ marginRight: 16 }} onPress={handleSubmit}>
-					<Icon
-						name="check"
-						size={20}
-						style={{
-							color: "white",
-						}}
-					/>
-				</TouchableOpacity>
+				<Pressable onPress={handleSubmit}>
+					<IconButton icon="check" size={20} />
+				</Pressable>
 			),
 		});
 	}, [navigation, exerciseValues]);
 
 	const pickImage = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ImagePicker.MediaTypeOptions.All,
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
 			allowsEditing: true,
 			aspect: [4, 4],
 			quality: 1,
 		});
 
 		if (!result.canceled) {
-			const response = await fetch(result.assets[0].uri);
-			const blob = await response.blob();
-
 			setExerciseValues({
 				...exerciseValues,
-				picture: blob,
+				thumbnailUrl: result.assets[0].uri,
+				standardResolutionUrl: result.assets[0].uri,
 			});
 		}
 	};
 
+	const handleSubmit = async () => {
+		if (!exerciseValues.name) {
+			setError(true);
+			return;
+		}
+
+		if (data) {
+			dispatch(addExercise(exerciseValues));
+		} else {
+			dispatch(updateExercise(exerciseValues));
+		}
+
+		navigation.navigate(routes.EXERCISE);
+	};
+
 	return (
 		<View style={styles.container}>
-			<Button title="Pick an image" onPress={pickImage} />
-			{exerciseValues.picture && (
-				<Image
-					source={{ uri: exerciseValues.picture.uri }}
-					style={{ width: 200, height: 200 }}
-				/>
-			)}
+			<Pressable
+				onPress={pickImage}
+				style={{
+					height: 250,
+					alignItems: "center",
+					justifyContent: "center",
+				}}
+			>
+				{exerciseValues.standardResolutionUrl ? (
+					<ImageBackground
+						source={{ uri: exerciseValues.standardResolutionUrl }}
+						blurRadius={30}
+						style={styles.image}
+					>
+						<Image
+							source={{ uri: exerciseValues.standardResolutionUrl }}
+							style={styles.image}
+						/>
+					</ImageBackground>
+				) : (
+					<IconButton icon="camera" size={40} />
+				)}
+			</Pressable>
 			<TextInput
 				placeholder="Add name"
 				value={exerciseValues.name}
-				style={[styles.input, { backgroundColor: colors.surfaceVariant }]}
 				onChangeText={(val) => {
 					if (!exerciseValues.name) {
 						setError(false);
@@ -111,14 +126,12 @@ const CreateExerciseScreen = ({ navigation }) => {
 			<TextInput
 				placeholder="Add instructions"
 				value={exerciseValues.instructions}
-				style={[styles.input, { backgroundColor: colors.surfaceVariant }]}
 				onChangeText={(v) =>
 					setExerciseValues({ ...exerciseValues, instructions: v })
 				}
 			/>
 			<Picker
 				selectedValue={exerciseValues.targetMuscle}
-				style={[styles.input, { backgroundColor: colors.surfaceVariant }]}
 				onValueChange={(itemValue) =>
 					setExerciseValues({ ...exerciseValues, targetMuscle: itemValue })
 				}
@@ -128,7 +141,6 @@ const CreateExerciseScreen = ({ navigation }) => {
 				))}
 			</Picker>
 			<Picker
-				style={[styles.input, { backgroundColor: colors.surfaceVariant }]}
 				selectedValue={exerciseValues.exerciseCategory}
 				onValueChange={(itemValue) =>
 					setExerciseValues({ ...exerciseValues, exerciseCategory: itemValue })
@@ -146,10 +158,10 @@ export default CreateExerciseScreen;
 const styles = StyleSheet.create({
 	container: {
 		display: "flex",
-		gap: 12,
 	},
-	input: {
-		padding: 12,
-		color: "white",
+	image: {
+		height: 250,
+		width: "100%",
+		objectFit: "contain",
 	},
 });

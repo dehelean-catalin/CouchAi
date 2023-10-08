@@ -1,6 +1,7 @@
 import { RootState } from "@/redux/store";
 import React, { useLayoutEffect } from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { FlatList, Pressable } from "react-native";
+import { Text } from "react-native-paper";
 import { useSelector } from "react-redux";
 import ExerciseCard from "../../components/ExerciseCard";
 import routes, { RouteValues } from "../../constants/routes";
@@ -10,19 +11,18 @@ export default function ExercisesScreen({ navigation }) {
 	const data = useSelector<RootState>((s) => s.exercise.value);
 
 	const navigateToRoute = (route: RouteValues) => {
-		console.log(route);
 		navigation.navigate(route);
 	};
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
 			headerRight: () => (
-				<TouchableOpacity
+				<Pressable
 					style={{ marginRight: 12 }}
 					onPress={() => navigateToRoute(routes.CREATE_EXERCISE)}
 				>
-					<Text style={styles.rightHeader}>CREATE</Text>
-				</TouchableOpacity>
+					<Text variant="titleSmall">CREATE</Text>
+				</Pressable>
 			),
 		});
 	}, [navigation]);
@@ -42,7 +42,3 @@ export default function ExercisesScreen({ navigation }) {
 		/>
 	);
 }
-
-const styles = StyleSheet.create({
-	rightHeader: { fontSize: 14, color: "white" },
-});
