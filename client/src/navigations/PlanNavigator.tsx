@@ -14,7 +14,7 @@ export default function PlanNavigator() {
 				name={ROUTES.PLAN}
 				component={PlansScreen}
 				options={{
-					headerTitle: "Plans",
+					headerShown: false,
 				}}
 			/>
 			<Stack.Screen

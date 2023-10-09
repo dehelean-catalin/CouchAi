@@ -1,18 +1,22 @@
 import { RootState } from "@/redux/store";
-import React, { useLayoutEffect } from "react";
-import { FlatList, Pressable } from "react-native";
-import { Text } from "react-native-paper";
+import React, { useLayoutEffect, useState } from "react";
+import { FlatList, Pressable, StyleSheet, View } from "react-native";
+import { Button, Searchbar, Text } from "react-native-paper";
 import { useSelector } from "react-redux";
 import ExerciseCard from "../../components/ExerciseCard";
 import routes, { RouteValues } from "../../constants/routes";
+import { theme } from "../../constants/theme";
 import { Exercise } from "../../models/exerciseModels";
 
 export default function ExercisesScreen({ navigation }) {
-	const data = useSelector<RootState>((s) => s.exercise.value);
+	const data = useSelector<RootState, { [key: string]: Exercise }>(
+		(s) => s.exercise.value
+	);
+	const [searchQuery, setSearchQuery] = useState("");
 
-	const navigateToRoute = (route: RouteValues) => {
-		navigation.navigate(route);
-	};
+	const result = Object.values(data).filter((item) =>
+		item.name.includes(searchQuery)
+	);
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
@@ -27,9 +31,24 @@ export default function ExercisesScreen({ navigation }) {
 		});
 	}, [navigation]);
 
+	const onChangeSearch = (query) => setSearchQuery(query);
+	const navigateToRoute = (route: RouteValues) => {
+		navigation.navigate(route);
+	};
+
 	return (
 		<FlatList<Exercise>
-			data={Object.values(data)}
+			data={result}
+			ListHeaderComponent={
+				<View style={styles.searchContainer}>
+					<Searchbar
+						placeholder="Search"
+						onChangeText={onChangeSearch}
+						value={searchQuery}
+						style={{ flex: 1 }}
+					/>
+				</View>
+			}
 			renderItem={({ item }) => (
 				<ExerciseCard
 					key={item.id}
@@ -39,6 +58,30 @@ export default function ExercisesScreen({ navigation }) {
 					}
 				/>
 			)}
+			contentContainerStyle={{ flexGrow: 1 }}
+			ListEmptyComponent={
+				<View
+					style={{
+						alignItems: "center",
+						justifyContent: "center",
+						gap: 10,
+						flex: 1,
+					}}
+				>
+					<Text variant="titleLarge">"{searchQuery}" not found</Text>
+					<Button mode="contained">Create Exercise</Button>
+				</View>
+			}
+			stickyHeaderIndices={[0]}
 		/>
 	);
 }
+
+const styles = StyleSheet.create({
+	searchContainer: {
+		backgroundColor: theme.colors.background,
+		flexDirection: "row",
+		paddingBottom: 10,
+		paddingHorizontal: 10,
+	},
+});

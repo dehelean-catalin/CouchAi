@@ -30,7 +30,7 @@ const Card: FC<CardModel> = ({ data, onClick }) => {
 			<View style={styles.column}>
 				<Text style={styles.title}>{data.name}</Text>
 				<Text style={[styles.content, { color: colors.primary }]}>
-					{data.targetMuscle}
+					{data.mainMuscleGroup}
 				</Text>
 			</View>
 		</TouchableOpacity>

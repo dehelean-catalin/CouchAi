@@ -20,12 +20,12 @@ const Tab = createBottomTabNavigator();
 export default function BottomTabNavigator() {
 	return (
 		<NavigationContainer theme={{ dark: true, colors: NavigatorColors }}>
-			<Tab.Navigator initialRouteName="Account">
+			<Tab.Navigator>
 				<Tab.Screen
 					name="Home"
 					component={HomeScreen}
 					options={{
-						headerShown: false,
+						headerShown: true,
 						tabBarLabel: "Home",
 						tabBarIcon: ({ color }) => (
 							<MaterialCommunityIcons name="home" color={color} size={26} />
@@ -36,7 +36,6 @@ export default function BottomTabNavigator() {
 					name="Plans"
 					component={PlanNavigator}
 					options={{
-						headerShown: false,
 						tabBarIcon: ({ color }) => (
 							<MaterialCommunityIcons
 								name="calendar-blank"

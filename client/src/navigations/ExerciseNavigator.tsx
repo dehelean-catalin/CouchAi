@@ -1,4 +1,4 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { Pressable } from "react-native";
 import { IconButton } from "react-native-paper";
@@ -7,7 +7,7 @@ import CreateExerciseScreen from "../screens/ExerciseScreen/CreateExerciseScreen
 import ExerciseDetailsScreen from "../screens/ExerciseScreen/ExerciseDetailsScreen";
 import ExercisesScreen from "../screens/ExerciseScreen/ExercisesScreen";
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function ExerciseNavigator() {
 	return (

@@ -7,7 +7,10 @@
 
 # Exercise Page:
 
-- add search and filter functionalities
+- add filter functionalities
+- upload real data and files to the system
+- check the file type and dimesion
+- resolution 720 and 180
 
 # Pagina plans
 

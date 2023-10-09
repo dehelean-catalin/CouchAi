@@ -2,14 +2,41 @@ export type Exercise = {
 	id: string;
 	name: string;
 	instructions: string;
-	exerciseCategory: ExerciseCategory;
-	targetMuscle: TargetMuscle;
-	authorId: String;
+	category: ExerciseCategory;
+	movementType: ExerciseType;
+
+	mainBodyPart: MainBodyPart;
+	mainMuscleGroup: MainMuscleGroup;
+	secondaryMuscleGroup: SecondaryMuscleGroup[];
+
+	equipment: Equipment;
+	equipmentRequired: EquipmentRequired[];
+
+	custom: boolean;
+	deleted: boolean;
+	authorId?: string;
 	standardResolutionUrl: string | null;
 	thumbnailUrl: string | null;
 };
 
-export enum TargetMuscle {
+export enum ExerciseCategory {
+	WeightAndReps = "Weight and Reps",
+	Reps = "Reps",
+	DistanceAndTime = "Distance and Time",
+	Time = "Time",
+}
+
+export type ExerciseType = "compound" | "isolation";
+
+export type MainBodyPart =
+	| "Arms"
+	| "Legs"
+	| "Shoulders"
+	| "Back"
+	| "Chest"
+	| "Abs";
+
+export enum MainMuscleGroup {
 	Neck = "Neck",
 	Traps = "Traps",
 	Shoulders = "Shoulders",
@@ -30,9 +57,18 @@ export enum TargetMuscle {
 	None = "None",
 }
 
-export enum ExerciseCategory {
-	WeightAndReps = "WeightAndReps",
-	Reps = "Reps",
-	DistanceAndTime = "DistanceAndTime",
-	Time = "Time",
-}
+export type SecondaryMuscleGroup = {
+	id: string;
+	name: MainMuscleGroup;
+};
+
+export type Equipment =
+	| "Barbell"
+	| "Dumbbell"
+	| "Machine"
+	| "Bar"
+	| "Parallel Bars"
+	| "Free Weight"
+	| "Cable Machine";
+
+export type EquipmentRequired = { category: string; name: string };
