@@ -2,8 +2,8 @@ import React, { useLayoutEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
-import ExerciseDetailsHeaderRight from "../../components/ExerciseDetailsHeaderRight";
 import { theme } from "../../constants/theme";
+import EDHeaderRight from "./EDHeaderRight";
 import EDSummary from "./EDSummary";
 
 export default function ExerciseDetailsScreen({ route, navigation }) {
@@ -13,7 +13,7 @@ export default function ExerciseDetailsScreen({ route, navigation }) {
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
-			headerRight: () => <ExerciseDetailsHeaderRight />,
+			headerRight: () => <EDHeaderRight />,
 		});
 	}, [navigation]);
 

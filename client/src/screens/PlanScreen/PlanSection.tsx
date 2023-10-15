@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
-import { WorkoutPlan } from "../models/workoutModel";
-import PlanCard from "./PlanCard";
+import { WorkoutPlan } from "../../models/workoutModel";
+import WorkoutPlanCard from "./WorkoutPlanCard";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
@@ -12,6 +12,8 @@ type Props = {
 };
 
 const PlanSection: FC<Props> = ({ value, sectionTitle }) => {
+	if (!value.length) return;
+
 	return (
 		<View style={styles.container}>
 			<Text variant="titleSmall" style={styles.title}>
@@ -19,7 +21,7 @@ const PlanSection: FC<Props> = ({ value, sectionTitle }) => {
 			</Text>
 			<FlatList
 				data={value}
-				renderItem={({ item }) => <PlanCard value={item} />}
+				renderItem={({ item }) => <WorkoutPlanCard value={item} />}
 				keyExtractor={(item) => item.id}
 				horizontal
 				pagingEnabled

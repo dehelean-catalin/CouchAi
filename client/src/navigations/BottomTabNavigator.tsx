@@ -8,13 +8,6 @@ import ExerciseNavigator from "./ExerciseNavigator";
 import HomeNavigator from "./HomeNavigator";
 import PlanNavigator from "./PlanNavigator";
 
-export type RootStackParamList = {
-	Home: undefined;
-	Exercises: { fromCreateWorkout: boolean };
-	ExerciseDetails: { id: string };
-	CreateExercise: undefined;
-};
-
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {

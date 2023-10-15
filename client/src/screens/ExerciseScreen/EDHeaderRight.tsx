@@ -1,5 +1,4 @@
 import { Exercise } from "@/models/exerciseModel";
-import { RootStackParamList } from "@/navigations/BottomTabNavigator";
 import { RootState } from "@/redux/store";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -7,13 +6,13 @@ import React, { useState } from "react";
 import { Pressable } from "react-native";
 import { IconButton, Menu } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
-import routes from "../constants/routes";
-import { deleteExercise } from "../redux/exerciseReducer";
+import routes, { RootStackParamList } from "../../constants/routes";
+import { deleteExercise } from "../../redux/exerciseReducer";
 
-const ExerciseDetailsHeaderRight = () => {
+const EDHeaderRight = () => {
+	const dispatch = useDispatch();
 	const { params } =
 		useRoute<RouteProp<RootStackParamList, "ExerciseDetails">>();
-	const dispatch = useDispatch();
 	const navigation = useNavigation<NativeStackNavigationProp<any>>();
 	const data = useSelector<RootState, Exercise | undefined>(
 		(s) => s.exercise.value[params?.id]
@@ -58,4 +57,4 @@ const ExerciseDetailsHeaderRight = () => {
 	);
 };
 
-export default ExerciseDetailsHeaderRight;
+export default EDHeaderRight;

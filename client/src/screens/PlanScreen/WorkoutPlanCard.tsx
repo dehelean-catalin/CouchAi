@@ -1,14 +1,18 @@
-import { WorkoutPlan } from "@/models/workoutModel";
-import React from "react";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React, { FC } from "react";
 import {
 	ImageBackground,
+	Pressable,
 	StyleSheet,
 	Text,
-	View,
 	useWindowDimensions,
 } from "react-native";
+import routes from "../../constants/routes";
+import { WorkoutPlan } from "../../models/workoutModel";
 
-export default function PlanCard({ value }: { value: WorkoutPlan }) {
+const WorkoutPlanCard: FC<{ value: WorkoutPlan }> = ({ value }) => {
+	const { navigate } = useNavigation<NativeStackNavigationProp<any>>();
 	const { width: screenWidth } = useWindowDimensions();
 	const minWidth = 260;
 	const maxWidth = 400;
@@ -17,6 +21,8 @@ export default function PlanCard({ value }: { value: WorkoutPlan }) {
 		Math.max(screenWidth * 0.6, minWidth),
 		maxWidth
 	);
+
+	const openPreview = () => navigate(routes.WORKOUT_PREVIEW, { id: value.id });
 
 	return (
 		<ImageBackground
@@ -27,14 +33,16 @@ export default function PlanCard({ value }: { value: WorkoutPlan }) {
 			}}
 			imageStyle={styles.image}
 		>
-			<View style={styles.container}>
+			<Pressable style={styles.container} onPress={openPreview}>
 				<Text numberOfLines={2} ellipsizeMode="tail" style={styles.text}>
 					{value.name}
 				</Text>
-			</View>
+			</Pressable>
 		</ImageBackground>
 	);
-}
+};
+
+export default WorkoutPlanCard;
 
 const styles = StyleSheet.create({
 	image: {

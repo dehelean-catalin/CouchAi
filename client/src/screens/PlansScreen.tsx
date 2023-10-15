@@ -4,9 +4,9 @@ import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { IconButton, useTheme } from "react-native-paper";
 import { useSelector } from "react-redux";
-import PlanSection from "../components/PlanSection";
 import routes from "../constants/routes";
 import { AppTheme } from "../constants/theme";
+import PlanSection from "./PlanScreen/PlanSection";
 
 export default function PlansScreen({ navigation }) {
 	const theme = useTheme<AppTheme>();

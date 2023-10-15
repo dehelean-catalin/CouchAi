@@ -18,11 +18,16 @@ export const workoutPlanSlice = createSlice({
 		createWorkoutPlan: (state, action: PayloadAction<WorkoutPlan>) => {
 			const id = action.payload.id;
 
-			state.savedWorkoutPlans[id] = action.payload;
+			if (state.savedWorkoutPlans[id])
+				state.savedWorkoutPlans[id] = action.payload;
+		},
+		deleteWorkoutPlan: (state, action: PayloadAction<string>) => {
+			delete state.savedWorkoutPlans[action.payload];
 		},
 	},
 });
 
-export const { createWorkoutPlan } = workoutPlanSlice.actions;
+export const { createWorkoutPlan, deleteWorkoutPlan } =
+	workoutPlanSlice.actions;
 
 export default workoutPlanSlice.reducer;

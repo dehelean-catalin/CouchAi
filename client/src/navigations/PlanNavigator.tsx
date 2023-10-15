@@ -5,6 +5,7 @@ import { Button } from "react-native-paper";
 import ROUTES from "../constants/routes";
 import CreatePlanScreen from "../screens/CreatePlanScreen";
 import ExercisesScreen from "../screens/ExerciseScreen/ExercisesScreen";
+import WorkoutPlanPreview from "../screens/PlanScreen/WorkoutPlanPreview";
 import PlansScreen from "../screens/PlansScreen";
 
 const Stack = createStackNavigator();
@@ -31,6 +32,11 @@ export default function PlanNavigator() {
 					headerTitle: "Create plan",
 					headerRight: () => <Button>Save</Button>,
 				}}
+			/>
+			<Stack.Screen
+				name={ROUTES.WORKOUT_PREVIEW}
+				component={WorkoutPlanPreview}
+				options={{ headerTitle: "" }}
 			/>
 		</Stack.Navigator>
 	);

@@ -1,19 +1,14 @@
-import { RootStackParamList } from "@/navigations/BottomTabNavigator";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import axios from "axios";
-import React, {
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { FlatList, Pressable, StyleSheet, View } from "react-native";
-import { Button, IconButton, Searchbar, Text } from "react-native-paper";
+import { Button, Searchbar, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import ExerciseCard from "../../components/ExerciseCard";
-import routes, { RouteValues } from "../../constants/routes";
+import routes, {
+	RootStackParamList,
+	RouteValues,
+} from "../../constants/routes";
 import { theme } from "../../constants/theme";
 import { Exercise } from "../../models/exerciseModel";
 import { addExercises } from "../../redux/exerciseReducer";
@@ -21,7 +16,6 @@ import { RootState } from "../../redux/store";
 
 export default function ExercisesScreen({ navigation }) {
 	const { params } = useRoute<RouteProp<RootStackParamList, "Exercises">>();
-	const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 	const data = useSelector<RootState, { [key: string]: Exercise }>(
 		(s) => s.exercise.value
 	);
@@ -63,10 +57,6 @@ export default function ExercisesScreen({ navigation }) {
 		navigation.navigate(route);
 	};
 
-	const handlePresentModalPress = useCallback(() => {
-		bottomSheetModalRef.current?.present();
-	}, []);
-
 	if (!Object.keys(data).length) return;
 
 	return (
@@ -80,7 +70,6 @@ export default function ExercisesScreen({ navigation }) {
 						value={searchQuery}
 						style={{ flex: 1 }}
 					/>
-					<IconButton icon="filter" onPress={handlePresentModalPress} />
 				</View>
 			}
 			renderItem={({ item }) => (

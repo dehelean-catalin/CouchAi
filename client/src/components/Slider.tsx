@@ -9,10 +9,6 @@ import Pagination from "./Pagination";
 const Slider = () => {
 	const scrollX = useRef(new Animated.Value(0)).current;
 
-	const handleOnViewableItemsChanged = useRef(({ viewableItems }) => {
-		setIndex(viewableItems[0].index);
-	}).current;
-
 	const viewabilityConfig = useRef({
 		itemVisiblePercentThreshold: 10,
 		waitForInteraction: true,
