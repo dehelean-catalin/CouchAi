@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Exercise } from "../models/exerciseModels";
+import { Exercise } from "../models/exerciseModel";
 
 export interface ExerciseState {
 	value: { [key: string]: Exercise };
@@ -13,6 +13,12 @@ export const exerciseSlice = createSlice({
 	name: "exercise",
 	initialState,
 	reducers: {
+		addExercises: (
+			state,
+			action: PayloadAction<{ [key: string]: Exercise }>
+		) => {
+			state.value = action.payload;
+		},
 		addExercise: (state, action: PayloadAction<Exercise>) => {
 			const id = action.payload.id;
 			state.value[id] = action.payload;
@@ -28,7 +34,7 @@ export const exerciseSlice = createSlice({
 	},
 });
 
-export const { addExercise, updateExercise, deleteExercise } =
+export const { addExercises, addExercise, updateExercise, deleteExercise } =
 	exerciseSlice.actions;
 
 export default exerciseSlice.reducer;

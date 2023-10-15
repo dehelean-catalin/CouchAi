@@ -1,46 +1,43 @@
-import React from "react";
-import { FlatList, SectionList, StyleSheet, Text, View } from "react-native";
-import { SectionPlan } from "../services/planService";
+import React, { FC } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
+import { Text } from "react-native-paper";
+import { WorkoutPlan } from "../models/workoutModel";
 import PlanCard from "./PlanCard";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export default function PlanSection({ value }: { value: SectionPlan[] }) {
+type Props = {
+	sectionTitle: string;
+	value: WorkoutPlan[];
+};
+
+const PlanSection: FC<Props> = ({ value, sectionTitle }) => {
 	return (
-		<SectionList
-			sections={value}
-			keyExtractor={(item) => item.id}
-			renderSectionHeader={({ section }) => (
-				<>
-					<Text style={styles.text}>{section.title}</Text>
-					<FlatList
-						data={section.data}
-						style={styles.list}
-						renderItem={({ item }) => <PlanCard value={item} />}
-						keyExtractor={(item) => item.id}
-						horizontal
-						pagingEnabled
-						showsHorizontalScrollIndicator={false}
-						ItemSeparatorComponent={ItemSeparator}
-					/>
-				</>
-			)}
-			renderItem={({ item }) => {
-				return null;
-			}}
-			stickySectionHeadersEnabled={false}
-		/>
+		<View style={styles.container}>
+			<Text variant="titleSmall" style={styles.title}>
+				{sectionTitle}
+			</Text>
+			<FlatList
+				data={value}
+				renderItem={({ item }) => <PlanCard value={item} />}
+				keyExtractor={(item) => item.id}
+				horizontal
+				pagingEnabled
+				showsHorizontalScrollIndicator={false}
+				ItemSeparatorComponent={ItemSeparator}
+			/>
+		</View>
 	);
-}
+};
 
 const styles = StyleSheet.create({
-	list: { marginBottom: "15px" },
-	text: {
-		color: "#fff",
-		fontSize: 16,
-		marginBottom: "15px",
-		alignContent: "center",
-		fontWeight: "600",
+	container: {
+		marginBottom: 15,
 	},
-	separator: { width: "10px" },
+	title: {
+		marginBottom: 5,
+	},
+	separator: { width: 10 },
 });
+
+export default PlanSection;

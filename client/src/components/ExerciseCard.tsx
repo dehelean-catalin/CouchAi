@@ -1,21 +1,29 @@
-import React, { FC } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React, { FC, memo, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useTheme } from "react-native-paper";
+import { Checkbox, useTheme } from "react-native-paper";
+import routes from "../constants/routes";
 import { AppTheme } from "../constants/theme";
-import { Exercise } from "../models/exerciseModels";
+import { Exercise } from "../models/exerciseModel";
 
 type CardModel = {
 	data: Exercise;
-	onClick: () => void;
+	showCheckbox?: boolean;
 };
 
-const Card: FC<CardModel> = ({ data, onClick }) => {
+const Card: FC<CardModel> = ({ data, showCheckbox }) => {
 	const initialLetter = data.name.slice(0, 1).toUpperCase();
 	const { colors } = useTheme<AppTheme>();
+	const { navigate } = useNavigation<NativeStackNavigationProp<any>>();
+	const [checked, setChecked] = useState(false);
+	const handlePress = () => {
+		navigate(routes.EXERCISE_DETAILS, { id: data.id });
+	};
 
 	return (
-		<TouchableOpacity style={styles.card} onPress={onClick}>
-			{!!data.thumbnailUrl ? (
+		<TouchableOpacity style={styles.card} onPress={handlePress}>
+			{!data.thumbnailUrl ? (
 				<Image
 					source={{
 						uri: data.thumbnailUrl,
@@ -30,8 +38,18 @@ const Card: FC<CardModel> = ({ data, onClick }) => {
 			<View style={styles.column}>
 				<Text style={styles.title}>{data.name}</Text>
 				<Text style={[styles.content, { color: colors.primary }]}>
-					{data.mainMuscleGroup}
+					{data.mainBodyPart[0].toUpperCase() + data.mainBodyPart.slice(1)}
 				</Text>
+			</View>
+			<View style={{ justifyContent: "center", marginRight: 10 }}>
+				{showCheckbox && (
+					<Checkbox
+						status={checked ? "checked" : "unchecked"}
+						onPress={() => {
+							setChecked(!checked);
+						}}
+					/>
+				)}
 			</View>
 		</TouchableOpacity>
 	);
@@ -73,4 +91,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default Card;
+export default memo(Card);

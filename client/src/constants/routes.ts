@@ -4,6 +4,8 @@ const routes = {
 	EXERCISE: "Exercise",
 	CREATE_EXERCISE: "Create exercise",
 	EXERCISE_DETAILS: "Exercise details",
+	HOME: "Home",
+	WORKOUT_SESION: "Workout Sesion",
 } as const;
 
 type RouteKeys = keyof typeof routes;

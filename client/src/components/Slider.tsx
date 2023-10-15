@@ -1,27 +1,40 @@
 import React, { useRef, useState } from "react";
-import { Animated, FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { Animated, FlatList, StyleSheet, View } from "react-native";
 import { IconButton } from "react-native-paper";
+import uuid from "react-native-uuid";
 import { PlanItem } from "../models/planModels";
 import DayCard from "./DayCard";
 import Pagination from "./Pagination";
 
 const Slider = () => {
+	const scrollX = useRef(new Animated.Value(0)).current;
+
+	const handleOnViewableItemsChanged = useRef(({ viewableItems }) => {
+		setIndex(viewableItems[0].index);
+	}).current;
+
+	const viewabilityConfig = useRef({
+		itemVisiblePercentThreshold: 10,
+		waitForInteraction: true,
+		viewAreaCoveragePercentThreshold: 10,
+	}).current;
+
 	const [index, setIndex] = useState(0);
 	const [slides, setSlides] = useState<PlanItem[]>([
 		{
-			id: new Date().getTime().toString(),
+			id: uuid.v4().toString(),
 			name: "",
 			exercises: [],
 		},
 	]);
-	const scrollX = useRef(new Animated.Value(0)).current;
+
+	const newItemPlan = {
+		id: uuid.v4().toString(),
+		name: "",
+		exercises: [],
+	};
 
 	const onAddItemPress = () => {
-		const newItemPlan = {
-			id: "lala",
-			name: "",
-			exercises: [],
-		};
 		setSlides([...slides, newItemPlan]);
 	};
 
@@ -42,38 +55,31 @@ const Slider = () => {
 		)(event);
 	};
 
-	const handleOnViewableItemsChanged = useRef(({ viewableItems }) => {
-		setIndex(viewableItems[0].index);
-	}).current;
-
-	const viewabilityConfig = useRef({
-		itemVisiblePercentThreshold: 50,
-	}).current;
+	const renderItem = ({ item, index }) => <DayCard index={index} item={item} />;
 
 	return (
-		<>
+		<View style={styles.container}>
 			<IconButton icon="plus" onPress={onAddItemPress} />
 			<Pagination data={slides} scrollX={scrollX} index={index} />
-			<SafeAreaView>
-				<FlatList
-					data={slides}
-					renderItem={({ item, index: key }) => (
-						<DayCard key={key} index={key} item={item} />
-					)}
-					style={{ marginHorizontal: "10px" }}
-					horizontal
-					pagingEnabled
-					snapToAlignment="center"
-					showsHorizontalScrollIndicator={false}
-					onScroll={handleOnScroll}
-					onViewableItemsChanged={handleOnViewableItemsChanged}
-					viewabilityConfig={viewabilityConfig}
-				/>
-			</SafeAreaView>
-		</>
+			<FlatList
+				data={slides}
+				renderItem={renderItem}
+				keyExtractor={(item) => item.id}
+				horizontal
+				onScroll={handleOnScroll}
+				pagingEnabled
+				bounces={false}
+				viewabilityConfig={viewabilityConfig}
+				showsHorizontalScrollIndicator={false}
+			/>
+		</View>
 	);
 };
 
 export default Slider;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
+});

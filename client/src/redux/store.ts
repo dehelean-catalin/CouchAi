@@ -11,13 +11,17 @@ import {
 	persistStore,
 } from "redux-persist";
 import exerciseSlice from "./exerciseReducer";
+import workoutPlanSlice from "./workoutPlanReducer";
 
 const persistConfig = {
 	key: "root",
 	storage: AsyncStorage,
 };
 
-const rootReducer = combineReducers({ exercise: exerciseSlice });
+const rootReducer = combineReducers({
+	exercise: exerciseSlice,
+	workoutPlan: workoutPlanSlice,
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

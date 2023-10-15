@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
 import ExerciseDetailsHeaderRight from "../../components/ExerciseDetailsHeaderRight";
 import { theme } from "../../constants/theme";
@@ -20,7 +21,7 @@ export default function ExerciseDetailsScreen({ route, navigation }) {
 	const toggleTabStats = () => setToggleTabName(true);
 
 	return (
-		<View>
+		<ScrollView>
 			<View style={styles.header}>
 				<Pressable
 					style={[styles.tabName, !isToggleTabName && styles.active]}
@@ -36,7 +37,7 @@ export default function ExerciseDetailsScreen({ route, navigation }) {
 				</Pressable>
 			</View>
 			{!isToggleTabName ? <EDSummary id={id} /> : <Text>No log found</Text>}
-		</View>
+		</ScrollView>
 	);
 }
 

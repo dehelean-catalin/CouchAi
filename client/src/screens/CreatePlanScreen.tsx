@@ -1,57 +1,54 @@
-import * as ImagePicker from "expo-image-picker";
-import React, { useState } from "react";
-import { Image, SafeAreaView, StyleSheet, View } from "react-native";
-import { Button, TextInput } from "react-native-paper";
+import React, { useLayoutEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { Button } from "react-native-paper";
+import uuid from "react-native-uuid";
+import { useDispatch } from "react-redux";
+import CustomTextInput from "../components/CustomTextInput";
 import Slider from "../components/Slider";
+import { WorkoutPlan } from "../models/workoutModel";
+import { createWorkoutPlan } from "../redux/workoutPlanReducer";
 
-const ImageUrl = require("../../assets/barbell.png");
+export default function CreatePlanScreen({ navigation }) {
+	const dispatch = useDispatch();
 
-export default function CreatePlanScreen() {
-	const [planTitle, setPlanTitle] = useState("");
+	const [workoutPlan, setWorkoutPlan] = useState<WorkoutPlan>({
+		id: uuid.v4().toString(),
+		name: "",
+		thumbnailURL: "",
+		description: "",
+		workoutDays: [],
+	});
 
-	const [image, setImage] = useState("");
-
-	const pickImage = async () => {
-		let result = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ImagePicker.MediaTypeOptions.Images,
-			allowsEditing: true,
-			aspect: [4, 3],
-			quality: 1,
+	useLayoutEffect(() => {
+		navigation.setOptions({
+			headerRight: () => <Button onPress={onSavePress}>Save</Button>,
 		});
+	}, [navigation, workoutPlan]);
 
-		if (!result.canceled) {
-			setImage(result.assets[0].uri);
-		}
+	const onSavePress = () => {
+		dispatch(createWorkoutPlan(workoutPlan));
+		navigation.goBack();
 	};
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<View style={{ flexDirection: "row", alignItems: "center" }}>
-				<Button onPress={pickImage}>
-					{image ? (
-						<Image source={{ uri: image }} style={styles.image} />
-					) : (
-						<Image source={{ uri: ImageUrl }} style={styles.image} />
-					)}
-				</Button>
-				<TextInput
-					label="Name"
-					value={planTitle}
-					onChangeText={setPlanTitle}
-					placeholder="Enter workout name"
-				/>
-			</View>
+		<View style={styles.container}>
+			<CustomTextInput
+				placeholder="Workout name"
+				value={workoutPlan.name}
+				onChangeText={(val) => {
+					console.log(val);
+					setWorkoutPlan({ ...workoutPlan, name: val });
+				}}
+			/>
 			<Slider />
-		</SafeAreaView>
+		</View>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		padding: "10px",
+		padding: 10,
 		height: "100%",
 		gap: 20,
 	},
-
-	image: { width: 48, height: 48, marginBottom: "0px", marginTop: "0px" },
 });

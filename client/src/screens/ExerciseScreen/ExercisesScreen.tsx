@@ -1,25 +1,51 @@
-import { RootState } from "@/redux/store";
-import React, { useLayoutEffect, useState } from "react";
+import { RootStackParamList } from "@/navigations/BottomTabNavigator";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import axios from "axios";
+import React, {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react";
 import { FlatList, Pressable, StyleSheet, View } from "react-native";
-import { Button, Searchbar, Text } from "react-native-paper";
-import { useSelector } from "react-redux";
+import { Button, IconButton, Searchbar, Text } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
 import ExerciseCard from "../../components/ExerciseCard";
 import routes, { RouteValues } from "../../constants/routes";
 import { theme } from "../../constants/theme";
-import { Exercise } from "../../models/exerciseModels";
+import { Exercise } from "../../models/exerciseModel";
+import { addExercises } from "../../redux/exerciseReducer";
+import { RootState } from "../../redux/store";
 
 export default function ExercisesScreen({ navigation }) {
+	const { params } = useRoute<RouteProp<RootStackParamList, "Exercises">>();
+	const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 	const data = useSelector<RootState, { [key: string]: Exercise }>(
 		(s) => s.exercise.value
 	);
 	const [searchQuery, setSearchQuery] = useState("");
 
-	const result = Object.values(data).filter((item) =>
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (!Object.keys(data).length) {
+			axios
+				.get<{ [key: string]: Exercise }>(
+					"http://192.168.1.5:8090/api/exercises"
+				)
+				.then((res) => dispatch(addExercises(res.data)));
+		}
+	}, []);
+
+	const result = Object.values(data)?.filter((item) =>
 		item.name.includes(searchQuery)
 	);
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
+			headerTitle: params?.fromCreateWorkout ? "Choose exercises" : "Exercises",
 			headerRight: () => (
 				<Pressable
 					style={{ marginRight: 12 }}
@@ -32,9 +58,16 @@ export default function ExercisesScreen({ navigation }) {
 	}, [navigation]);
 
 	const onChangeSearch = (query) => setSearchQuery(query);
+
 	const navigateToRoute = (route: RouteValues) => {
 		navigation.navigate(route);
 	};
+
+	const handlePresentModalPress = useCallback(() => {
+		bottomSheetModalRef.current?.present();
+	}, []);
+
+	if (!Object.keys(data).length) return;
 
 	return (
 		<FlatList<Exercise>
@@ -47,27 +80,19 @@ export default function ExercisesScreen({ navigation }) {
 						value={searchQuery}
 						style={{ flex: 1 }}
 					/>
+					<IconButton icon="filter" onPress={handlePresentModalPress} />
 				</View>
 			}
 			renderItem={({ item }) => (
 				<ExerciseCard
 					key={item.id}
 					data={item}
-					onClick={() =>
-						navigation.navigate(routes.EXERCISE_DETAILS, { id: item.id })
-					}
+					showCheckbox={params?.fromCreateWorkout}
 				/>
 			)}
 			contentContainerStyle={{ flexGrow: 1 }}
 			ListEmptyComponent={
-				<View
-					style={{
-						alignItems: "center",
-						justifyContent: "center",
-						gap: 10,
-						flex: 1,
-					}}
-				>
+				<View style={styles.notFoundContainer}>
 					<Text variant="titleLarge">"{searchQuery}" not found</Text>
 					<Button mode="contained">Create Exercise</Button>
 				</View>
@@ -83,5 +108,11 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		paddingBottom: 10,
 		paddingHorizontal: 10,
+	},
+	notFoundContainer: {
+		alignItems: "center",
+		justifyContent: "center",
+		gap: 10,
+		flex: 1,
 	},
 });

@@ -1,3 +1,4 @@
+import { WorkoutPlan } from "@/models/workoutModel";
 import React from "react";
 import {
 	ImageBackground,
@@ -6,9 +7,8 @@ import {
 	View,
 	useWindowDimensions,
 } from "react-native";
-import { Plan } from "../models/planModels";
 
-export default function PlanCard({ value }: { value: Plan }) {
+export default function PlanCard({ value }: { value: WorkoutPlan }) {
 	const { width: screenWidth } = useWindowDimensions();
 	const minWidth = 260;
 	const maxWidth = 400;
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 	container: {
 		height: "100%",
 		borderRadius: 6,
-		padding: "16px",
+		padding: 16,
 		display: "flex",
 		justifyContent: "center",
 		backgroundColor: "rgba(0, 0, 0, 0.5)",

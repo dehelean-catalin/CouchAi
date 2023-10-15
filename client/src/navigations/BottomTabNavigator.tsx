@@ -3,14 +3,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { NavigatorColors } from "../constants/theme";
-import HomeScreen from "../screens/HomeScreen";
 import StatisticsScreen from "../screens/StatisticsScreen";
 import ExerciseNavigator from "./ExerciseNavigator";
+import HomeNavigator from "./HomeNavigator";
 import PlanNavigator from "./PlanNavigator";
 
 export type RootStackParamList = {
 	Home: undefined;
-	Exercises: undefined;
+	Exercises: { fromCreateWorkout: boolean };
 	ExerciseDetails: { id: string };
 	CreateExercise: undefined;
 };
@@ -23,10 +23,9 @@ export default function BottomTabNavigator() {
 			<Tab.Navigator>
 				<Tab.Screen
 					name="Home"
-					component={HomeScreen}
+					component={HomeNavigator}
 					options={{
-						headerShown: true,
-						tabBarLabel: "Home",
+						headerShown: false,
 						tabBarIcon: ({ color }) => (
 							<MaterialCommunityIcons name="home" color={color} size={26} />
 						),
@@ -36,6 +35,7 @@ export default function BottomTabNavigator() {
 					name="Plans"
 					component={PlanNavigator}
 					options={{
+						headerShown: false,
 						tabBarIcon: ({ color }) => (
 							<MaterialCommunityIcons
 								name="calendar-blank"

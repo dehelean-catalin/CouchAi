@@ -1,10 +1,10 @@
-import { Exercise } from "@/models/exerciseModels";
-import { RootState } from "@/redux/store";
 import React from "react";
 import { Linking, Pressable, StyleSheet, View } from "react-native";
 import { Divider, IconButton, Text } from "react-native-paper";
 import { useSelector } from "react-redux";
 import CustomImageBackground from "../../components/CustomImageBackground";
+import { Exercise } from "../../models/exerciseModel";
+import { RootState } from "../../redux/store";
 
 export default function EDSummary({ id }) {
 	const data = useSelector<RootState, Exercise | undefined>(
@@ -12,7 +12,9 @@ export default function EDSummary({ id }) {
 	);
 
 	const navigateToYoutube = () =>
-		Linking.openURL(`vnd.youtube://results?search_query=${data.name} Tutorial`);
+		Linking.openURL(
+			`vnd.youtube://results?search_query=${data?.name} Tutorial`
+		);
 
 	if (!data) return <></>;
 
@@ -25,18 +27,18 @@ export default function EDSummary({ id }) {
 					<Text variant="displayLarge">{data.name[0]}</Text>
 				</View>
 			)}
-			<View style={{ padding: 12, gap: 12 }}>
+			<View style={styles.descriptionContainer}>
 				<Text variant="headlineSmall">{data.name}</Text>
 				{data.instructions && (
 					<>
 						<Divider bold />
-						<Text variant="bodyLarge">{data.instructions}</Text>
+						<Text variant="bodyMedium">{data.instructions}</Text>
 					</>
 				)}
 				<Divider bold />
 				<Pressable style={styles.youtubeContainer} onPress={navigateToYoutube}>
-					<IconButton icon="youtube" style={{ margin: 0, width: 25 }} />
-					<Text variant="bodyLarge">View on youtube</Text>
+					<IconButton icon="youtube" style={styles.ytIcon} />
+					<Text variant="bodyMedium">View on youtube</Text>
 				</Pressable>
 			</View>
 		</View>
@@ -50,5 +52,13 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
+	descriptionContainer: {
+		padding: 12,
+		gap: 12,
+	},
 	youtubeContainer: { flexDirection: "row", alignItems: "center", gap: 20 },
+	ytIcon: {
+		margin: 0,
+		width: 25,
+	},
 });
