@@ -1,5 +1,5 @@
 const routes = {
-	PLAN: "Home",
+	PLAN: "Plan",
 	CREATE_PLAN: "Create plan",
 	EXERCISE: "Exercise",
 	CREATE_EXERCISE: "Create exercise",
@@ -14,7 +14,7 @@ export type RouteValues = (typeof routes)[RouteKeys];
 
 export type RootStackParamList = {
 	Home: undefined;
-	Exercises: { fromCreateWorkout: boolean };
+	Exercises: { id: string };
 	ExerciseDetails: { id: string };
 	CreateExercise: undefined;
 	WorkoutPreview: { id: string };

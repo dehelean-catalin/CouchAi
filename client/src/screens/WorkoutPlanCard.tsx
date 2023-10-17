@@ -8,8 +8,8 @@ import {
 	Text,
 	useWindowDimensions,
 } from "react-native";
-import routes from "../../constants/routes";
-import { WorkoutPlan } from "../../models/workoutModel";
+import routes from "../constants/routes";
+import { WorkoutPlan } from "../models/workoutModel";
 
 const WorkoutPlanCard: FC<{ value: WorkoutPlan }> = ({ value }) => {
 	const { navigate } = useNavigation<NativeStackNavigationProp<any>>();

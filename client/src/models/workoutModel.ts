@@ -5,19 +5,17 @@ export type WorkoutPlan = {
 	name: string;
 	thumbnailURL: string;
 	description: string;
-	workoutDays: WorkoutDay[];
+	workoutDays: { [key: string]: WorkoutDay };
 };
 
 export type WorkoutDay = {
 	id: string;
 	name: string;
-	position: number;
-	exercises: WorkoutExercise[];
+	exercises: { [key: string]: WorkoutExercise };
 };
 
 export type WorkoutExercise = {
 	id: string;
-	position: number;
 	exercise: Exercise;
 	workoutSets: WorkoutSet[];
 };

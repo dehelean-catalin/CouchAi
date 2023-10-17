@@ -1,16 +1,21 @@
-import { RootState } from "@/redux/store";
-import { WorkoutPlanState } from "@/redux/workoutPlanReducer";
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
-import { IconButton, useTheme } from "react-native-paper";
+import { IconButton } from "react-native-paper";
+import uuid from "react-native-uuid";
 import { useSelector } from "react-redux";
 import routes from "../constants/routes";
-import { AppTheme } from "../constants/theme";
-import PlanSection from "./PlanScreen/PlanSection";
+import { theme } from "../constants/theme";
+import { RootState } from "../redux/store";
+import { WorkoutPlanState } from "../redux/workoutPlanReducer";
+import PlanSection from "./PlanSection";
 
-export default function PlansScreen({ navigation }) {
-	const theme = useTheme<AppTheme>();
+const PlansScreen = ({ navigation }) => {
 	const plans = useSelector<RootState, WorkoutPlanState>((s) => s.workoutPlan);
+	const id = uuid.v4().toString();
+
+	const onCreatePlanPress = () => {
+		navigation.navigate(routes.CREATE_PLAN, { id });
+	};
 
 	return (
 		<View style={styles.container}>
@@ -22,21 +27,23 @@ export default function PlansScreen({ navigation }) {
 				sectionTitle="Intermediate"
 				value={Object.values(plans.workoutPlans)}
 			/>
-			<Pressable style={{ position: "absolute", bottom: 20, right: 0 }}>
+			<Pressable style={styles.icon}>
 				<IconButton
 					icon="plus"
 					iconColor="white"
-					style={{
-						backgroundColor: theme.colors.primary,
-					}}
+					style={styles.iconBtn}
 					size={30}
-					onPress={() => navigation.navigate(routes.CREATE_PLAN)}
+					onPress={onCreatePlanPress}
 				/>
 			</Pressable>
 		</View>
 	);
-}
+};
 
 const styles = StyleSheet.create({
 	container: { height: "100%", marginHorizontal: 15 },
+	icon: { position: "absolute", bottom: 20, right: 0 },
+	iconBtn: { backgroundColor: theme.colors.primary },
 });
+
+export default PlansScreen;

@@ -33,6 +33,10 @@
       "photosPermission": "The app accesses your photos to let you share them with your friends.",
       "cameraPermission": "Allow CouchAI to access your camera",
       "microphonePermission": "Allow CouchAI to access your microphone"
+    },
+    "experiments": {
+      "typedRoutes": true,
+      "tsconfigPaths": true
     }
   }
 }

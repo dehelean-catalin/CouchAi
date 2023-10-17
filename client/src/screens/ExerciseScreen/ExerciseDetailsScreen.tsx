@@ -14,6 +14,7 @@ export default function ExerciseDetailsScreen({ route, navigation }) {
 	useLayoutEffect(() => {
 		navigation.setOptions({
 			headerRight: () => <EDHeaderRight />,
+			tabBarVisible: false, //this will hide the TabBar navigator's header (LoggedIn_TabNavigator)
 		});
 	}, [navigation]);
 

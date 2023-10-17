@@ -1,11 +1,9 @@
 import React from "react";
-import { Animated, Dimensions, StyleSheet, View } from "react-native";
-import { useTheme } from "react-native-paper";
+import { Animated, StyleSheet, View, useWindowDimensions } from "react-native";
 
-const { width } = Dimensions.get("screen");
+const Pagination = ({ data, scrollX }) => {
+	const { width } = useWindowDimensions();
 
-const Pagination = ({ data, scrollX, index }) => {
-	const { colors } = useTheme();
 	return (
 		<View style={styles.container}>
 			{data.map((_, idx) => {
@@ -13,7 +11,7 @@ const Pagination = ({ data, scrollX, index }) => {
 
 				const dotWidth = scrollX.interpolate({
 					inputRange,
-					outputRange: [10, 16, 10],
+					outputRange: [10, 15, 10],
 					extrapolate: "clamp",
 				});
 
@@ -25,7 +23,7 @@ const Pagination = ({ data, scrollX, index }) => {
 
 				const backgroundColor = scrollX.interpolate({
 					inputRange,
-					outputRange: ["#ccc", "#fff", "#ccc"],
+					outputRange: ["#ccf", "#fff", "#ccc"],
 					extrapolate: "clamp",
 				});
 
@@ -35,9 +33,7 @@ const Pagination = ({ data, scrollX, index }) => {
 						style={[
 							styles.dot,
 							{ width: dotWidth, backgroundColor, opacity },
-							idx === index && {
-								backgroundColor: colors.onBackground,
-							},
+							,
 						]}
 					/>
 				);

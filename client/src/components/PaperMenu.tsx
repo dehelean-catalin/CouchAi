@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Divider, IconButton, Menu, useTheme } from "react-native-paper";
+import React, { FC, useState } from "react";
+import { Pressable, StyleSheet } from "react-native";
+import { IconButton, Menu, useTheme } from "react-native-paper";
 
-export default function PaperMenu({ options }) {
+const CustomMenu: FC<{ children: React.ReactNode[] | React.ReactNode }> = ({
+	children,
+}) => {
 	const { colors } = useTheme();
 	const [isVisible, setIsVisible] = useState(false);
 
@@ -15,19 +17,16 @@ export default function PaperMenu({ options }) {
 			onDismiss={onClose}
 			contentStyle={{ backgroundColor: colors.tertiaryContainer }}
 			anchor={
-				<TouchableOpacity>
+				<Pressable>
 					<IconButton icon="dots-vertical" onPress={onShow} />
-				</TouchableOpacity>
+				</Pressable>
 			}
 		>
-			{options.map((option, index) => (
-				<View key={index}>
-					<Menu.Item onPress={option.action} title={option.title} />
-					{index === options.length - 2 && <Divider />}
-				</View>
-			))}
+			{children}
 		</Menu>
 	);
-}
+};
 
 const styles = StyleSheet.create({});
+
+export default CustomMenu;

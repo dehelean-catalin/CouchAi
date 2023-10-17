@@ -15,7 +15,7 @@ export default function BottomTabNavigator() {
 		<NavigationContainer theme={{ dark: true, colors: NavigatorColors }}>
 			<Tab.Navigator>
 				<Tab.Screen
-					name="Home"
+					name="Homes"
 					component={HomeNavigator}
 					options={{
 						headerShown: false,
