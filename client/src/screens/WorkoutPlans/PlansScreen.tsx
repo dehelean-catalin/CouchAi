@@ -2,18 +2,21 @@ import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { IconButton } from "react-native-paper";
 import uuid from "react-native-uuid";
-import { useSelector } from "react-redux";
-import routes from "../constants/routes";
-import { theme } from "../constants/theme";
-import { RootState } from "../redux/store";
-import { WorkoutPlanState } from "../redux/workoutPlanReducer";
-import PlanSection from "./PlanSection";
+import { useDispatch, useSelector } from "react-redux";
+import routes from "../../constants/routes";
+import { theme } from "../../constants/theme";
+import { RootState } from "../../redux/store";
+import { workoutFormActions } from "../../redux/workoutFormReducer";
+import { WorkoutPlanState } from "../../redux/workoutPlanReducer";
+import PlanSection from "../PlanSection";
 
 const PlansScreen = ({ navigation }) => {
-	const plans = useSelector<RootState, WorkoutPlanState>((s) => s.workoutPlan);
 	const id = uuid.v4().toString();
+	const dispatch = useDispatch();
+	const plans = useSelector<RootState, WorkoutPlanState>((s) => s.workoutPlan);
 
 	const onCreatePlanPress = () => {
+		dispatch(workoutFormActions.initializeWorkout());
 		navigation.navigate(routes.CREATE_PLAN, { id });
 	};
 

@@ -2,14 +2,14 @@ import * as ImagePicker from "expo-image-picker";
 import React, { useLayoutEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { IconButton, Text, useTheme } from "react-native-paper";
+import { IconButton, Text } from "react-native-paper";
 import uuid from "react-native-uuid";
 import { useDispatch, useSelector } from "react-redux";
 import CustomImageBackground from "../../components/CustomImageBackground";
 import { CustomPicker } from "../../components/CustomPicker";
 import CustomTextInput from "../../components/CustomTextInput";
 import routes from "../../constants/routes";
-import { AppTheme, theme } from "../../constants/theme";
+import { theme } from "../../constants/theme";
 import {
 	Exercise,
 	exerciseCategoryRecord,
@@ -18,31 +18,31 @@ import {
 import { addExercise, updateExercise } from "../../redux/exerciseReducer";
 import { RootState } from "../../redux/store";
 
+const INITIAL_VALUE = {
+	id: uuid.v4().toString(),
+	name: "",
+	instructions: "",
+	category: exerciseCategoryRecord[0],
+	compoundMovement: null,
+	mainBodyPart: muscleRecord[0],
+	primaryMuscleGroup: [],
+	secondaryMuscleGroup: [],
+	equipmentRequired: [],
+	custom: true,
+	deleted: false,
+	standardResolutionUrl: null,
+	thumbnailUrl: null,
+};
+
 const CreateExerciseScreen = ({ navigation, route }) => {
-	const { colors } = useTheme<AppTheme>();
 	const dispatch = useDispatch();
-	const id = uuid.v4().toString();
 
 	const data = useSelector<RootState, Exercise>(
 		(s) => s.exercise.value[route.params?.id]
 	);
 
 	const [exerciseValues, setExerciseValues] = useState<Exercise>(
-		data ?? {
-			id,
-			name: "",
-			instructions: "",
-			category: exerciseCategoryRecord[0],
-			compoundMovement: null,
-			mainBodyPart: muscleRecord[0],
-			primaryMuscleGroup: [],
-			secondaryMuscleGroup: [],
-			equipmentRequired: [],
-			custom: true,
-			deleted: false,
-			standardResolutionUrl: null,
-			thumbnailUrl: null,
-		}
+		data ?? INITIAL_VALUE
 	);
 	const [error, setError] = useState(false);
 
@@ -97,15 +97,19 @@ const CreateExerciseScreen = ({ navigation, route }) => {
 
 		navigation.navigate(routes.EXERCISE);
 	};
+	console.log(exerciseValues.standardResolutionUrl);
 
 	return (
 		<ScrollView style={styles.container}>
-			<Pressable onPress={pickImage} style={styles.imgBackgroundContainer}>
-				{exerciseValues.standardResolutionUrl ? (
-					<CustomImageBackground url={exerciseValues.standardResolutionUrl} />
-				) : (
-					<IconButton icon="camera" size={40} />
-				)}
+			<Pressable onPress={pickImage}>
+				<CustomImageBackground
+					url={exerciseValues.standardResolutionUrl}
+					fallback={
+						<View style={styles.imgBackgroundContainer}>
+							<IconButton icon="camera" size={40} />
+						</View>
+					}
+				/>
 			</Pressable>
 			<View style={styles.formContainer}>
 				<CustomTextInput
@@ -118,9 +122,8 @@ const CreateExerciseScreen = ({ navigation, route }) => {
 						setExerciseValues({ ...exerciseValues, name: val });
 					}}
 				/>
-				{error && (
-					<Text style={{ color: colors.error }}>Name is required*</Text>
-				)}
+				{error && <Text style={styles.reuqired}>Name is required*</Text>}
+
 				<CustomTextInput
 					placeholder="Instructions"
 					value={exerciseValues.instructions}
@@ -171,5 +174,8 @@ const styles = StyleSheet.create({
 		marginTop: 15,
 		gap: 15,
 		marginHorizontal: 15,
+	},
+	reuqired: {
+		color: theme.colors.error,
 	},
 });

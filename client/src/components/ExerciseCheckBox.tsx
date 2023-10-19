@@ -1,9 +1,10 @@
-import React, { memo, useContext, useState } from "react";
+import React, { memo, useState } from "react";
 import { Checkbox } from "react-native-paper";
-import { ExerciseSelectionContext } from "../context/ExerciseSelectionContext";
+import { useDispatch } from "react-redux";
+import { workoutFormActions } from "../redux/workoutFormReducer";
 
 const ExerciseCheckBox = ({ data }) => {
-	const { addExercise, removeExercise } = useContext(ExerciseSelectionContext);
+	const dispatch = useDispatch();
 	const [checked, setChecked] = useState(false);
 	return (
 		<Checkbox
@@ -11,9 +12,9 @@ const ExerciseCheckBox = ({ data }) => {
 			onPress={() => {
 				setChecked(!checked);
 				if (checked) {
-					removeExercise(data.id);
+					dispatch(workoutFormActions.removeExercise(data.id));
 				} else {
-					addExercise(data);
+					dispatch(workoutFormActions.addExercise(data));
 				}
 			}}
 		/>

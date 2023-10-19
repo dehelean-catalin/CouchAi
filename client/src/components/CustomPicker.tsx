@@ -15,7 +15,7 @@ export const CustomPicker = ({
 			<Text variant="bodyMedium">{label}</Text>
 			<Picker
 				style={styles.picker}
-				dropdownIconColor="#000"
+				dropdownIconColor="#fff"
 				selectedValue={selectedValue}
 				onValueChange={onValueChange}
 			>

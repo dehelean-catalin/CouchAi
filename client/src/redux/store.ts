@@ -1,26 +1,22 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import {
-	FLUSH,
-	PAUSE,
-	PERSIST,
-	PURGE,
-	REGISTER,
-	REHYDRATE,
-	persistReducer,
-	persistStore,
-} from "redux-persist";
-import exerciseSlice from "./exerciseReducer";
-import workoutPlanSlice from "./workoutPlanReducer";
+import { persistReducer, persistStore } from "redux-persist";
+import exerciseReducer from "./exerciseReducer";
+import scheduleReducer from "./scheduleReducer";
+import workoutFormReducer from "./workoutFormReducer";
+import workoutPlanReducer from "./workoutPlanReducer";
 
 const persistConfig = {
 	key: "root",
 	storage: AsyncStorage,
+	blacklist: ["workoutForm"],
 };
 
 const rootReducer = combineReducers({
-	exercise: exerciseSlice,
-	workoutPlan: workoutPlanSlice,
+	exercise: exerciseReducer,
+	workoutPlan: workoutPlanReducer,
+	workoutForm: workoutFormReducer,
+	schedule: scheduleReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -29,9 +25,7 @@ export const store = configureStore({
 	reducer: persistedReducer,
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
-			serializableCheck: {
-				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-			},
+			serializableCheck: false,
 			immutableCheck: false,
 		}),
 });

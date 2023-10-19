@@ -2,8 +2,14 @@
 
 # On Going:
 
-- add exercises to workoutDay;
-- delete exercise and workDay;
+- ask do discard or save changes when leave workoutform page;
+- delete workout day;
+- duplicate workout day;
+- preview workout day;
+- get plans from db;
+
+# On Going:
+
 - remove stackNav from Details and Create Page
 - check the file type and dimesion when uploading
 
@@ -14,11 +20,10 @@
 # Pagina plans
 
 - duplicate workoutDay, duplicate workoutPlan;
-- workoutDay preview;
-- edit Workout Plan
-- Search page
-- Share Plan
-- save image to db
+- edit Workout Plan/Day;
+- Search page;
+- Share Plan;
+- save image to aws cloud
 
 # Pagina home
 
@@ -26,5 +31,4 @@
 - ce ar trebui sa faci azi conform planului
 - istoric cu ce ai parcurs in ulitimele zile
 - statistici saptamanale
-- plan curent
 - rutina on going

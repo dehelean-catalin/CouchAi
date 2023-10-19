@@ -3,16 +3,21 @@ import { Image, ImageBackground, StyleSheet } from "react-native";
 
 type Props = {
 	url: string;
+	height?: 250 | 300;
+	fallback: React.ReactNode;
 };
 
-const CustomImageBackground: FC<Props> = ({ url }) => {
+const CustomImageBackground: FC<Props> = ({ url, height = 250, fallback }) => {
+	if (!url) return fallback;
+
 	return (
 		<ImageBackground
 			source={{ uri: url }}
 			blurRadius={30}
-			style={styles.imageContainer}
+			resizeMode="cover"
+			style={{ height }}
 		>
-			<Image source={{ uri: url }} style={styles.image} />
+			{<Image style={styles.image} source={{ uri: url }} />}
 		</ImageBackground>
 	);
 };
@@ -20,13 +25,7 @@ const CustomImageBackground: FC<Props> = ({ url }) => {
 const styles = StyleSheet.create({
 	image: {
 		height: "100%",
-		width: 300,
-		objectFit: "fill",
-		aspectRatio: 1,
-	},
-	imageContainer: {
-		alignItems: "center",
-		height: 300,
+		objectFit: "contain",
 	},
 });
 

@@ -6,7 +6,7 @@ import { IconButton, Menu } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { deleteWorkoutPlan } from "../../redux/workoutPlanReducer";
 
-const WPPRightHeader: FC<{ id: string }> = ({ id }) => {
+const RightHeader: FC<{ id: string }> = ({ id }) => {
 	const dispatch = useDispatch();
 	const navigation = useNavigation<NativeStackNavigationProp<any>>();
 	const [visible, setVisible] = useState(false);
@@ -38,4 +38,4 @@ const WPPRightHeader: FC<{ id: string }> = ({ id }) => {
 	);
 };
 
-export default WPPRightHeader;
+export default RightHeader;

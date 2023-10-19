@@ -3,7 +3,7 @@ import { Animated, StyleSheet, View, useWindowDimensions } from "react-native";
 
 const Pagination = ({ data, scrollX }) => {
 	const { width } = useWindowDimensions();
-
+	console.log("reload");
 	return (
 		<View style={styles.container}>
 			{data.map((_, idx) => {
@@ -11,19 +11,13 @@ const Pagination = ({ data, scrollX }) => {
 
 				const dotWidth = scrollX.interpolate({
 					inputRange,
-					outputRange: [10, 15, 10],
+					outputRange: [9, 12, 9],
 					extrapolate: "clamp",
 				});
 
 				const opacity = scrollX.interpolate({
 					inputRange,
-					outputRange: [0.2, 1, 0.1],
-					extrapolate: "clamp",
-				});
-
-				const backgroundColor = scrollX.interpolate({
-					inputRange,
-					outputRange: ["#ccf", "#fff", "#ccc"],
+					outputRange: [0.1, 1, 0.1],
 					extrapolate: "clamp",
 				});
 
@@ -32,7 +26,12 @@ const Pagination = ({ data, scrollX }) => {
 						key={idx.toString()}
 						style={[
 							styles.dot,
-							{ width: dotWidth, backgroundColor, opacity },
+							{
+								width: dotWidth,
+								height: dotWidth,
+								backgroundColor: "#fff",
+								opacity,
+							},
 							,
 						]}
 					/>
@@ -50,11 +49,13 @@ const styles = StyleSheet.create({
 		width: "100%",
 		alignItems: "center",
 		justifyContent: "center",
+		paddingVertical: 15,
+		height: 16,
 	},
 	dot: {
 		width: 10,
 		height: 10,
-		borderRadius: 6,
+		borderRadius: 10,
 		marginHorizontal: 3,
 		backgroundColor: "#ccc",
 	},

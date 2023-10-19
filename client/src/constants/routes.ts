@@ -1,6 +1,6 @@
 const routes = {
 	PLAN: "Plan",
-	CREATE_PLAN: "Create plan",
+	CREATE_PLAN: "Create_plan",
 	EXERCISE: "Exercise",
 	CREATE_EXERCISE: "Create exercise",
 	EXERCISE_DETAILS: "Exercise details",

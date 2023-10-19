@@ -1,6 +1,7 @@
+import { workoutFormActions } from "@/src/redux/workoutFormReducer";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import axios from "axios";
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { FlatList, Pressable, StyleSheet, View } from "react-native";
 import { Button, Searchbar, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +11,6 @@ import routes, {
 	RouteValues,
 } from "../../constants/routes";
 import { theme } from "../../constants/theme";
-import WorkoutPlanFormContext from "../../context/WorkoutPlanFormContext";
 import { Exercise } from "../../models/exerciseModel";
 import { addExercises } from "../../redux/exerciseReducer";
 import { RootState } from "../../redux/store";
@@ -18,7 +18,6 @@ import { RootState } from "../../redux/store";
 export default function ExercisesScreen({ navigation }) {
 	const dispatch = useDispatch();
 	const { params } = useRoute<RouteProp<RootStackParamList, "Exercises">>();
-	const { addWorkoutExercises } = useContext(WorkoutPlanFormContext);
 
 	const data = useSelector<RootState, { [key: string]: Exercise }>(
 		(s) => s.exercise.value
@@ -96,7 +95,8 @@ export default function ExercisesScreen({ navigation }) {
 						style={styles.addButton}
 						mode="contained"
 						onPress={() => {
-							addWorkoutExercises(params.id), navigation.goBack();
+							dispatch(workoutFormActions.addExercisesToWorkout(params.id)),
+								navigation.goBack();
 						}}
 					>
 						Add exercises

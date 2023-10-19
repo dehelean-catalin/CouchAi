@@ -20,13 +20,16 @@ export default function EDSummary({ id }) {
 
 	return (
 		<View>
-			{data.standardResolutionUrl ? (
-				<CustomImageBackground url={data.standardResolutionUrl} />
-			) : (
-				<View style={styles.container}>
-					<Text variant="displayLarge">{data.name[0]}</Text>
-				</View>
-			)}
+			<CustomImageBackground
+				url={data.standardResolutionUrl}
+				height={300}
+				fallback={
+					<View style={styles.container}>
+						<Text variant="displayLarge">{data.name[0]}</Text>
+					</View>
+				}
+			/>
+
 			<View style={styles.descriptionContainer}>
 				<Text variant="headlineSmall">{data.name}</Text>
 				{data.instructions && (

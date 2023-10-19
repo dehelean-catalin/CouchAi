@@ -3,9 +3,9 @@ import React from "react";
 import { Pressable } from "react-native";
 import { IconButton } from "react-native-paper";
 import routes from "../constants/routes";
-import CreateExerciseScreen from "../screens/ExerciseScreen/CreateExerciseScreen";
-import ExerciseDetailsScreen from "../screens/ExerciseScreen/ExerciseDetailsScreen";
-import ExercisesScreen from "../screens/ExerciseScreen/ExercisesScreen";
+import CreateExerciseScreen from "../screens/CreateExercise/CreateExerciseScreen";
+import ExerciseDetailsScreen from "../screens/ExerciseDetails/ExerciseDetailsScreen";
+import ExercisesScreen from "../screens/Exercises/ExercisesScreen";
 
 const Stack = createNativeStackNavigator();
 

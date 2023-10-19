@@ -1,9 +1,10 @@
-import React, { FC, useContext } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { FC } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Menu, Text } from "react-native-paper";
+import { useDispatch } from "react-redux";
 import { theme } from "../constants/theme";
-import WorkoutPlanFormContext from "../context/WorkoutPlanFormContext";
 import { WorkoutExercise } from "../models/workoutModel";
+import { workoutFormActions } from "../redux/workoutFormReducer";
 import CustomMenu from "./PaperMenu";
 
 type Props = {
@@ -12,7 +13,8 @@ type Props = {
 };
 
 const CustomCard: FC<Props> = ({ id, value }) => {
-	const { deleteByIdWorkoutExercise } = useContext(WorkoutPlanFormContext);
+	const dispatch = useDispatch();
+
 	let maxVal = 0;
 	let minVal = 100;
 
@@ -43,7 +45,7 @@ const CustomCard: FC<Props> = ({ id, value }) => {
 			: `x ${maxVal} `;
 
 	return (
-		<View style={styles.container}>
+		<Pressable style={styles.container}>
 			<View>
 				<Text>{value.exercise.name}</Text>
 				{!!numberOfSets && (
@@ -63,10 +65,17 @@ const CustomCard: FC<Props> = ({ id, value }) => {
 			<CustomMenu>
 				<Menu.Item
 					title="Delete"
-					onPress={() => deleteByIdWorkoutExercise(id, value.id)}
+					onPress={() =>
+						dispatch(
+							workoutFormActions.deleteWorkoutExercise({
+								id,
+								exerciseId: value.id,
+							})
+						)
+					}
 				/>
 			</CustomMenu>
-		</View>
+		</Pressable>
 	);
 };
 
