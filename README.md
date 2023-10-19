@@ -2,15 +2,16 @@
 
 # On Going:
 
-- ask do discard or save changes when leave workoutform page;
-- delete workout day;
 - duplicate workout day;
 - preview workout day;
 - get plans from db;
 - design improve workout plan form;
 
-# On Going:
+# Prio:
 
+- replace exercise;
+- go to new workout day added
+- add workout plan thumbnail;
 - remove stackNav from Details and Create Page
 - check the file type and dimesion when uploading
 
@@ -20,7 +21,7 @@
 
 # Pagina plans
 
-- duplicate workoutDay, duplicate workoutPlan;
+- duplicate workoutPlan;
 - edit Workout Plan/Day;
 - Search page;
 - Share Plan;

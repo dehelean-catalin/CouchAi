@@ -9,6 +9,7 @@ import CustomTextInput from "../../components/CustomTextInput";
 import Pagination from "../../components/Pagination";
 import { WorkoutDay, WorkoutPlan } from "../../models/workoutModel";
 import { createWorkoutPlan } from "../../redux/workoutPlanReducer";
+import DiscardChangesDialog from "./DiscardChangesDialog";
 import WorkoutDayCard from "./WorkoutDayCard";
 
 const WorkoutPlanForm = ({ navigation }) => {
@@ -29,6 +30,13 @@ const WorkoutPlanForm = ({ navigation }) => {
 	useLayoutEffect(() => {
 		navigation.setOptions({
 			headerRight: () => <Button onPress={onSavePress}>Save</Button>,
+			headerLeft: () => (
+				<IconButton
+					style={styles.closeIcon}
+					icon="close"
+					onPress={() => dispatch(workoutFormActions.toggleDialog(true))}
+				/>
+			),
 		});
 	}, [navigation, workoutPlan]);
 
@@ -84,6 +92,7 @@ const WorkoutPlanForm = ({ navigation }) => {
 					viewabilityConfig={viewabilityConfig}
 				/>
 			</View>
+			<DiscardChangesDialog />
 		</View>
 	);
 };
@@ -103,6 +112,9 @@ const styles = StyleSheet.create({
 		zIndex: 1,
 		right: 10,
 		top: -28,
+	},
+	closeIcon: {
+		marginRight: 0,
 	},
 });
 

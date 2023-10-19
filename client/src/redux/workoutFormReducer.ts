@@ -6,6 +6,7 @@ import { WorkoutExercise, WorkoutPlan } from "../models/workoutModel";
 export interface WorkoutFormState {
 	workoutPlan: WorkoutPlan;
 	exercises: { [key: string]: WorkoutExercise };
+	showDialog: boolean;
 }
 
 const initialState: WorkoutFormState = {
@@ -17,6 +18,7 @@ const initialState: WorkoutFormState = {
 		workoutDays: {},
 	},
 	exercises: {},
+	showDialog: false,
 };
 
 const workoutFormSlice = createSlice({
@@ -143,14 +145,12 @@ const workoutFormSlice = createSlice({
 			delete state.exercises[action.payload];
 		},
 
-		clearState: (state) => {
-			state.workoutPlan = {
-				id: uuid.v4().toString(),
-				name: "",
-				thumbnailURL: "",
-				description: "",
-				workoutDays: {},
-			};
+		clearState: (state) => initialState,
+
+		// DIALOG CONTROL
+
+		toggleDialog: (state, action: PayloadAction<boolean>) => {
+			state.showDialog = action.payload;
 		},
 	},
 });

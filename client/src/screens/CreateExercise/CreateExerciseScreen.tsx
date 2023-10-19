@@ -36,7 +36,6 @@ const INITIAL_VALUE = {
 
 const CreateExerciseScreen = ({ navigation, route }) => {
 	const dispatch = useDispatch();
-
 	const data = useSelector<RootState, Exercise>(
 		(s) => s.exercise.value[route.params?.id]
 	);
