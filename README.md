@@ -7,6 +7,7 @@
 - duplicate workout day;
 - preview workout day;
 - get plans from db;
+- design improve workout plan form;
 
 # On Going:
 

@@ -97,7 +97,6 @@ const CreateExerciseScreen = ({ navigation, route }) => {
 
 		navigation.navigate(routes.EXERCISE);
 	};
-	console.log(exerciseValues.standardResolutionUrl);
 
 	return (
 		<ScrollView style={styles.container}>

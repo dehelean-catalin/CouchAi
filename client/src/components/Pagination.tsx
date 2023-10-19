@@ -3,7 +3,7 @@ import { Animated, StyleSheet, View, useWindowDimensions } from "react-native";
 
 const Pagination = ({ data, scrollX }) => {
 	const { width } = useWindowDimensions();
-	console.log("reload");
+
 	return (
 		<View style={styles.container}>
 			{data.map((_, idx) => {

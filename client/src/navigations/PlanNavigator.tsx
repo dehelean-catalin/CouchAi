@@ -3,9 +3,9 @@ import React from "react";
 import { default as ROUTES, default as routes } from "../constants/routes";
 import ExerciseDetailsScreen from "../screens/ExerciseDetails/ExerciseDetailsScreen";
 import ExercisesScreen from "../screens/Exercises/ExercisesScreen";
-import WorkoutPlanForm from "../screens/WorkoutPlanForm";
+import WorkoutPlanForm from "../screens/WorkoutPlanForm/WorkoutPlanForm";
 import WorkoutPlanPreview from "../screens/WorkoutPlanPreview/WorkoutPlanPreview";
-import PlansScreen from "../screens/WorkoutPlans/PlansScreen";
+import WorkoutPlansScreen from "../screens/WorkoutPlans/WorkoutPlansScreen";
 
 const Stack = createStackNavigator();
 
@@ -14,7 +14,7 @@ export default function PlanNavigator() {
 		<Stack.Navigator>
 			<Stack.Screen
 				name={ROUTES.PLAN}
-				component={PlansScreen}
+				component={WorkoutPlansScreen}
 				options={{ headerTitle: "Plans" }}
 			/>
 			<Stack.Screen

@@ -5,13 +5,13 @@ import { StyleSheet, View, useWindowDimensions } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Button, Chip, Menu, Text } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import CustomCard from "../components/CustomCard";
-import CustomTextInput from "../components/CustomTextInput";
-import CustomMenu from "../components/PaperMenu";
-import routes from "../constants/routes";
-import { theme } from "../constants/theme";
-import { WorkoutDay } from "../models/workoutModel";
-import { workoutFormActions } from "../redux/workoutFormReducer";
+import CustomTextInput from "../../components/CustomTextInput";
+import CustomMenu from "../../components/PaperMenu";
+import routes from "../../constants/routes";
+import { theme } from "../../constants/theme";
+import { WorkoutDay } from "../../models/workoutModel";
+import { workoutFormActions } from "../../redux/workoutFormReducer";
+import CustomCard from "./CustomCard";
 
 type Props = {
 	item: WorkoutDay;
@@ -22,6 +22,12 @@ const WorkoutDayCard = ({ item: value, index }: Props) => {
 	const { navigate } = useNavigation<NativeStackNavigationProp<any>>();
 	const { width } = useWindowDimensions();
 	const dispatch = useDispatch();
+
+	const handleDelete = () => {
+		dispatch(workoutFormActions.deleteWorkout(value.id));
+	};
+
+	const data = Object.values(value.exercises);
 
 	return (
 		<View
@@ -44,12 +50,14 @@ const WorkoutDayCard = ({ item: value, index }: Props) => {
 					style={styles.input}
 				/>
 				<CustomMenu>
-					<Menu.Item title="Delete" />
+					<Menu.Item title="Reorder" disabled={true} />
+					<Menu.Item title="Duplicate" disabled={true} />
+					<Menu.Item title="Delete" onPress={handleDelete} />
 				</CustomMenu>
 			</View>
-			{!!Object.values(value.exercises).length ? (
+			{!!data.length ? (
 				<FlatList
-					data={Object.values(value.exercises)}
+					data={data}
 					renderItem={({ item }) => <CustomCard id={value.id} value={item} />}
 					keyExtractor={(item) => item.id}
 					showsVerticalScrollIndicator={false}

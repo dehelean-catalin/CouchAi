@@ -5,10 +5,10 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { Animated, FlatList, StyleSheet, View } from "react-native";
 import { Button, IconButton, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
-import CustomTextInput from "../components/CustomTextInput";
-import Pagination from "../components/Pagination";
-import { WorkoutDay, WorkoutPlan } from "../models/workoutModel";
-import { createWorkoutPlan } from "../redux/workoutPlanReducer";
+import CustomTextInput from "../../components/CustomTextInput";
+import Pagination from "../../components/Pagination";
+import { WorkoutDay, WorkoutPlan } from "../../models/workoutModel";
+import { createWorkoutPlan } from "../../redux/workoutPlanReducer";
 import WorkoutDayCard from "./WorkoutDayCard";
 
 const WorkoutPlanForm = ({ navigation }) => {
@@ -90,7 +90,6 @@ const WorkoutPlanForm = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 	container: {
-		// margin: 10,
 		flex: 1,
 		gap: 10,
 	},

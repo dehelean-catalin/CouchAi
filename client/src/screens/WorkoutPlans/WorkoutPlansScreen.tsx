@@ -8,9 +8,9 @@ import { theme } from "../../constants/theme";
 import { RootState } from "../../redux/store";
 import { workoutFormActions } from "../../redux/workoutFormReducer";
 import { WorkoutPlanState } from "../../redux/workoutPlanReducer";
-import PlanSection from "../PlanSection";
+import WorkoutPlanSection from "./WorkoutPlanSection";
 
-const PlansScreen = ({ navigation }) => {
+const WorkoutPlansScreen = ({ navigation }) => {
 	const id = uuid.v4().toString();
 	const dispatch = useDispatch();
 	const plans = useSelector<RootState, WorkoutPlanState>((s) => s.workoutPlan);
@@ -22,14 +22,11 @@ const PlansScreen = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<PlanSection
+			<WorkoutPlanSection
 				sectionTitle="Your plans"
 				value={Object.values(plans.savedWorkoutPlans)}
 			/>
-			<PlanSection
-				sectionTitle="Intermediate"
-				value={Object.values(plans.workoutPlans)}
-			/>
+
 			<Pressable style={styles.icon}>
 				<IconButton
 					icon="plus"
@@ -49,4 +46,4 @@ const styles = StyleSheet.create({
 	iconBtn: { backgroundColor: theme.colors.primary },
 });
 
-export default PlansScreen;
+export default WorkoutPlansScreen;

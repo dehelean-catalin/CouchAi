@@ -43,6 +43,7 @@ const workoutFormSlice = createSlice({
 				},
 			};
 		},
+
 		setPlanName: (state, action: PayloadAction<string>) => {
 			state.workoutPlan.name = action.payload;
 		},
@@ -67,6 +68,11 @@ const workoutFormSlice = createSlice({
 			};
 		},
 
+		deleteWorkout: (state, action: PayloadAction<string>) => {
+			const id = action.payload;
+			delete state.workoutPlan.workoutDays[id];
+		},
+
 		addExercisesToWorkout: (state, action: PayloadAction<string>) => {
 			state.workoutPlan.workoutDays[action.payload].exercises = {
 				...state.workoutPlan.workoutDays[action.payload].exercises,
@@ -75,13 +81,16 @@ const workoutFormSlice = createSlice({
 			state.exercises = {};
 		},
 
-		reorderExercises: (
+		deleteWorkoutExercise: (
 			state,
-			action: PayloadAction<{ id: string; data: Exercise }>
+			action: PayloadAction<{ id: string; exerciseId: string }>
 		) => {
-			state.workoutPlan.workoutDays[action.payload.id].exercises = {};
-			state.exercises = {};
+			delete state.workoutPlan.workoutDays[action.payload.id].exercises[
+				action.payload.exerciseId
+			];
 		},
+
+		//EXERCISE SELECTION
 
 		addExercise: (state, action: PayloadAction<Exercise>) => {
 			const id = uuid.v4().toString();
@@ -132,15 +141,6 @@ const workoutFormSlice = createSlice({
 
 		removeExercise: (state, action: PayloadAction<string>) => {
 			delete state.exercises[action.payload];
-		},
-
-		deleteWorkoutExercise: (
-			state,
-			action: PayloadAction<{ id: string; exerciseId: string }>
-		) => {
-			delete state.workoutPlan.workoutDays[action.payload.id].exercises[
-				action.payload.exerciseId
-			];
 		},
 
 		clearState: (state) => {

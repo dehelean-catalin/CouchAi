@@ -2,10 +2,10 @@ import React, { FC } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Menu, Text } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import { theme } from "../constants/theme";
-import { WorkoutExercise } from "../models/workoutModel";
-import { workoutFormActions } from "../redux/workoutFormReducer";
-import CustomMenu from "./PaperMenu";
+import CustomMenu from "../../components/PaperMenu";
+import { theme } from "../../constants/theme";
+import { WorkoutExercise } from "../../models/workoutModel";
+import { workoutFormActions } from "../../redux/workoutFormReducer";
 
 type Props = {
 	id: string;

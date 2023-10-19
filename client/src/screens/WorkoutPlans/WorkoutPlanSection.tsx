@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
-import { WorkoutPlan } from "../models/workoutModel";
+import { WorkoutPlan } from "../../models/workoutModel";
 import WorkoutPlanCard from "./WorkoutPlanCard";
 
 const ItemSeparator = () => <View style={styles.separator} />;

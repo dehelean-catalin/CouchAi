@@ -15,7 +15,7 @@ const CustomMenu: FC<{ children: React.ReactNode[] | React.ReactNode }> = ({
 		<Menu
 			visible={isVisible}
 			onDismiss={onClose}
-			contentStyle={{ backgroundColor: colors.tertiaryContainer }}
+			contentStyle={{ backgroundColor: colors.surface }}
 			anchor={
 				<Pressable>
 					<IconButton icon="dots-vertical" onPress={onShow} />
