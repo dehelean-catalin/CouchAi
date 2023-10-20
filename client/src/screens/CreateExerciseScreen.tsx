@@ -5,18 +5,18 @@ import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, Text } from "react-native-paper";
 import uuid from "react-native-uuid";
 import { useDispatch, useSelector } from "react-redux";
-import CustomImageBackground from "../../components/CustomImageBackground";
-import { CustomPicker } from "../../components/CustomPicker";
-import CustomTextInput from "../../components/CustomTextInput";
-import routes from "../../constants/routes";
-import { theme } from "../../constants/theme";
+import CustomImageBackground from "../components/CustomImageBackground";
+import { CustomPicker } from "../components/CustomPicker";
+import CustomTextInput from "../components/CustomTextInput";
+import routes from "../constants/routes";
+import { theme } from "../constants/theme";
 import {
 	Exercise,
 	exerciseCategoryRecord,
 	muscleRecord,
-} from "../../models/exerciseModel";
-import { addExercise, updateExercise } from "../../redux/exerciseReducer";
-import { RootState } from "../../redux/store";
+} from "../models/exerciseModel";
+import { addExercise, updateExercise } from "../redux/exerciseReducer";
+import { RootState } from "../redux/store";
 
 const INITIAL_VALUE = {
 	id: uuid.v4().toString(),

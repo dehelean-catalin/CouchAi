@@ -50,6 +50,8 @@ const WorkoutPlanForm = ({ navigation }) => {
 		navigation.goBack();
 	};
 
+	console.log(scrollX);
+
 	if (!workoutPlan) return <></>;
 
 	return (

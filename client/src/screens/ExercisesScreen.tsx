@@ -1,21 +1,18 @@
 import { workoutFormActions } from "@/src/redux/workoutFormReducer";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import axios from "axios";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { FC, useEffect, useLayoutEffect, useState } from "react";
 import { FlatList, Pressable, StyleSheet, View } from "react-native";
 import { Button, Searchbar, Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
-import ExerciseCard from "../../components/ExerciseCard";
-import routes, {
-	RootStackParamList,
-	RouteValues,
-} from "../../constants/routes";
-import { theme } from "../../constants/theme";
-import { Exercise } from "../../models/exerciseModel";
-import { addExercises } from "../../redux/exerciseReducer";
-import { RootState } from "../../redux/store";
+import ExerciseCard from "../components/ExerciseCard";
+import routes, { RootStackParamList, RouteValues } from "../constants/routes";
+import { theme } from "../constants/theme";
+import { Exercise } from "../models/exerciseModel";
+import { addExercises } from "../redux/exerciseReducer";
+import { RootState } from "../redux/store";
 
-export default function ExercisesScreen({ navigation }) {
+const ExercisesScreen: FC<any> = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const { params } = useRoute<RouteProp<RootStackParamList, "Exercises">>();
 
@@ -105,7 +102,9 @@ export default function ExercisesScreen({ navigation }) {
 			)}
 		</>
 	);
-}
+};
+
+export default ExercisesScreen;
 
 const styles = StyleSheet.create({
 	searchContainer: {
