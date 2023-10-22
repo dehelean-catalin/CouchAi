@@ -19,7 +19,7 @@ export const NavigatorColors = {
 	background: theme.colors.background,
 	card: MD3DarkTheme.colors.background,
 	text: MD3DarkTheme.colors.primary,
-	border: MD3DarkTheme.colors.surface,
+	border: MD3DarkTheme.colors.background,
 	notification: MD3DarkTheme.colors.background,
 };
 

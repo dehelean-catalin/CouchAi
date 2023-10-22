@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ScheduleDTO {
+public class ScheduleCLI {
 
         private String id;
         private String coverPhoto;

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
 import { WorkoutPlan } from "../../models/workoutModel";
-import WorkoutPlanCard from "./WorkoutPlanCard";
+import { WorkoutPlanCard } from "./WorkoutPlanCard";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
@@ -11,11 +11,11 @@ type Props = {
 	value: WorkoutPlan[];
 };
 
-const PlanSection: FC<Props> = ({ value, sectionTitle }) => {
+export const WorkoutPlanSection: FC<Props> = ({ value, sectionTitle }) => {
 	if (!value.length) return;
 
 	return (
-		<View style={styles.container}>
+		<View>
 			<Text variant="titleSmall" style={styles.title}>
 				{sectionTitle}
 			</Text>
@@ -33,13 +33,8 @@ const PlanSection: FC<Props> = ({ value, sectionTitle }) => {
 };
 
 const styles = StyleSheet.create({
-	container: {
-		marginBottom: 15,
-	},
 	title: {
-		marginBottom: 5,
+		marginVertical: 15,
 	},
 	separator: { width: 10 },
 });
-
-export default PlanSection;

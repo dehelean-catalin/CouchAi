@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -16,15 +18,16 @@ import java.util.Set;
 public class WorkoutExercise {
     @Id
     private String id;
+
     private int position;
 
     @ManyToOne
-    @JoinColumn(name = "exercise_id")
-    private Exercise exercise = new Exercise();
+    @JoinColumn(name = "exercise_id", nullable=false)
+    private Exercise exercise;
 
     @OneToMany
-    private Set<WorkoutSet> workoutSets = new HashSet<>();
+    private List<WorkoutSet> workoutSets = new ArrayList<>();
 
     @OneToMany
-    private Set<WorkoutSet> workoutSuperSets = new HashSet<>();
+    private List<WorkoutSet> workoutSuperSets = new ArrayList<>();
 }

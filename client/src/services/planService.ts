@@ -1,13 +1,5 @@
-import axios from "axios";
-import { Plan } from "../models/planModels";
+import axiosInstance from "../hooks/useAxios";
+import { FindAllByCategoryResponse } from "../models/workoutModel";
 
-export type SectionPlan = {
-	title: string;
-	data: Plan[];
-};
-
-export const getAllPlans = async () => {
-	return await axios
-		.get<SectionPlan[]>("http://localhost:4000/plan")
-		.then((res) => res.data);
-};
+export const findAllPlansByCategory = () =>
+	axiosInstance.get<FindAllByCategoryResponse>("/schedules/categories");

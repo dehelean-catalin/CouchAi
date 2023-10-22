@@ -46,6 +46,7 @@ public class ExerciseServiceImpl implements ExerciseService{
     @Override
     public Exercise findById(String id) {
         Optional<Exercise> result = exerciseRepository.findById(id);
+
         if(result.isEmpty()){
             throw new NotFoundException("Not found Exercise with id - " + id);
         }
@@ -130,7 +131,7 @@ public class ExerciseServiceImpl implements ExerciseService{
                  continue;
              }
 
-             var exercise = new Exercise(ex.getId(),
+             Exercise exercise = new Exercise(ex.getId(),
                      ex.getName(),
                      ex.getInstructions(),
                      ex.getCategory(),

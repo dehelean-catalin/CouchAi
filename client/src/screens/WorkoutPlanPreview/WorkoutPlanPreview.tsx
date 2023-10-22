@@ -15,7 +15,7 @@ const WorkoutPlanPreview = ({ navigation, route }) => {
 	const dispatch = useDispatch();
 
 	const customPLanData = useSelector<RootState, WorkoutPlan>(
-		(s) => s.workoutPlan.savedWorkoutPlans[id] ?? s.workoutPlan.workoutPlans[id]
+		(s) => s.workoutPlan.savedWorkoutPlans[id]
 	);
 
 	useLayoutEffect(() => {

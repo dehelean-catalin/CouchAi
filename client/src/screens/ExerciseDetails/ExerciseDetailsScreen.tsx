@@ -6,7 +6,7 @@ import { theme } from "../../constants/theme";
 import EDHeaderRight from "./EDHeaderRight";
 import EDSummary from "./EDSummary";
 
-export default function ExerciseDetailsScreen({ route, navigation }) {
+export const ExerciseDetailsScreen = ({ route, navigation }) => {
 	const { id } = route.params;
 
 	const [isToggleTabName, setToggleTabName] = useState(false);
@@ -39,7 +39,7 @@ export default function ExerciseDetailsScreen({ route, navigation }) {
 			{!isToggleTabName ? <EDSummary id={id} /> : <Text>No log found</Text>}
 		</ScrollView>
 	);
-}
+};
 
 const styles = StyleSheet.create({
 	header: {

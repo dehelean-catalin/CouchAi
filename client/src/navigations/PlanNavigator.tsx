@@ -1,11 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import routes, { default as ROUTES } from "../constants/routes";
-import ExerciseDetailsScreen from "../screens/ExerciseDetails/ExerciseDetailsScreen";
+import { WorkoutPlansScreen } from "../screens/DiscoverPlans/WorkoutPlansScreen";
+import { ExerciseDetailsScreen } from "../screens/ExerciseDetails/ExerciseDetailsScreen";
 import ExercisesScreen from "../screens/ExercisesScreen";
-import WorkoutPlanForm from "../screens/WorkoutPlanForm/WorkoutPlanForm";
+import { WorkoutPlanForm } from "../screens/WorkoutPlanForm/WorkoutPlanForm";
 import WorkoutPlanPreview from "../screens/WorkoutPlanPreview/WorkoutPlanPreview";
-import WorkoutPlansScreen from "../screens/WorkoutPlans/WorkoutPlansScreen";
 
 const Stack = createStackNavigator();
 

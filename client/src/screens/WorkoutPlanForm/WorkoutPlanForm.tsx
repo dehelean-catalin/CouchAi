@@ -10,14 +10,13 @@ import Pagination from "../../components/Pagination";
 import { WorkoutDay, WorkoutPlan } from "../../models/workoutModel";
 import { createWorkoutPlan } from "../../redux/workoutPlanReducer";
 import DiscardChangesDialog from "./DiscardChangesDialog";
-import WorkoutDayCard from "./WorkoutDayCard";
+import { WorkoutDayCard } from "./WorkoutDayCard";
 
-const WorkoutPlanForm = ({ navigation }) => {
+export const WorkoutPlanForm = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const workoutPlan = useSelector<RootState, WorkoutPlan>(
 		(s) => s.workoutForm.workoutPlan
 	);
-
 	const [error, setError] = useState(false);
 
 	const scrollX = useRef(new Animated.Value(0)).current;
@@ -50,8 +49,6 @@ const WorkoutPlanForm = ({ navigation }) => {
 		navigation.goBack();
 	};
 
-	console.log(scrollX);
-
 	if (!workoutPlan) return <></>;
 
 	return (
@@ -82,6 +79,7 @@ const WorkoutPlanForm = ({ navigation }) => {
 					renderItem={({ index, item }) => (
 						<WorkoutDayCard index={index} item={item} />
 					)}
+					style={{ flex: 1 }}
 					keyExtractor={(item) => item.id}
 					horizontal
 					showsHorizontalScrollIndicator={false}
@@ -107,6 +105,7 @@ const styles = StyleSheet.create({
 	formContainer: {
 		borderColor: theme.colors.surface,
 		flex: 1,
+		minHeight: "100%",
 		position: "relative",
 	},
 	icon: {
@@ -119,5 +118,3 @@ const styles = StyleSheet.create({
 		marginRight: 0,
 	},
 });
-
-export default WorkoutPlanForm;

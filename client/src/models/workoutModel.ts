@@ -1,10 +1,23 @@
 import { Exercise } from "./exerciseModel";
 
+export type FindAllByCategoryResponse = {
+	gainStrength: WorkoutPlan[];
+	buildMuscle: WorkoutPlan[];
+	loseFat: WorkoutPlan[];
+	homeWorkouts: WorkoutPlan[];
+	singleWorkouts: any[];
+};
+
 export type WorkoutPlan = {
 	id: string;
 	name: string;
 	thumbnailURL: string;
 	description: string;
+	daysPerWeek: number;
+	mainGoal: string;
+	trainingLevel: String;
+	custom: boolean;
+	premium: boolean;
 	workoutDays: { [key: string]: WorkoutDay };
 };
 

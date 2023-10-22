@@ -18,7 +18,7 @@ type Props = {
 	index: number;
 };
 
-const WorkoutDayCard = ({ item: value, index }: Props) => {
+export const WorkoutDayCard = memo(({ item: value, index }: Props) => {
 	const { navigate } = useNavigation<NativeStackNavigationProp<any>>();
 	const { width } = useWindowDimensions();
 	const dispatch = useDispatch();
@@ -35,6 +35,7 @@ const WorkoutDayCard = ({ item: value, index }: Props) => {
 				width: width,
 				flex: 1,
 				padding: 10,
+				height: "100%",
 			}}
 		>
 			<View style={styles.header}>
@@ -75,9 +76,7 @@ const WorkoutDayCard = ({ item: value, index }: Props) => {
 			</Button>
 		</View>
 	);
-};
-
-export default memo(WorkoutDayCard);
+});
 
 const styles = StyleSheet.create({
 	header: {
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
 	},
 	emptyContainer: {
 		flex: 1,
-		height: "100%",
+		minHeight: "100%",
 		alignItems: "center",
 		justifyContent: "center",
 	},
