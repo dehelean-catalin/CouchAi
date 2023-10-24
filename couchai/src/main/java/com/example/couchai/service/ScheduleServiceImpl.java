@@ -9,10 +9,7 @@ import com.example.couchai.repository.ScheduleRepository;
 import com.example.couchai.repository.WorkoutDayRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -70,6 +67,10 @@ public class ScheduleServiceImpl implements ScheduleService {
         List<Schedule> scheduleList = new ArrayList<>();
 
         for (ScheduleCLI scheduleCLI : schedules){
+            if (scheduleCLI.isCustom()){
+                continue;
+            }
+
             Schedule schedule = new Schedule(
                     scheduleCLI.getId(),
                     scheduleCLI.getName(),
@@ -90,10 +91,11 @@ public class ScheduleServiceImpl implements ScheduleService {
                     continue;
                 }
 
+
                 WorkoutDay workoutDay = workoutDayOptional.get();
 
-                List<WorkoutDay> workoutDays = schedule.getWorkoutDays();
-                workoutDays.add(workoutDay);
+                Map<String,WorkoutDay> workoutDays = schedule.getWorkoutDays();
+                workoutDays.put(workoutDay.getId(),workoutDay);
                 schedule.setWorkoutDays(workoutDays);
             }
         }

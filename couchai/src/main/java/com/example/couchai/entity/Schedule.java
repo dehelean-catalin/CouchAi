@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -41,7 +38,7 @@ public class Schedule {
     private String trainingLevel;
 
     @OneToMany
-    List<WorkoutDay> workoutDays = new ArrayList<>();
+    Map<String,WorkoutDay> workoutDays = new HashMap<>();
 
     public Schedule(String id, String name, String thumbnailURL, boolean custom, int daysPerWeek, String description, String mainGoal, boolean premium, String trainingLevel) {
         this.id = id;
