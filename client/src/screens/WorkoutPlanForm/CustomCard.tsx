@@ -1,3 +1,4 @@
+import { computeWorkoutSets } from "@/src/helpers/workoutSet.heler";
 import React, { FC } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Menu, Text } from "react-native-paper";
@@ -15,34 +16,8 @@ type Props = {
 const CustomCard: FC<Props> = ({ id, value }) => {
 	const dispatch = useDispatch();
 
-	let maxVal = 0;
-	let minVal = 100;
-
-	value.workoutSets.forEach((set) => {
-		maxVal = Math.max(maxVal, set.maxReps);
-		minVal = Math.min(minVal, set.minReps);
-	});
-
-	const numberOfSets = value.workoutSets.length;
-
-	const setFormat = numberOfSets === 1 ? "set" : "sets";
-
-	const repsFormat =
-		maxVal === 0 && (minVal === 100 || minVal === 0)
-			? ""
-			: minVal === 1 || maxVal === 1
-			? " rep"
-			: " reps";
-
-	const minValFormat =
-		minVal === 100 || minVal === 0 || minVal === maxVal ? "" : minVal;
-
-	const maxValFormat =
-		maxVal === 0
-			? ""
-			: minVal === 100 || minVal === 0
-			? maxVal
-			: `x ${maxVal} `;
+	const { numberOfSets, setFormat, minValFormat, maxValFormat, repsFormat } =
+		computeWorkoutSets(value.workoutSets);
 
 	return (
 		<Pressable style={styles.container}>

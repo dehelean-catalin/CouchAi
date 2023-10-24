@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const WorkoutPlanSection: FC<Props> = ({ value, sectionTitle }) => {
-	if (!value.length) return;
+	if (!value.length) return <></>;
 
 	return (
 		<View>

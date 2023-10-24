@@ -1,3 +1,4 @@
+import { WorkoutPlan } from "@/src/models/workoutModel";
 import { findAllPlansByCategory } from "@/src/services/planService";
 import React, { useEffect } from "react";
 import { Pressable, StyleSheet } from "react-native";
@@ -9,22 +10,21 @@ import routes from "../../constants/routes";
 import { theme } from "../../constants/theme";
 import { RootState } from "../../redux/store";
 import { workoutFormActions } from "../../redux/workoutFormReducer";
-import {
-	WorkoutPlanState,
-	initializeWorkoutPlans,
-} from "../../redux/workoutPlanReducer";
+import { initializeWorkoutPlans } from "../../redux/workoutPlanReducer";
 import { WorkoutPlanSection } from "./WorkoutPlanSection";
 
 export const WorkoutPlansScreen = ({ navigation }) => {
 	const id = uuid.v4().toString();
 	const dispatch = useDispatch();
-	const plans = useSelector<RootState, WorkoutPlanState>((s) => s.workoutPlan);
+	const workoutPlans = useSelector<RootState, WorkoutPlan[]>(
+		(s) => s.workoutPlan.workoutPlans
+	);
 
 	useEffect(() => {
-		if (!plans?.buildMuscle?.length) {
-			findAllPlansByCategory().then((res) =>
-				dispatch(initializeWorkoutPlans(res.data))
-			);
+		if (!workoutPlans.length) {
+			findAllPlansByCategory().then((res) => {
+				dispatch(initializeWorkoutPlans(res.data));
+			});
 		}
 	}, []);
 
@@ -34,21 +34,36 @@ export const WorkoutPlansScreen = ({ navigation }) => {
 	};
 
 	return (
-		<ScrollView showsHorizontalScrollIndicator={false} style={styles.container}>
-			<WorkoutPlanSection
-				sectionTitle="Your plans"
-				value={Object.values(plans.savedWorkoutPlans)}
-			/>
-			<WorkoutPlanSection
-				sectionTitle="Gain Strength"
-				value={plans.gainStrength}
-			/>
-			<WorkoutPlanSection
-				sectionTitle="Build Muscle"
-				value={plans.buildMuscle}
-			/>
-			<WorkoutPlanSection sectionTitle="Lose Fat" value={plans.loseFat} />
-
+		<>
+			<ScrollView
+				showsHorizontalScrollIndicator={false}
+				style={styles.container}
+			>
+				<WorkoutPlanSection
+					sectionTitle="Your plans"
+					value={workoutPlans.filter(
+						(workoutPlan) => workoutPlan.custom === true
+					)}
+				/>
+				<WorkoutPlanSection
+					sectionTitle="Gain Strength"
+					value={workoutPlans.filter(
+						(workoutPlan) => workoutPlan.mainGoal === "gain_strength"
+					)}
+				/>
+				<WorkoutPlanSection
+					sectionTitle="Build Muscle"
+					value={workoutPlans.filter(
+						(workoutPlan) => workoutPlan.mainGoal === "build_muscle"
+					)}
+				/>
+				<WorkoutPlanSection
+					sectionTitle="Lose Fat"
+					value={workoutPlans.filter(
+						(workoutPlan) => workoutPlan.mainGoal == "lose_fat"
+					)}
+				/>
+			</ScrollView>
 			<Pressable style={styles.icon}>
 				<IconButton
 					icon="plus"
@@ -58,12 +73,12 @@ export const WorkoutPlansScreen = ({ navigation }) => {
 					onPress={onCreatePlanPress}
 				/>
 			</Pressable>
-		</ScrollView>
+		</>
 	);
 };
 
 const styles = StyleSheet.create({
 	container: { height: "100%", marginHorizontal: 15, marginBottom: 20 },
-	icon: { position: "absolute", bottom: 20, right: 0 },
+	icon: { position: "absolute", bottom: 0, right: 15 },
 	iconBtn: { backgroundColor: theme.colors.primary },
 });

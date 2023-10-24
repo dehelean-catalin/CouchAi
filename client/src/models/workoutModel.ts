@@ -24,7 +24,7 @@ export type WorkoutPlan = {
 export type WorkoutDay = {
 	id: string;
 	name: string;
-	exercises: { [key: string]: WorkoutExercise };
+	workoutExercises: { [key: string]: WorkoutExercise };
 };
 
 export type WorkoutExercise = {

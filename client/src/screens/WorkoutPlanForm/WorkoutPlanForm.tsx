@@ -45,6 +45,7 @@ export const WorkoutPlanForm = ({ navigation }) => {
 			return;
 		}
 		dispatch(createWorkoutPlan(workoutPlan));
+		dispatch(workoutFormActions.clearState());
 
 		navigation.goBack();
 	};
@@ -53,7 +54,7 @@ export const WorkoutPlanForm = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<View style={{ paddingBottom: 40 }}>
+			<View style={{ marginBottom: 40 }}>
 				<CustomTextInput
 					placeholder="Workout name"
 					value={workoutPlan.name}
@@ -105,7 +106,6 @@ const styles = StyleSheet.create({
 	formContainer: {
 		borderColor: theme.colors.surface,
 		flex: 1,
-		minHeight: "100%",
 		position: "relative",
 	},
 	icon: {

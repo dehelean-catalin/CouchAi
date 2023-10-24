@@ -16,7 +16,7 @@ const initialState: WorkoutFormState = {
 		thumbnailURL: "",
 		premium: false,
 		daysPerWeek: null,
-		custom: false,
+		custom: true,
 		mainGoal: "gain_muscle",
 		trainingLevel: "",
 		description: "",
@@ -38,7 +38,7 @@ const workoutFormSlice = createSlice({
 				[workoutId]: {
 					id: workoutId,
 					name: "",
-					exercises: {},
+					workoutExercises: {},
 				},
 			};
 
@@ -71,7 +71,7 @@ const workoutFormSlice = createSlice({
 			state.workoutPlan.workoutDays[id] = {
 				id,
 				name: "",
-				exercises: {},
+				workoutExercises: {},
 			};
 		},
 
@@ -81,8 +81,8 @@ const workoutFormSlice = createSlice({
 		},
 
 		addExercisesToWorkout: (state, action: PayloadAction<string>) => {
-			state.workoutPlan.workoutDays[action.payload].exercises = {
-				...state.workoutPlan.workoutDays[action.payload].exercises,
+			state.workoutPlan.workoutDays[action.payload].workoutExercises = {
+				...state.workoutPlan.workoutDays[action.payload].workoutExercises,
 				...state.exercises,
 			};
 			state.exercises = {};
@@ -92,7 +92,7 @@ const workoutFormSlice = createSlice({
 			state,
 			action: PayloadAction<{ id: string; exerciseId: string }>
 		) => {
-			delete state.workoutPlan.workoutDays[action.payload.id].exercises[
+			delete state.workoutPlan.workoutDays[action.payload.id].workoutExercises[
 				action.payload.exerciseId
 			];
 		},

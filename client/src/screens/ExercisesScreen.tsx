@@ -25,14 +25,14 @@ const ExercisesScreen: FC<any> = ({ navigation }) => {
 		if (!Object.keys(data).length) {
 			axios
 				.get<{ [key: string]: Exercise }>(
-					"http://192.168.1.5:8090/api/exercises"
+					"http://192.168.1.2:8090/api/exercises"
 				)
 				.then((res) => dispatch(addExercises(res.data)));
 		}
 	}, []);
 
 	const result = Object.values(data)?.filter((item) =>
-		item.name.includes(searchQuery)
+		item.name.toLowerCase().includes(searchQuery.toLowerCase())
 	);
 
 	useLayoutEffect(() => {

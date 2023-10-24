@@ -24,7 +24,7 @@ const Card: FC<CardModel> = ({ data, showCheckbox }) => {
 
 	return (
 		<Pressable style={styles.card} onPress={handlePress}>
-			{!data.thumbnailUrl ? (
+			{data.thumbnailUrl ? (
 				<Image
 					source={{
 						uri: data.thumbnailUrl,

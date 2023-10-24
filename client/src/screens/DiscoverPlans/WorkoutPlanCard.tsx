@@ -8,6 +8,7 @@ import {
 	useWindowDimensions,
 } from "react-native";
 import { Text } from "react-native-paper";
+import defaultImage from "../../../assets/barbell.png";
 import routes from "../../constants/routes";
 import { WorkoutPlan } from "../../models/workoutModel";
 
@@ -22,11 +23,17 @@ export const WorkoutPlanCard: FC<{ value: WorkoutPlan }> = ({ value }) => {
 		maxWidth
 	);
 
+	const source = !!value.thumbnailURL
+		? {
+				uri: value.thumbnailURL,
+		  }
+		: defaultImage;
+
 	const openPreview = () => navigate(routes.WORKOUT_PREVIEW, { id: value.id });
 
 	return (
 		<ImageBackground
-			source={{ uri: value.thumbnailURL ?? "https://picsum.photos/700" }}
+			source={source}
 			style={{
 				width: containerWidth,
 				aspectRatio: 16 / 9,
@@ -42,7 +49,7 @@ export const WorkoutPlanCard: FC<{ value: WorkoutPlan }> = ({ value }) => {
 				>
 					{value.name}
 				</Text>
-				{value.trainingLevel && (
+				{!!value.trainingLevel && (
 					<Text variant="bodyMedium" style={styles.text}>
 						{value.trainingLevel}
 					</Text>

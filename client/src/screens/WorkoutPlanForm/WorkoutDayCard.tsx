@@ -27,7 +27,7 @@ export const WorkoutDayCard = memo(({ item: value, index }: Props) => {
 		dispatch(workoutFormActions.deleteWorkout(value.id));
 	};
 
-	const data = Object.values(value.exercises);
+	const data = Object.values(value.workoutExercises);
 
 	return (
 		<View
@@ -35,12 +35,13 @@ export const WorkoutDayCard = memo(({ item: value, index }: Props) => {
 				width: width,
 				flex: 1,
 				padding: 10,
-				height: "100%",
 			}}
 		>
 			<View style={styles.header}>
 				<Chip style={styles.chip}>
-					<Text>Day {index + 1}</Text>
+					<Text style={{ color: theme.colors.background }}>
+						Day {index + 1}
+					</Text>
 				</Chip>
 				<CustomTextInput
 					placeholder="Workout name"
@@ -90,6 +91,7 @@ const styles = StyleSheet.create({
 		marginLeft: 10,
 		justifyContent: "center",
 		backgroundColor: theme.colors.primary,
+		color: theme.colors.surface,
 	},
 	input: {
 		flex: 1,
@@ -97,7 +99,6 @@ const styles = StyleSheet.create({
 	},
 	emptyContainer: {
 		flex: 1,
-		minHeight: "100%",
 		alignItems: "center",
 		justifyContent: "center",
 	},

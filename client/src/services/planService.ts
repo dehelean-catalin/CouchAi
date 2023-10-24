@@ -1,5 +1,5 @@
 import axiosInstance from "../hooks/useAxios";
-import { FindAllByCategoryResponse } from "../models/workoutModel";
+import { WorkoutPlan } from "../models/workoutModel";
 
 export const findAllPlansByCategory = () =>
-	axiosInstance.get<FindAllByCategoryResponse>("/schedules/categories");
+	axiosInstance.get<WorkoutPlan[]>("/schedules");
