@@ -1,5 +1,5 @@
+import { WorkoutPlan } from "@/model/workoutModel";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { WorkoutPlan } from "../models/workoutModel";
 
 export interface WorkoutPlanState {
 	workoutPlans: WorkoutPlan[];

@@ -1,15 +1,14 @@
+import routes from "@/constant/routes";
+import { WorkoutDay } from "@/model/workoutModel";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { memo } from "react";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { Button, Chip, Menu, Text } from "react-native-paper";
+import { Button, Chip, Menu, Text, useTheme } from "react-native-paper";
 import { useDispatch } from "react-redux";
+import CustomMenu from "../../components/CustomMenu";
 import CustomTextInput from "../../components/CustomTextInput";
-import CustomMenu from "../../components/PaperMenu";
-import routes from "../../constants/routes";
-import { theme } from "../../constants/theme";
-import { WorkoutDay } from "../../models/workoutModel";
 import { workoutFormActions } from "../../redux/workoutFormReducer";
 import CustomCard from "./CustomCard";
 
@@ -19,6 +18,7 @@ type Props = {
 };
 
 export const WorkoutDayCard = memo(({ item: value, index }: Props) => {
+	const { colors } = useTheme();
 	const { navigate } = useNavigation<NativeStackNavigationProp<any>>();
 	const { width } = useWindowDimensions();
 	const dispatch = useDispatch();
@@ -32,16 +32,22 @@ export const WorkoutDayCard = memo(({ item: value, index }: Props) => {
 	return (
 		<View
 			style={{
-				width: width,
+				width,
 				flex: 1,
 				padding: 10,
 			}}
 		>
-			<View style={styles.header}>
-				<Chip style={styles.chip}>
-					<Text style={{ color: theme.colors.background }}>
-						Day {index + 1}
-					</Text>
+			<View style={[styles.header, { backgroundColor: colors.surface }]}>
+				<Chip
+					style={[
+						styles.chip,
+						{
+							backgroundColor: colors.primary,
+							// color: colors.surface,
+						},
+					]}
+				>
+					<Text style={{ color: colors.background }}>Day {index + 1}</Text>
 				</Chip>
 				<CustomTextInput
 					placeholder="Workout name"
@@ -82,7 +88,6 @@ export const WorkoutDayCard = memo(({ item: value, index }: Props) => {
 const styles = StyleSheet.create({
 	header: {
 		flexDirection: "row",
-		backgroundColor: theme.colors.surface,
 		alignItems: "center",
 		gap: 15,
 	},
@@ -90,8 +95,6 @@ const styles = StyleSheet.create({
 		borderRadius: 50,
 		marginLeft: 10,
 		justifyContent: "center",
-		backgroundColor: theme.colors.primary,
-		color: theme.colors.surface,
 	},
 	input: {
 		flex: 1,

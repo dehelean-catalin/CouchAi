@@ -91,7 +91,6 @@ public class ScheduleServiceImpl implements ScheduleService {
                     continue;
                 }
 
-
                 WorkoutDay workoutDay = workoutDayOptional.get();
 
                 Map<String,WorkoutDay> workoutDays = schedule.getWorkoutDays();

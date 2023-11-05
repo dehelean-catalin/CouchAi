@@ -1,19 +1,20 @@
+import { useTheme } from "@react-navigation/native";
 import React, { useLayoutEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Text } from "react-native-paper";
-import { theme } from "../../constants/theme";
-import EDHeaderRight from "./EDHeaderRight";
-import EDSummary from "./EDSummary";
+import ExerciseDetailsHeader from "./ExerciseDetailsHeaderRight";
+import EDSummary from "./ExerciseDetailsSummary";
 
 export const ExerciseDetailsScreen = ({ route, navigation }) => {
 	const { id } = route.params;
+	const { colors } = useTheme();
 
 	const [isToggleTabName, setToggleTabName] = useState(false);
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
-			headerRight: () => <EDHeaderRight />,
+			headerRight: () => <ExerciseDetailsHeader />,
 		});
 	}, [navigation]);
 
@@ -24,13 +25,19 @@ export const ExerciseDetailsScreen = ({ route, navigation }) => {
 		<ScrollView>
 			<View style={styles.header}>
 				<Pressable
-					style={[styles.tabName, !isToggleTabName && styles.active]}
+					style={[
+						styles.tabName,
+						!isToggleTabName && { borderBottomColor: colors.primary },
+					]}
 					onPress={toggleTabSummary}
 				>
 					<Text variant="titleSmall">Summary</Text>
 				</Pressable>
 				<Pressable
-					style={[styles.tabName, isToggleTabName && styles.active]}
+					style={[
+						styles.tabName,
+						isToggleTabName && { borderBottomColor: colors.primary },
+					]}
 					onPress={toggleTabStats}
 				>
 					<Text variant="titleSmall">Stats</Text>
@@ -50,9 +57,6 @@ const styles = StyleSheet.create({
 		padding: 15,
 		alignItems: "center",
 		borderBottomWidth: 1,
-		borderBottomColor: theme.colors.background,
-	},
-	active: {
-		borderBottomColor: theme.colors.primary,
+		// borderBottomColor: theme.colors.background,
 	},
 });

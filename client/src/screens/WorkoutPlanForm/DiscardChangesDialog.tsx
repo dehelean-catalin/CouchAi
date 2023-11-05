@@ -1,5 +1,5 @@
-import { RootState } from "@/src/redux/store";
-import { workoutFormActions } from "@/src/redux/workoutFormReducer";
+import { RootState } from "@/redux/store";
+import { workoutFormActions } from "@/redux/workoutFormReducer";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";

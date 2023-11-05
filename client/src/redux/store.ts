@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
+import activeWorkoutSession from "./activeWorkoutSessionReducer";
 import exerciseReducer from "./exerciseReducer";
 import scheduleReducer from "./scheduleReducer";
 import workoutFormReducer from "./workoutFormReducer";
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
 	workoutPlan: workoutPlanReducer,
 	workoutForm: workoutFormReducer,
 	schedule: scheduleReducer,
+	activeWorkoutSession: activeWorkoutSession,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

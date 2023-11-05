@@ -1,11 +1,10 @@
-import { computeWorkoutSets } from "@/src/helpers/workoutSet.heler";
+import CustomMenu from "@/components/CustomMenu";
+import { computeWorkoutSets } from "@/helper/workoutSet.heler";
+import { WorkoutExercise } from "@/model/workoutModel";
 import React, { FC } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
-import { Menu, Text } from "react-native-paper";
+import { Menu, Text, useTheme } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import CustomMenu from "../../components/PaperMenu";
-import { theme } from "../../constants/theme";
-import { WorkoutExercise } from "../../models/workoutModel";
 import { workoutFormActions } from "../../redux/workoutFormReducer";
 
 type Props = {
@@ -14,13 +13,21 @@ type Props = {
 };
 
 const CustomCard: FC<Props> = ({ id, value }) => {
+	const { colors } = useTheme();
 	const dispatch = useDispatch();
 
 	const { numberOfSets, setFormat, minValFormat, maxValFormat, repsFormat } =
 		computeWorkoutSets(value.workoutSets);
 
 	return (
-		<Pressable style={styles.container}>
+		<Pressable
+			style={[
+				styles.container,
+				{
+					borderBlockColor: colors.surfaceVariant,
+				},
+			]}
+		>
 			<View>
 				<Text>{value.exercise.name}</Text>
 				{!!numberOfSets && (
@@ -60,7 +67,6 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		borderBottomWidth: 1,
-		borderBlockColor: theme.colors.surfaceVariant,
 		padding: 10,
 		paddingRight: 0,
 	},

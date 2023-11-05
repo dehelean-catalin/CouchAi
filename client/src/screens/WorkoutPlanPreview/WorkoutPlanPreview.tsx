@@ -1,6 +1,6 @@
-import routes from "@/src/constants/routes";
-import { theme } from "@/src/constants/theme";
-import { scheduleActions } from "@/src/redux/scheduleReducer";
+import routes from "@/constant/routes";
+import { WorkoutPlan } from "@/model/workoutModel";
+import { scheduleActions } from "@/redux/scheduleReducer";
 import React, { useLayoutEffect } from "react";
 import {
 	FlatList,
@@ -9,17 +9,17 @@ import {
 	StyleSheet,
 	View,
 } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useDispatch, useSelector } from "react-redux";
 import DefaultImage from "../../../assets/barbell.png";
-import { WorkoutPlan } from "../../models/workoutModel";
 import { RootState } from "../../redux/store";
 import RightHeader from "./RightHeader";
 import WokoutPlanPreviewCard from "./WokoutPlanPreviewCard";
 
 const WorkoutPlanPreview = ({ navigation, route }) => {
 	const { id } = route.params;
+	const { colors } = useTheme();
 	const dispatch = useDispatch();
 
 	const data = useSelector<RootState, WorkoutPlan[]>(
@@ -58,17 +58,34 @@ const WorkoutPlanPreview = ({ navigation, route }) => {
 				</ImageBackground>
 				<View style={styles.workoutsContainer}>
 					{!!previewPlan.description && (
-						<Text style={styles.description}>{previewPlan.description}</Text>
+						<Text
+							style={[
+								styles.description,
+								{ borderBottomColor: colors.surfaceDisabled },
+							]}
+						>
+							{previewPlan.description}
+						</Text>
 					)}
 					{!!previewPlan.mainGoal && (
-						<View style={styles.rowContainer}>
+						<View
+							style={[
+								styles.rowContainer,
+								{ borderBottomColor: colors.surfaceDisabled },
+							]}
+						>
 							<MaterialCommunityIcons name="trophy" color="#fff" size={26} />
 							<Text>{previewPlan.mainGoal}</Text>
 						</View>
 					)}
 
 					{!!previewPlan.daysPerWeek && (
-						<View style={styles.rowContainer}>
+						<View
+							style={[
+								styles.rowContainer,
+								{ borderBottomColor: colors.surfaceDisabled },
+							]}
+						>
 							<MaterialCommunityIcons
 								name="calendar-range"
 								color="#fff"
@@ -91,7 +108,7 @@ const WorkoutPlanPreview = ({ navigation, route }) => {
 					/>
 				</View>
 			</ScrollView>
-			<Button mode="contained" onPress={handleStartWorkout}>
+			<Button style={styles.btn} mode="contained" onPress={handleStartWorkout}>
 				Start Workout Plan
 			</Button>
 		</>
@@ -117,7 +134,6 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		paddingBottom: 20,
 		borderBottomWidth: 1,
-		borderBottomColor: theme.colors.surfaceDisabled,
 	},
 	rowContainer: {
 		flexDirection: "row",
@@ -125,7 +141,10 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		paddingBottom: 15,
 		borderBottomWidth: 1,
-		borderBottomColor: theme.colors.surfaceDisabled,
+	},
+	btn: {
+		paddingVertical: 5,
+		borderRadius: 0,
 	},
 });
 

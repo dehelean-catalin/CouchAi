@@ -1,5 +1,5 @@
+import { Exercise } from "@/model/exerciseModel";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Exercise } from "../models/exerciseModel";
 
 export interface ExerciseState {
 	value: { [key: string]: Exercise };

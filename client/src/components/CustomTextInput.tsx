@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { StyleProp, StyleSheet, TextStyle } from "react-native";
+import { StyleProp, TextStyle } from "react-native";
 import { TextInput } from "react-native-paper";
 
 type Props = {
@@ -25,6 +25,5 @@ const CustomTextInput: FC<Props> = ({
 		/>
 	);
 };
-const styles = StyleSheet.create({});
 
 export default CustomTextInput;

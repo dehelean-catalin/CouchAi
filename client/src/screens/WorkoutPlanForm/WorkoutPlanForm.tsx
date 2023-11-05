@@ -1,18 +1,23 @@
-import { theme } from "@/src/constants/theme";
-import { RootState } from "@/src/redux/store";
-import { workoutFormActions } from "@/src/redux/workoutFormReducer";
-import React, { useLayoutEffect, useRef, useState } from "react";
+import { WorkoutDay, WorkoutPlan } from "@/model/workoutModel";
+import { RootState } from "@/redux/store";
+import { workoutFormActions } from "@/redux/workoutFormReducer";
+import { StackNavigationProp } from "@react-navigation/stack";
+import React, { FC, useLayoutEffect, useRef, useState } from "react";
 import { Animated, FlatList, StyleSheet, View } from "react-native";
-import { Button, IconButton, Text } from "react-native-paper";
+import { Button, IconButton, Text, useTheme } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import CustomTextInput from "../../components/CustomTextInput";
-import Pagination from "../../components/Pagination";
-import { WorkoutDay, WorkoutPlan } from "../../models/workoutModel";
 import { createWorkoutPlan } from "../../redux/workoutPlanReducer";
 import DiscardChangesDialog from "./DiscardChangesDialog";
+import Pagination from "./Pagination";
 import { WorkoutDayCard } from "./WorkoutDayCard";
 
-export const WorkoutPlanForm = ({ navigation }) => {
+type Props = {
+	navigation: StackNavigationProp<any>;
+};
+
+export const WorkoutPlanForm: FC<Props> = ({ navigation }) => {
+	const { colors } = useTheme();
 	const dispatch = useDispatch();
 	const workoutPlan = useSelector<RootState, WorkoutPlan>(
 		(s) => s.workoutForm.workoutPlan
@@ -67,7 +72,9 @@ export const WorkoutPlanForm = ({ navigation }) => {
 				/>
 			</View>
 			{error && <Text>Name is required</Text>}
-			<View style={styles.formContainer}>
+			<View
+				style={[styles.formContainer, { backgroundColor: colors.backdrop }]}
+			>
 				<IconButton
 					mode="contained-tonal"
 					icon="plus"
@@ -104,7 +111,6 @@ const styles = StyleSheet.create({
 		gap: 10,
 	},
 	formContainer: {
-		borderColor: theme.colors.surface,
 		flex: 1,
 		position: "relative",
 	},

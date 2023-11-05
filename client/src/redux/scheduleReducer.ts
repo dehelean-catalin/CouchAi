@@ -1,8 +1,8 @@
+import { WorkoutPlan } from "@/model/workoutModel";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { WorkoutPlan } from "./../models/workoutModel";
 
 type ScheduleState = {
-	data: WorkoutPlan;
+	data: WorkoutPlan | null;
 };
 
 const initialState: ScheduleState = {
