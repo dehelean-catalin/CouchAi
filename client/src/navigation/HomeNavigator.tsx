@@ -1,5 +1,4 @@
 import routes from "@/constant/routes";
-import { WorkoutPlansScreen } from "@/screens/Plans/PlansScreen";
 import { WorkoutPlanForm } from "@/screens/WorkoutPlanForm/WorkoutPlanForm";
 import WorkoutPreview from "@/screens/WorkoutPreview/WorkoutPreview";
 import WorkoutSession from "@/screens/WorkoutSession/WorkoutSession";
@@ -32,11 +31,6 @@ export default function HomeNavigator({
 			<Stack.Screen
 				name={routes.WORKOUT_SESION}
 				component={WorkoutSession}
-				options={{ headerTitle: "" }}
-			/>
-			<Stack.Screen
-				name={routes.PLAN}
-				component={WorkoutPlansScreen}
 				options={{ headerTitle: "" }}
 			/>
 			<Stack.Screen

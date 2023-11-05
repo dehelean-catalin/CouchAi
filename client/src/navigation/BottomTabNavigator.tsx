@@ -22,12 +22,13 @@ export default function BottomTabNavigator() {
 				<Tab.Screen
 					name="Homes"
 					component={HomeNavigator}
-					options={{
+					options={({ route }) => ({
 						headerShown: false,
 						tabBarIcon: ({ color }) => (
 							<MaterialCommunityIcons name="home" color={color} size={26} />
 						),
-					}}
+						tabBarStyle: { display: getHomeRouteName(route) },
+					})}
 				/>
 				<Tab.Screen
 					name="Plans"
@@ -92,14 +93,36 @@ const getRouteName = (route: RouteProp<ParamListBase, "Exercises">) => {
 	return "flex";
 };
 
+const getHomeRouteName = (route: RouteProp<ParamListBase, "Homes">) => {
+	const routeName = getFocusedRouteNameFromRoute(route);
+	const { CREATE_PLAN, WORKOUT_DAY_PREVIEW } = routes;
+
+	if (
+		routeName?.includes(CREATE_PLAN) ||
+		routeName?.includes(WORKOUT_DAY_PREVIEW)
+	) {
+		return "none";
+	}
+
+	return "flex";
+};
+
 const getPlanRouteName = (route: RouteProp<ParamListBase, "Plans">) => {
 	const routeName = getFocusedRouteNameFromRoute(route);
-	const { CREATE_PLAN, WORKOUT_PREVIEW, WORKOUT_DAY_PREVIEW } = routes;
+	const {
+		CREATE_PLAN,
+		EXERCISE,
+		EXERCISE_DETAILS,
+		WORKOUT_PREVIEW,
+		WORKOUT_DAY_PREVIEW,
+	} = routes;
 
 	if (
 		routeName?.includes(CREATE_PLAN) ||
 		routeName?.includes(WORKOUT_PREVIEW) ||
-		routeName?.includes(WORKOUT_DAY_PREVIEW)
+		routeName?.includes(WORKOUT_DAY_PREVIEW) ||
+		routeName?.includes(EXERCISE) ||
+		routeName?.includes(EXERCISE_DETAILS)
 	) {
 		return "none";
 	}

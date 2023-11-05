@@ -12,7 +12,7 @@ const WorkoutSession: FC<Props> = ({ navigation }) => {
 	useLayoutEffect(() => {
 		navigation.setOptions({
 			headerRight: () => <Button>FINISH</Button>,
-			headerLeft: () => <Counter />,
+			headerTitle: () => <Counter />,
 		});
 	}, [navigation]);
 

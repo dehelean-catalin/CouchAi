@@ -29,20 +29,21 @@ export default function HomeScreen({ navigation }: Props) {
 	);
 
 	const startEmptyWorkout = () => {
-		dispatch(
-			activeWorkoutSessionActions.startWorkout({
-				id: uuid.v4().toString(),
-				name: "Workout on the fly",
-				isComplete: false,
-				startDate: Date.now(),
-				endDate: null,
-				workoutSessionExercises: [],
-			})
-		);
 		navigation.navigate(routes.WORKOUT_SESION);
+		// dispatch(
+		// 	activeWorkoutSessionActions.startWorkout({
+		// 		id: uuid.v4().toString(),
+		// 		name: "Workout on the fly",
+		// 		isComplete: false,
+		// 		startDate: Date.now(),
+		// 		endDate: null,
+		// 		workoutSessionExercises: [],
+		// 	})
+		// );
 	};
 
-	const onFindWorkoutPress = () => navigation.navigate(routes.PLAN);
+	const onFindWorkoutPress = () =>
+		navigation.navigate("Plans", { screen: routes.PLAN });
 
 	const onCreateWorkoutPress = () => {
 		dispatch(workoutFormActions.initializeWorkout());
