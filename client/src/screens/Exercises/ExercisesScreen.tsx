@@ -1,5 +1,6 @@
 import routes, { RootStackParamList, RouteValues } from "@/constant/routes";
 import { Exercise } from "@/model/exerciseModel";
+import { activeWorkoutSessionActions } from "@/redux/activeWorkoutSessionReducer";
 import { addExercises } from "@/redux/exerciseReducer";
 import { RootState } from "@/redux/store";
 import { workoutFormActions } from "@/redux/workoutFormReducer";
@@ -27,7 +28,9 @@ const ExercisesScreen: FC<any> = ({ navigation }) => {
 				.get<{ [key: string]: Exercise }>(
 					"http://192.168.1.6:8090/api/exercises"
 				)
-				.then((res) => dispatch(addExercises(res.data)));
+				.then((res) => {
+					dispatch(addExercises(res.data));
+				});
 		}
 	}, []);
 
@@ -99,8 +102,18 @@ const ExercisesScreen: FC<any> = ({ navigation }) => {
 						style={styles.addButton}
 						mode="contained"
 						onPress={() => {
-							dispatch(workoutFormActions.addExercisesToWorkout(params.id)),
-								navigation.goBack();
+							if (params?.session) {
+								dispatch(
+									activeWorkoutSessionActions.addExercise({
+										id: params.id,
+										data: [],
+									})
+								);
+							} else {
+								dispatch(workoutFormActions.addExercisesToWorkout(params.id));
+							}
+
+							navigation.goBack();
 						}}
 					>
 						Add exercises

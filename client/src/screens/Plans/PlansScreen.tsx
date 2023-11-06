@@ -4,7 +4,8 @@ import { RootState } from "@/redux/store";
 import { workoutFormActions } from "@/redux/workoutFormReducer";
 import { initializeWorkoutPlans } from "@/redux/workoutPlanReducer";
 import { findAllPlansByCategory } from "@/service/planService";
-import React, { useEffect } from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
+import React, { FC, useEffect } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, useTheme } from "react-native-paper";
@@ -12,19 +13,27 @@ import uuid from "react-native-uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { PlanSection } from "./PlanSection";
 
-export const WorkoutPlansScreen = ({ navigation }) => {
+type Props = {
+	navigation: StackNavigationProp<any>;
+};
+
+export const WorkoutPlansScreen: FC<Props> = ({ navigation }) => {
 	const id = uuid.v4().toString();
 	const { colors } = useTheme();
 	const dispatch = useDispatch();
-	const workoutPlans = useSelector<RootState, WorkoutPlan[]>(
+	const data = useSelector<RootState, { [key: string]: WorkoutPlan }>(
 		(s) => s.workoutPlan.workoutPlans
 	);
 
+	const workoutPlans = Object.values(data);
+
 	useEffect(() => {
 		if (!workoutPlans.length) {
-			findAllPlansByCategory().then((res) => {
-				dispatch(initializeWorkoutPlans(res.data));
-			});
+			findAllPlansByCategory()
+				.then((res) => {
+					dispatch(initializeWorkoutPlans(res.data));
+				})
+				.catch((err) => console.log(err));
 		}
 	}, []);
 

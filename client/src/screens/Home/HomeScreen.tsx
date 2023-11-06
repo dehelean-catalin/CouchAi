@@ -24,30 +24,36 @@ export default function HomeScreen({ navigation }: Props) {
 	const data = useSelector<RootState, WorkoutPlan | null>(
 		(s) => s.schedule.data
 	);
+
 	const activeWorkoutSession = useSelector<RootState, WorkoutSession[]>(
 		(s) => s.activeWorkoutSession.data
 	);
 
 	const startEmptyWorkout = () => {
-		navigation.navigate(routes.WORKOUT_SESION);
-		// dispatch(
-		// 	activeWorkoutSessionActions.startWorkout({
-		// 		id: uuid.v4().toString(),
-		// 		name: "Workout on the fly",
-		// 		isComplete: false,
-		// 		startDate: Date.now(),
-		// 		endDate: null,
-		// 		workoutSessionExercises: [],
-		// 	})
-		// );
+		const id = uuid.v4().toString();
+		const startDate = new Date().getTime();
+		console.log(id);
+		navigation.navigate(routes.WORKOUT_SESION, { id });
+
+		dispatch(
+			activeWorkoutSessionActions.startWorkout({
+				id,
+				name: "Workout on the fly",
+				isComplete: false,
+				startDate,
+				endDate: null,
+				workoutSessionExercises: [],
+			})
+		);
 	};
 
 	const onFindWorkoutPress = () =>
 		navigation.navigate("Plans", { screen: routes.PLAN });
 
 	const onCreateWorkoutPress = () => {
+		const id = uuid.v4().toString();
 		dispatch(workoutFormActions.initializeWorkout());
-		navigation.navigate(routes.CREATE_PLAN, { id: uuid.v4().toString() });
+		navigation.navigate(routes.CREATE_PLAN, { id });
 	};
 
 	const closeWorkoutInProgress = (index: number) => {

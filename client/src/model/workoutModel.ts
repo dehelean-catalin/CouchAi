@@ -13,7 +13,7 @@ export type WorkoutPlan = {
 	name: string;
 	thumbnailURL: string;
 	description: string;
-	daysPerWeek: number;
+	daysPerWeek: number | null;
 	mainGoal: string;
 	trainingLevel: String;
 	custom: boolean;
@@ -38,7 +38,7 @@ export type WorkoutSet = {
 	minReps: number;
 	maxReps: number;
 	restTime: number;
-	rir: number;
+	rir: number | null;
 	untilFailure: boolean;
 	warmUp: boolean;
 };

@@ -1,4 +1,5 @@
 import routes from "@/constant/routes";
+import CreateExerciseScreen from "@/screens/CreateExercise/CreateExerciseScreen";
 import { ExerciseDetailsScreen } from "@/screens/ExerciseDetails/ExerciseDetailsScreen";
 import ExercisesScreen from "@/screens/Exercises/ExercisesScreen";
 import { WorkoutPlansScreen } from "@/screens/Plans/PlansScreen";
@@ -32,6 +33,10 @@ export default function PlanNavigator() {
 				name={routes.EXERCISE_DETAILS}
 				component={ExerciseDetailsScreen}
 				options={options}
+			/>
+			<Stack.Screen
+				name={routes.CREATE_EXERCISE}
+				component={CreateExerciseScreen}
 			/>
 			<Stack.Screen
 				name={routes.WORKOUT_PREVIEW}

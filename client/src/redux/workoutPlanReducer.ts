@@ -2,11 +2,11 @@ import { WorkoutPlan } from "@/model/workoutModel";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface WorkoutPlanState {
-	workoutPlans: WorkoutPlan[];
+	workoutPlans: { [key: string]: WorkoutPlan };
 }
 
 const initialState: WorkoutPlanState = {
-	workoutPlans: [],
+	workoutPlans: {},
 };
 
 export const workoutPlanSlice = createSlice({
@@ -14,11 +14,14 @@ export const workoutPlanSlice = createSlice({
 	initialState,
 	reducers: {
 		initializeWorkoutPlans: (state, action: PayloadAction<WorkoutPlan[]>) => {
-			action.payload.forEach((workout) => state.workoutPlans.push(workout));
+			action.payload.forEach(
+				(workout) => (state.workoutPlans[workout.id] = workout)
+			);
 		},
 
 		createWorkoutPlan: (state, action: PayloadAction<WorkoutPlan>) => {
-			state.workoutPlans.push(action.payload);
+			console.log(action.payload.id);
+			state.workoutPlans[action.payload.id] = action.payload;
 		},
 
 		deleteWorkoutPlan: (state, action: PayloadAction<string>) => {

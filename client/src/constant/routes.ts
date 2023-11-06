@@ -15,7 +15,7 @@ export type RouteValues = (typeof routes)[RouteKeys];
 
 export type RootStackParamList = {
 	Home: undefined;
-	Exercises: { id: string };
+	Exercises: { id: string; session: boolean };
 	ExerciseDetails: { id: string };
 	CreateExercise: undefined;
 	WorkoutPreview: { id: string };

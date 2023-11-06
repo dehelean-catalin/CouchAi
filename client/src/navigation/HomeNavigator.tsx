@@ -1,4 +1,7 @@
 import routes from "@/constant/routes";
+import CreateExerciseScreen from "@/screens/CreateExercise/CreateExerciseScreen";
+import { ExerciseDetailsScreen } from "@/screens/ExerciseDetails/ExerciseDetailsScreen";
+import ExercisesScreen from "@/screens/Exercises/ExercisesScreen";
 import { WorkoutPlanForm } from "@/screens/WorkoutPlanForm/WorkoutPlanForm";
 import WorkoutPreview from "@/screens/WorkoutPreview/WorkoutPreview";
 import WorkoutSession from "@/screens/WorkoutSession/WorkoutSession";
@@ -37,6 +40,16 @@ export default function HomeNavigator({
 				name={routes.CREATE_PLAN}
 				component={WorkoutPlanForm}
 				options={{ headerTitle: "" }}
+			/>
+			<Stack.Screen name={routes.EXERCISE} component={ExercisesScreen} />
+			<Stack.Screen
+				name={routes.EXERCISE_DETAILS}
+				component={ExerciseDetailsScreen}
+				options={{ headerTitle: "" }}
+			/>
+			<Stack.Screen
+				name={routes.CREATE_EXERCISE}
+				component={CreateExerciseScreen}
 			/>
 		</Stack.Navigator>
 	);

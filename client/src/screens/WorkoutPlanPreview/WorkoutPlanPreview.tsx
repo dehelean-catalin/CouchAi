@@ -1,7 +1,8 @@
 import routes from "@/constant/routes";
 import { WorkoutPlan } from "@/model/workoutModel";
 import { scheduleActions } from "@/redux/scheduleReducer";
-import React, { useLayoutEffect } from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
+import React, { FC, useLayoutEffect } from "react";
 import {
 	FlatList,
 	ImageBackground,
@@ -17,27 +18,35 @@ import { RootState } from "../../redux/store";
 import RightHeader from "./RightHeader";
 import WokoutPlanPreviewCard from "./WokoutPlanPreviewCard";
 
-const WorkoutPlanPreview = ({ navigation, route }) => {
+type Props = {
+	navigation: StackNavigationProp<any>;
+	route: any;
+};
+
+const WorkoutPlanPreview: FC<Props> = ({ navigation, route }) => {
 	const { id } = route.params;
 	const { colors } = useTheme();
 	const dispatch = useDispatch();
 
-	const data = useSelector<RootState, WorkoutPlan[]>(
-		(s) => s.workoutPlan.workoutPlans
+	const previewPlan = useSelector<RootState, WorkoutPlan | undefined>(
+		(s) => s.workoutPlan.workoutPlans[id]
 	);
 
-	const previewPlan = data.find((plan) => plan.id === id);
-	const source = previewPlan.thumbnailURL
+	const source = previewPlan?.thumbnailURL
 		? { uri: previewPlan.thumbnailURL }
 		: DefaultImage;
 
 	useLayoutEffect(() => {
-		navigation.setOptions({
-			headerRight: () => <RightHeader id={id} />,
-		});
+		if (previewPlan?.custom) {
+			navigation.setOptions({
+				headerRight: () => <RightHeader id={id} />,
+			});
+		}
 	}, [navigation, id]);
 
 	const handleStartWorkout = () => {
+		if (!previewPlan) return;
+
 		dispatch(scheduleActions.startSchedule(previewPlan));
 		navigation.navigate(routes.HOME);
 	};

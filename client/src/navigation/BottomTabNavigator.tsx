@@ -95,11 +95,12 @@ const getRouteName = (route: RouteProp<ParamListBase, "Exercises">) => {
 
 const getHomeRouteName = (route: RouteProp<ParamListBase, "Homes">) => {
 	const routeName = getFocusedRouteNameFromRoute(route);
-	const { CREATE_PLAN, WORKOUT_DAY_PREVIEW } = routes;
+	const { CREATE_PLAN, WORKOUT_DAY_PREVIEW, WORKOUT_SESION } = routes;
 
 	if (
 		routeName?.includes(CREATE_PLAN) ||
-		routeName?.includes(WORKOUT_DAY_PREVIEW)
+		routeName?.includes(WORKOUT_DAY_PREVIEW) ||
+		routeName?.includes(WORKOUT_SESION)
 	) {
 		return "none";
 	}

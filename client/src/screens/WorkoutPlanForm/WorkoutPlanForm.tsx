@@ -49,6 +49,7 @@ export const WorkoutPlanForm: FC<Props> = ({ navigation }) => {
 			setError(true);
 			return;
 		}
+		console.log(workoutPlan);
 		dispatch(createWorkoutPlan(workoutPlan));
 		dispatch(workoutFormActions.clearState());
 

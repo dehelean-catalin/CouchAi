@@ -1,3 +1,4 @@
+import routes from "@/constant/routes";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { FC, useLayoutEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -6,9 +7,10 @@ import Counter from "./Counter";
 
 type Props = {
 	navigation: StackNavigationProp<any>;
+	route: any;
 };
 
-const WorkoutSession: FC<Props> = ({ navigation }) => {
+const WorkoutSession: FC<Props> = ({ navigation, route }) => {
 	useLayoutEffect(() => {
 		navigation.setOptions({
 			headerRight: () => <Button>FINISH</Button>,
@@ -16,11 +18,18 @@ const WorkoutSession: FC<Props> = ({ navigation }) => {
 		});
 	}, [navigation]);
 
+	const handleAddExercises = () => {
+		navigation.navigate(routes.EXERCISE, {
+			id: route?.params?.id,
+			session: true,
+		});
+	};
+
 	return (
 		<View>
 			<Text>WorkoutSession</Text>
 
-			<Button>ADD EXERCISES</Button>
+			<Button onPress={handleAddExercises}>ADD EXERCISES</Button>
 		</View>
 	);
 };

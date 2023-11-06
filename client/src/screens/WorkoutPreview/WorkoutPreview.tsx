@@ -1,20 +1,24 @@
 import { WorkoutPlan } from "@/model/workoutModel";
 import { RootState } from "@/redux/store";
-import React from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
+import React, { FC } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import WorkoutExerciseCard from "./WorkoutExerciseCard";
 
-const WorkoutPreview = ({ route, navigation }) => {
+type Props = {
+	navigation: StackNavigationProp<any>;
+	route: any;
+};
+
+const WorkoutPreview: FC<Props> = ({ route, navigation }) => {
 	const { id, workoutDayId } = route.params;
 	const dispatch = useDispatch();
 
-	const workoutPlans = useSelector<RootState, WorkoutPlan[]>(
-		(s) => s.workoutPlan.workoutPlans
+	const workoutPlan = useSelector<RootState, WorkoutPlan | undefined>(
+		(s) => s.workoutPlan.workoutPlans[id]
 	);
-
-	const workoutPlan = workoutPlans?.find((exercise) => exercise.id === id);
 
 	const workoutDay = workoutPlan?.workoutDays[workoutDayId];
 

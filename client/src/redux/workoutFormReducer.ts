@@ -1,7 +1,9 @@
+import { Exercise } from "@/model/exerciseModel";
+import { WorkoutExercise, WorkoutPlan } from "@/model/workoutModel";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import uuid from "react-native-uuid";
-import { Exercise } from "../models/exerciseModel";
-import { WorkoutExercise, WorkoutPlan } from "../models/workoutModel";
+
+export type EmptyObj = Record<PropertyKey, never>;
 
 export interface WorkoutFormState {
 	workoutPlan: WorkoutPlan;
@@ -11,7 +13,7 @@ export interface WorkoutFormState {
 
 const initialState: WorkoutFormState = {
 	workoutPlan: {
-		id: uuid.v4().toString(),
+		id: "",
 		name: "",
 		thumbnailURL: "",
 		premium: false,
@@ -31,22 +33,15 @@ const workoutFormSlice = createSlice({
 	initialState,
 	reducers: {
 		initializeWorkout: (state) => {
+			const id = uuid.v4().toString();
 			const workoutId = uuid.v4().toString();
 
-			const newWorkoutDays = {
-				...state.workoutPlan.workoutDays,
+			state.workoutPlan.id = id;
+			state.workoutPlan.workoutDays = {
 				[workoutId]: {
 					id: workoutId,
 					name: "",
 					workoutExercises: {},
-				},
-			};
-
-			return {
-				...state,
-				workoutPlan: {
-					...state.workoutPlan,
-					workoutDays: newWorkoutDays,
 				},
 			};
 		},
