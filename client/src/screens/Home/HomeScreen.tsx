@@ -14,6 +14,7 @@ import uuid from "react-native-uuid";
 import { useDispatch, useSelector } from "react-redux";
 import HomeCard from "./HomeCard";
 import HomeScheduleCard from "./HomeScheduleCard";
+
 type Props = {
 	navigation: StackNavigationProp<any>;
 };
@@ -31,8 +32,7 @@ export default function HomeScreen({ navigation }: Props) {
 
 	const startEmptyWorkout = () => {
 		const id = uuid.v4().toString();
-		const startDate = new Date().getTime();
-		console.log(id);
+		const startDate = new Date().getTime() / 1000;
 		navigation.navigate(routes.WORKOUT_SESION, { id });
 
 		dispatch(
@@ -60,6 +60,9 @@ export default function HomeScreen({ navigation }: Props) {
 		dispatch(activeWorkoutSessionActions.finishWorkout(index));
 	};
 
+	const handleResumeWorkout = (id: string) =>
+		navigation.navigate(routes.WORKOUT_SESION, { id });
+
 	return (
 		<View style={styles.container}>
 			<FlatList
@@ -70,7 +73,7 @@ export default function HomeScreen({ navigation }: Props) {
 						iconColor="#ffaf23"
 						name="Workout in progress"
 						description={item.name}
-						onPress={() => alert("not implemented")}
+						onPress={() => handleResumeWorkout(item.id)}
 						onClosePress={() => closeWorkoutInProgress(index)}
 					/>
 				)}

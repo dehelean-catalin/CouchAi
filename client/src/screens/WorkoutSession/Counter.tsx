@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { View } from "react-native";
 import { Text } from "react-native-paper";
 
-const Counter = () => {
-	const [seconds, setSeconds] = useState(0);
+type Props = {
+	startDate: number;
+};
+
+const Counter: FC<Props> = ({ startDate }) => {
+	console.log(startDate);
+	const [seconds, setSeconds] = useState(startDate);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
