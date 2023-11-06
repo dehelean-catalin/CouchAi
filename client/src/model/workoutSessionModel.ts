@@ -1,3 +1,5 @@
+import { Exercise } from "./exerciseModel";
+
 export type WorkoutSession = {
 	id: string;
 	name: string;
@@ -9,20 +11,21 @@ export type WorkoutSession = {
 
 export type WorkoutSessionExercise = {
 	id: string;
-	position: number;
+	exercise: Exercise;
 	supersetExercises: WorkoutSessionSet[];
 	workoutSessionSets: WorkoutSessionSet[];
 };
 
 export type WorkoutSessionSet = {
 	id: string;
-	isComplete: true;
+	isComplete: boolean;
 	measurementUnit: "kg" | "lbs";
 	oneRepMax: number;
 	reps: number;
 	weight: number;
 	restTime: number;
 	set: number;
+	rir: number | null;
 	untilFailure: boolean;
 	warmUp: boolean;
 };

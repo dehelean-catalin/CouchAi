@@ -41,9 +41,11 @@ const Card: FC<CardModel> = ({ data, showCheckbox }) => {
 					{data.mainBodyPart[0].toUpperCase() + data.mainBodyPart.slice(1)}
 				</Text>
 			</View>
-			<View style={styles.checkBoxContainer}>
-				{showCheckbox && <ExerciseCheckBox data={data} />}
-			</View>
+			{showCheckbox && (
+				<View style={styles.checkBoxContainer}>
+					<ExerciseCheckBox data={data} />
+				</View>
+			)}
 		</Pressable>
 	);
 };

@@ -3,10 +3,12 @@ import { WorkoutSession } from "@/model/workoutSessionModel";
 import { RootState } from "@/redux/store";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { FC, useLayoutEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Button } from "react-native-paper";
+import { StyleSheet } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import { Button, useTheme } from "react-native-paper";
 import { useSelector } from "react-redux";
 import Counter from "./Counter";
+import WorkoutSessionExerciseCard from "./WorkoutSessionExerciseCard";
 
 type Props = {
 	navigation: StackNavigationProp<any>;
@@ -15,6 +17,7 @@ type Props = {
 
 const WorkoutSessionScreen: FC<Props> = ({ navigation, route }) => {
 	const { id } = route.params;
+	const { colors } = useTheme();
 	const data = useSelector<RootState, WorkoutSession[]>(
 		(s) => s.activeWorkoutSession.data
 	);
@@ -42,12 +45,28 @@ const WorkoutSessionScreen: FC<Props> = ({ navigation, route }) => {
 		});
 	};
 
-	return (
-		<View>
-			<Text>WorkoutSession</Text>
+	if (!workoutInProgress) return;
 
-			<Button onPress={handleAddExercises}>ADD EXERCISES</Button>
-		</View>
+	return (
+		<>
+			<FlatList
+				data={workoutInProgress.workoutSessionExercises}
+				renderItem={({ item, index }) => (
+					<WorkoutSessionExerciseCard id={id} index={index} value={item} />
+				)}
+				keyExtractor={(item) => item.id}
+			/>
+			<Button
+				style={{
+					paddingVertical: 5,
+					borderRadius: 0,
+				}}
+				mode="contained"
+				onPress={handleAddExercises}
+			>
+				ADD EXERCISES
+			</Button>
+		</>
 	);
 };
 

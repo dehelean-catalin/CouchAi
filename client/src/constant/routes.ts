@@ -5,7 +5,8 @@ const routes = {
 	CREATE_EXERCISE: "Create exercise",
 	EXERCISE_DETAILS: "Exercise details",
 	HOME: "Home",
-	WORKOUT_SESION: "Workout Sesion",
+	WORKOUT_SESION: "Workout Session",
+	WORKOUT_SESSION_SET: "Workout Session Set",
 	WORKOUT_PREVIEW: "Workout Preview",
 	WORKOUT_DAY_PREVIEW: "Workout Day Preview",
 } as const;
@@ -15,10 +16,11 @@ export type RouteValues = (typeof routes)[RouteKeys];
 
 export type RootStackParamList = {
 	Home: undefined;
-	Exercises: { id: string; session: boolean };
+	Exercises: { id: string; replaceExerciseId: string; session: boolean };
 	ExerciseDetails: { id: string };
 	CreateExercise: undefined;
 	WorkoutPreview: { id: string };
+	WorkoutSessionSet: { id: string; workoutId: string };
 	WorkoutDayPreview: { id: string; workoutDayId: string };
 };
 

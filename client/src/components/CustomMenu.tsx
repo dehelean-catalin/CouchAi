@@ -15,10 +15,14 @@ const CustomMenu: FC<{ children: React.ReactNode[] | React.ReactNode }> = ({
 		<Menu
 			visible={isVisible}
 			onDismiss={onClose}
-			contentStyle={{ backgroundColor: colors.surface }}
+			contentStyle={{ backgroundColor: colors.surfaceVariant }}
 			anchor={
 				<Pressable>
-					<IconButton icon="dots-vertical" onPress={onShow} />
+					<IconButton
+						icon="dots-vertical"
+						onPress={onShow}
+						style={styles.icon}
+					/>
 				</Pressable>
 			}
 		>
@@ -27,6 +31,6 @@ const CustomMenu: FC<{ children: React.ReactNode[] | React.ReactNode }> = ({
 	);
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({ icon: { margin: 0 } });
 
 export default CustomMenu;

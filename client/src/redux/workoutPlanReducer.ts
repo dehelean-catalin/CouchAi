@@ -20,7 +20,6 @@ export const workoutPlanSlice = createSlice({
 		},
 
 		createWorkoutPlan: (state, action: PayloadAction<WorkoutPlan>) => {
-			console.log(action.payload.id);
 			state.workoutPlans[action.payload.id] = action.payload;
 		},
 

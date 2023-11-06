@@ -17,7 +17,7 @@ const ExercisesScreen: FC<any> = ({ navigation }) => {
 	const { colors } = useTheme();
 	const { params } = useRoute<RouteProp<RootStackParamList, "Exercises">>();
 
-	const data = useSelector<RootState, { [key: string]: Exercise }>(
+	const data = useSelector<RootState, Record<string, Exercise>>(
 		(s) => s.exercise.value
 	);
 	const [searchQuery, setSearchQuery] = useState("");
@@ -33,11 +33,6 @@ const ExercisesScreen: FC<any> = ({ navigation }) => {
 				});
 		}
 	}, []);
-
-	const result = Object.values(data)?.filter((item) =>
-		item.name.toLowerCase().includes(searchQuery.toLowerCase())
-	);
-
 	useLayoutEffect(() => {
 		navigation.setOptions({
 			headerTitle: params?.id ? "Choose exercises" : "Exercises",
@@ -52,18 +47,26 @@ const ExercisesScreen: FC<any> = ({ navigation }) => {
 		});
 	}, [navigation]);
 
+	const addMode = !!params?.id;
+
+	const exercises = Object.values(data);
+
+	const searchedExercises = exercises?.filter((item) =>
+		item.name.toLowerCase().includes(searchQuery.toLowerCase())
+	);
+
 	const onChangeSearch = (query: string) => setSearchQuery(query);
 
 	const navigateToRoute = (route: RouteValues) => {
 		navigation.navigate(route);
 	};
 
-	if (!Object.keys(data).length) return;
+	if (!exercises.length) return;
 
 	return (
 		<>
 			<FlatList<Exercise>
-				data={result}
+				data={searchedExercises}
 				ListHeaderComponent={
 					<View
 						style={[
@@ -80,7 +83,7 @@ const ExercisesScreen: FC<any> = ({ navigation }) => {
 					</View>
 				}
 				renderItem={({ item }) => (
-					<ExerciseCard key={item.id} data={item} showCheckbox={!!params?.id} />
+					<ExerciseCard key={item.id} data={item} showCheckbox={addMode} />
 				)}
 				contentContainerStyle={{ flexGrow: 1 }}
 				ListEmptyComponent={
@@ -91,9 +94,9 @@ const ExercisesScreen: FC<any> = ({ navigation }) => {
 				}
 				stickyHeaderIndices={[0]}
 			/>
-			{!!params?.id && (
+			{addMode && !params.replaceExerciseId && (
 				<View
-					style={[styles.addContainer, { backgroundColor: colors.backdrop }]}
+					style={[styles.addContainer, { backgroundColor: colors.surface }]}
 				>
 					<Button style={styles.addButton} mode="contained">
 						Add supersets
@@ -103,12 +106,7 @@ const ExercisesScreen: FC<any> = ({ navigation }) => {
 						mode="contained"
 						onPress={() => {
 							if (params?.session) {
-								dispatch(
-									activeWorkoutSessionActions.addExercise({
-										id: params.id,
-										data: [],
-									})
-								);
+								dispatch(activeWorkoutSessionActions.addExercises(params.id));
 							} else {
 								dispatch(workoutFormActions.addExercisesToWorkout(params.id));
 							}

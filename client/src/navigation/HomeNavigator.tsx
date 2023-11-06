@@ -5,6 +5,7 @@ import ExercisesScreen from "@/screens/Exercises/ExercisesScreen";
 import { WorkoutPlanForm } from "@/screens/WorkoutPlanForm/WorkoutPlanForm";
 import WorkoutPreview from "@/screens/WorkoutPreview/WorkoutPreview";
 import WorkoutSession from "@/screens/WorkoutSession/WorkoutSession";
+import WorkoutSessionSetScreen from "@/screens/WorkoutSessionSet/WorkoutSessionSetScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { BottomNavigationProps } from "react-native-paper";
@@ -34,6 +35,11 @@ export default function HomeNavigator({
 			<Stack.Screen
 				name={routes.WORKOUT_SESION}
 				component={WorkoutSession}
+				options={{ headerTitle: "" }}
+			/>
+			<Stack.Screen
+				name={routes.WORKOUT_SESSION_SET}
+				component={WorkoutSessionSetScreen}
 				options={{ headerTitle: "" }}
 			/>
 			<Stack.Screen

@@ -1,9 +1,16 @@
+import routes from "@/constant/routes";
 import { WorkoutPlan } from "@/model/workoutModel";
+import {
+	WorkoutSessionExercise,
+	WorkoutSessionSet,
+} from "@/model/workoutSessionModel";
+import { activeWorkoutSessionActions } from "@/redux/activeWorkoutSessionReducer";
 import { RootState } from "@/redux/store";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { FC } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { Button } from "react-native-paper";
+import uuid from "react-native-uuid";
 import { useDispatch, useSelector } from "react-redux";
 import WorkoutExerciseCard from "./WorkoutExerciseCard";
 
@@ -23,9 +30,51 @@ const WorkoutPreview: FC<Props> = ({ route, navigation }) => {
 	const workoutDay = workoutPlan?.workoutDays[workoutDayId];
 
 	const handleStartWorkout = () => {
-		alert("not implemented");
-		// dispatch(scheduleActions.startSchedule(workoutPlan));
-		// navigation.navigate(routes.HOME);
+		if (!workoutDay) return;
+
+		const id = uuid.v4().toString();
+		const startDate = new Date().getTime() / 1000;
+		navigation.navigate(routes.WORKOUT_SESION, { id });
+
+		let workoutSessionExercises: WorkoutSessionExercise[] = [];
+
+		Object.values(workoutDay.workoutExercises).forEach((ex, index) => {
+			let workoutSessionSets: WorkoutSessionSet[] = [];
+			ex.workoutSets.forEach((workoutSet, index) => {
+				const set: WorkoutSessionSet = {
+					id: uuid.v4().toString(),
+					isComplete: false,
+					measurementUnit: "kg",
+					oneRepMax: 0,
+					reps: 0,
+					weight: 0,
+					restTime: workoutSet.restTime,
+					set: index + 1,
+					untilFailure: workoutSet.untilFailure,
+					warmUp: workoutSet.warmUp,
+					rir: workoutSet.rir,
+				};
+				workoutSessionSets.push(set);
+			});
+
+			workoutSessionExercises.push({
+				id: uuid.v4().toString(),
+				exercise: ex.exercise,
+				workoutSessionSets,
+				supersetExercises: [],
+			});
+		});
+
+		dispatch(
+			activeWorkoutSessionActions.startWorkout({
+				id,
+				name: workoutDay?.name,
+				isComplete: false,
+				startDate,
+				endDate: null,
+				workoutSessionExercises,
+			})
+		);
 	};
 
 	if (!workoutDay) return;

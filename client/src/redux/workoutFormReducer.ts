@@ -96,7 +96,7 @@ const workoutFormSlice = createSlice({
 
 		addExercise: (state, action: PayloadAction<Exercise>) => {
 			const id = uuid.v4().toString();
-			const newExercises = {
+			const newExercise = {
 				id,
 				exercise: action.payload,
 				workoutSets: [
@@ -138,7 +138,7 @@ const workoutFormSlice = createSlice({
 					},
 				],
 			};
-			state.exercises[id] = newExercises;
+			state.exercises[id] = newExercise;
 		},
 
 		removeExercise: (state, action: PayloadAction<string>) => {

@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from "react";
-import { View } from "react-native";
 import { Text } from "react-native-paper";
 
 type Props = {
@@ -7,7 +6,6 @@ type Props = {
 };
 
 const Counter: FC<Props> = ({ startDate }) => {
-	console.log(startDate);
 	const [seconds, setSeconds] = useState(startDate);
 
 	useEffect(() => {
@@ -18,11 +16,7 @@ const Counter: FC<Props> = ({ startDate }) => {
 		return () => clearInterval(interval);
 	}, [seconds]);
 
-	return (
-		<View>
-			<Text>{timerFormat(seconds)}</Text>
-		</View>
-	);
+	return <Text variant="titleMedium">{timerFormat(seconds)}</Text>;
 };
 
 const timerFormat = (time: number) => {
