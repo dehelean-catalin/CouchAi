@@ -1,4 +1,4 @@
-import routes from "@/constant/routes";
+import routes, { RootStackParamList } from "@/constant/routes";
 import CreateExerciseScreen from "@/screens/CreateExercise/CreateExerciseScreen";
 import { ExerciseDetailsScreen } from "@/screens/ExerciseDetails/ExerciseDetailsScreen";
 import ExercisesScreen from "@/screens/Exercises/ExercisesScreen";
@@ -9,7 +9,7 @@ import WorkoutPreview from "@/screens/WorkoutPreview/WorkoutPreview";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function PlanNavigator() {
   const options = { headerTitle: "" };
@@ -28,7 +28,7 @@ export default function PlanNavigator() {
           headerTitle: "Create plan",
         }}
       />
-      <Stack.Screen name={routes.EXERCISE} component={ExercisesScreen} />
+      <Stack.Screen name={routes.EXERCISE_LIST} component={ExercisesScreen} />
       <Stack.Screen
         name={routes.EXERCISE_DETAILS}
         component={ExerciseDetailsScreen}

@@ -1,137 +1,98 @@
-import routes from "@/constant/routes";
-import { WorkoutPlan } from "@/model/workoutModel";
-import { RootState } from "@/redux/store";
-import { StackNavigationProp } from "@react-navigation/stack";
+import routes, { RootStackParamList } from "@/constant/routes";
+import { RootState, store } from "@/redux/store";
+import {
+  deleteWorkout,
+  startWorkout,
+  WorkoutState,
+} from "@/redux/workoutSlice";
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
-import { Text } from "react-native-paper";
-
-import { WorkoutSession } from "@/model/workoutSessionModel";
-import { activeWorkoutSessionActions } from "@/redux/activeWorkoutSessionReducer";
-import { workoutFormActions } from "@/redux/workoutFormReducer";
-import uuid from "react-native-uuid";
+import {
+  Button,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
-import HomeCard from "./HomeCard";
-import HomeScheduleCard from "./HomeScheduleCard";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-type Props = {
-	navigation: StackNavigationProp<any>;
-};
+type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
 
-export default function HomeScreen({ navigation }: Props) {
-	const dispatch = useDispatch();
+export default function HomeScreen(props: HomeScreenProps) {
+  const dispatch = useDispatch();
+  const workouts = useSelector<RootState, WorkoutState[]>(
+    (s) => s.workout.workouts,
+  );
 
-	const data = useSelector<RootState, WorkoutPlan | null>(
-		(s) => s.schedule.data
-	);
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        {workouts
+          .filter((w) => w.status === "in-progress")
+          .map((workout) => (
+            <Pressable
+              key={workout.id}
+              onPress={() =>
+                props.navigation.navigate(routes.WORKOUT, { id: workout.id })
+              }
+            >
+              <Text>Resume</Text>
+              <Text>{workout.name}</Text>
+              <Button
+                title="X"
+                onPress={() => dispatch(deleteWorkout(workout.id))}
+              />
+            </Pressable>
+          ))}
 
-	const activeWorkoutSession = useSelector<RootState, WorkoutSession[]>(
-		(s) => s.activeWorkoutSession.data
-	);
-
-	const startEmptyWorkout = () => {
-		const id = uuid.v4().toString();
-		const startDate = new Date().getTime() / 1000;
-		navigation.navigate(routes.WORKOUT_SESION, { id });
-
-		dispatch(
-			activeWorkoutSessionActions.startWorkout({
-				id,
-				name: "Workout on the fly",
-				isComplete: false,
-				startDate,
-				endDate: null,
-				workoutSessionExercises: [],
-			})
-		);
-	};
-
-	const onFindWorkoutPress = () =>
-		navigation.navigate("Plans", { screen: routes.PLAN });
-
-	const onCreateWorkoutPress = () => {
-		const id = uuid.v4().toString();
-		dispatch(workoutFormActions.initializeWorkout());
-		navigation.navigate(routes.CREATE_PLAN, { id });
-	};
-
-	const closeWorkoutInProgress = (index: number) => {
-		dispatch(activeWorkoutSessionActions.finishWorkout(index));
-	};
-
-	const handleResumeWorkout = (id: string) =>
-		navigation.navigate(routes.WORKOUT_SESION, { id });
-
-	return (
-		<View style={styles.container}>
-			<FlatList
-				data={activeWorkoutSession}
-				renderItem={({ item, index }) => (
-					<HomeCard
-						iconName="run"
-						iconColor="#ffaf23"
-						name="Workout in progress"
-						description={item.name}
-						onPress={() => handleResumeWorkout(item.id)}
-						onClosePress={() => closeWorkoutInProgress(index)}
-					/>
-				)}
-				keyExtractor={(item) => item.id}
-				ItemSeparatorComponent={() => <View style={{ paddingVertical: 10 }} />}
-			/>
-
-			{data ? (
-				<View>
-					<Text variant="titleSmall">My Workout Plan</Text>
-					<Text>{data.name}</Text>
-					<FlatList
-						data={Object.values(data.workoutDays)}
-						renderItem={({ item, index }) => (
-							<HomeScheduleCard id={data.id} index={index} value={item} />
-						)}
-						keyExtractor={(item) => item.id}
-						style={styles.listContainer}
-						ItemSeparatorComponent={() => (
-							<View style={{ paddingVertical: 10 }} />
-						)}
-					/>
-				</View>
-			) : (
-				<>
-					<HomeCard
-						iconName="magnify"
-						name="Find a workout plan"
-						description="Find a workout plan that meets your fitness goals"
-						onPress={onFindWorkoutPress}
-					/>
-					<HomeCard
-						iconName="creation"
-						iconColor="#0288d1"
-						name="Build a workout plan"
-						description="Create your personalized workout plan"
-						onPress={onCreateWorkoutPress}
-					/>
-				</>
-			)}
-			<Text variant="titleSmall">Quick start</Text>
-			<HomeCard
-				iconName="dumbbell"
-				name="Start logging a workout"
-				description="Start a workout and add exercises as you go"
-				onPress={startEmptyWorkout}
-			/>
-		</View>
-	);
+        <Pressable
+          style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+          onPress={() => {
+            dispatch(startWorkout());
+            const latestState = store.getState();
+            const latestWorkout =
+              latestState.workout.workouts[
+                latestState.workout.workouts.length - 1
+              ];
+            props.navigation.navigate(routes.WORKOUT, {
+              id: latestWorkout.id,
+            });
+          }}
+        >
+          <Text>Start Workout On The Fly</Text>
+        </Pressable>
+        <View>
+          <Text>Recent Activity</Text>
+          {workouts
+            .filter((workout) => workout.status === "completed")
+            .map((completedWorkout) => (
+              <View key={completedWorkout.id}>
+                <Text>{completedWorkout.name}</Text>
+              </View>
+            ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
-	container: {
-		padding: 15,
-		gap: 15,
-	},
-	listContainer: {
-		marginVertical: 15,
-	},
-	icon: {},
+  container: {
+    flex: 1,
+  },
+  button: {
+    backgroundColor: "#9abaff",
+    padding: 12,
+    borderRadius: 4,
+    alignItems: "center",
+  },
+  pressed: {
+    opacity: 0.7,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
 });

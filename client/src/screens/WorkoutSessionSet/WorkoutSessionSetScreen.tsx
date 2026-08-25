@@ -4,35 +4,35 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React, { FC, useLayoutEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
-import Counter from "../WorkoutSession/Counter";
+import Counter from "../Workout/Counter";
 
 type Props = {
-	navigation: StackNavigationProp<any>;
-	route: any;
+  navigation: StackNavigationProp<any>;
+  route: any;
 };
 const WorkoutSessionSetScreen: FC<Props> = ({ navigation, route }) => {
-	const { id, workoutId } = route.params;
-	const data = useSelector<RootState, WorkoutSession[]>(
-		(s) => s.activeWorkoutSession.data
-	);
+  const { id, workoutId } = route.params;
+  const data = useSelector<RootState, WorkoutSession[]>(
+    (s) => s.activeWorkoutSession.data,
+  );
 
-	const workout = data.find((item) => item.id === id);
+  const workout = data.find((item) => item.id === id);
 
-	useLayoutEffect(() => {
-		if (!workout) return;
-		const currentTimeInSeconds = new Date().getTime() / 1000;
-		const startDate = Math.floor(currentTimeInSeconds - workout.startDate);
+  useLayoutEffect(() => {
+    if (!workout) return;
+    const currentTimeInSeconds = new Date().getTime() / 1000;
+    const startDate = Math.floor(currentTimeInSeconds - workout.startDate);
 
-		navigation.setOptions({
-			headerTitle: () => <Counter startDate={startDate} />,
-		});
-	}, [navigation]);
+    navigation.setOptions({
+      headerTitle: () => <Counter startDate={startDate} />,
+    });
+  }, [navigation]);
 
-	return (
-		<View>
-			<Text>WorkoutSessionSetScreen</Text>
-		</View>
-	);
+  return (
+    <View>
+      <Text>WorkoutSessionSetScreen</Text>
+    </View>
+  );
 };
 
 export default WorkoutSessionSetScreen;

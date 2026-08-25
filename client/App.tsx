@@ -1,51 +1,30 @@
-import BottomTabNavigator from "@/navigation/BottomTabNavigator";
-import { persistor, store } from "@/redux/store";
-import {
-	DarkTheme as NavigationDarkTheme,
-	DefaultTheme as NavigationDefaultTheme,
-} from "@react-navigation/native";
-import merge from "deepmerge";
 import React from "react";
-import { StyleSheet } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { StyleSheet, Text, View } from "react-native";
+import "./polyfills";
 import {
-	MD3DarkTheme,
-	MD3LightTheme,
-	PaperProvider,
-	adaptNavigationTheme,
-	useTheme,
-} from "react-native-paper";
+  SafeAreaProvider,
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
+import BottomTabNavigator from "@/navigation/BottomTabNavigator";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-
-const { LightTheme, DarkTheme } = adaptNavigationTheme({
-	reactNavigationLight: NavigationDefaultTheme,
-	reactNavigationDark: NavigationDarkTheme,
-});
-
-const CombinedDefaultTheme = merge(MD3LightTheme, LightTheme);
-export const CombinedDarkTheme = merge(MD3DarkTheme, DarkTheme);
+import { store } from "@/redux/store";
 
 export default function App() {
-	const theme = useTheme();
-	return (
-		<Provider store={store}>
-			<PersistGate loading={null} persistor={persistor}>
-				<GestureHandlerRootView style={{ flex: 1 }}>
-					<PaperProvider theme={CombinedDarkTheme}>
-						<BottomTabNavigator />
-					</PaperProvider>
-				</GestureHandlerRootView>
-			</PersistGate>
-		</Provider>
-	);
+  return (
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <BottomTabNavigator />
+      </SafeAreaProvider>
+    </Provider>
+  );
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
-	},
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
