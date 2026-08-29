@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import exerciseReducer from "./exerciseReducer";
+import exercisesReducer from "./exerciseReducer";
 import workoutReducer from "./workoutSlice";
 
 const rootReducer = combineReducers({
-  exercise: exerciseReducer,
+  exercises: exercisesReducer,
   workout: workoutReducer,
 });
 

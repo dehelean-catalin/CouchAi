@@ -1,4 +1,4 @@
-import routes, { RootStackParamList } from "@/constant/routes";
+import routes, { RootStackParamList } from "@/navigation/routes";
 import CreateExerciseScreen from "@/screens/CreateExercise/CreateExerciseScreen";
 import { ExerciseDetailsScreen } from "@/screens/ExerciseDetails/ExerciseDetailsScreen";
 import ExercisesScreen from "@/screens/Exercises/ExercisesScreen";

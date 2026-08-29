@@ -1,16 +1,16 @@
-import routes, { RootStackParamList } from "@/constant/routes";
+import routes, { RootStackParamList } from "@/navigation/routes";
 import { RootState } from "@/redux/store";
-import React, { FC, useEffect, useLayoutEffect } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { Button, Text, View } from "react-native";
+import { useSelector } from "react-redux";
 import { WorkoutState } from "@/redux/workoutSlice";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type WorkoutProps = NativeStackScreenProps<RootStackParamList, "Workout">;
 
 function WorkoutScreen(props: WorkoutProps) {
   const { id } = props.route.params;
-  const dispatch = useDispatch();
 
   const workout = useSelector<RootState, WorkoutState | undefined>((s) =>
     s.workout.workouts.find((workout) => workout.id === id),
@@ -21,17 +21,22 @@ function WorkoutScreen(props: WorkoutProps) {
   }
 
   return (
-    <View>
-      <Text>{workout.name}</Text>
+    <SafeAreaView>
+      {workout.exercises.map((exercise, index) => (
+        <View key={index}>
+          <Text>{exercise.name}</Text>
+        </View>
+      ))}
       <Button
         title="Add exercise"
         onPress={() => {
           props.navigation.navigate(routes.EXERCISE_LIST, {
             workoutId: workout.id,
+            mode: "select",
           });
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

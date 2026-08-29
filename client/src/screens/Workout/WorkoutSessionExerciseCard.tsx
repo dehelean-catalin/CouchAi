@@ -1,5 +1,5 @@
 import CustomMenu from "@/components/CustomMenu";
-import routes from "@/constant/routes";
+import routes from "@/navigation/routes";
 import { WorkoutSessionExercise } from "@/model/workoutSessionModel";
 import { activeWorkoutSessionActions } from "@/redux/activeWorkoutSessionReducer";
 import { useNavigation } from "@react-navigation/native";

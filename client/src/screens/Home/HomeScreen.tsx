@@ -1,4 +1,4 @@
-import routes, { RootStackParamList } from "@/constant/routes";
+import routes, { RootStackParamList } from "@/navigation/routes";
 import { RootState, store } from "@/redux/store";
 import {
   deleteWorkout,

@@ -1,11 +1,9 @@
-import routes, { RootStackParamList } from "@/constant/routes";
+import routes, { RootStackParamList } from "@/navigation/routes";
 import React from "react";
 import { Pressable, Text } from "react-native";
 import HomeScreen from "../screens/Home/HomeScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import WorkoutScreen from "@/screens/Workout/WorkoutScreen";
-import { StackScreen } from "react-native-screens";
-import ExerciseCard from "@/screens/Exercises/ExerciseCard";
 import ExercisesScreen from "@/screens/Exercises/ExercisesScreen";
 import { useDispatch } from "react-redux";
 import { completeWorkout } from "@/redux/workoutSlice";

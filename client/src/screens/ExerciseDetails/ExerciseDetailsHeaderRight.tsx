@@ -1,4 +1,4 @@
-import routes, { RootStackParamList } from "@/constant/routes";
+import routes, { RootStackParamList } from "@/navigation/routes";
 import { Exercise } from "@/model/exerciseModel";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -10,51 +10,51 @@ import { deleteExercise } from "../../redux/exerciseReducer";
 import { RootState } from "../../redux/store";
 
 const ExerciseDetailsHeader = () => {
-	const dispatch = useDispatch();
-	const { params } =
-		useRoute<RouteProp<RootStackParamList, "ExerciseDetails">>();
-	const navigation = useNavigation<NativeStackNavigationProp<any>>();
-	const data = useSelector<RootState, Exercise | undefined>(
-		(s) => s.exercise.value[params?.id]
-	);
+  const dispatch = useDispatch();
+  const { params } =
+    useRoute<RouteProp<RootStackParamList, "ExerciseDetails">>();
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+  const data = useSelector<RootState, Exercise | undefined>(
+    (s) => s.exercise.value[params?.id],
+  );
 
-	const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-	const closeMenu = () => setVisible(false);
+  const closeMenu = () => setVisible(false);
 
-	const deleteExerciseItem = () => {
-		setVisible(false);
-		dispatch(deleteExercise(params.id));
-		navigation.goBack();
-	};
+  const deleteExerciseItem = () => {
+    setVisible(false);
+    dispatch(deleteExercise(params.id));
+    navigation.goBack();
+  };
 
-	const navigateToEditExercise = () =>
-		navigation.navigate(routes.CREATE_EXERCISE, { id: params.id });
+  const navigateToEditExercise = () =>
+    navigation.navigate(routes.CREATE_EXERCISE, { id: params.id });
 
-	if (!data) return;
+  if (!data) return;
 
-	return (
-		<Pressable style={{ flexDirection: "row" }}>
-			{data.custom && (
-				<IconButton icon="pencil" size={20} onPress={navigateToEditExercise} />
-			)}
-			{data.custom && (
-				<Menu
-					visible={visible}
-					onDismiss={closeMenu}
-					anchor={
-						<IconButton
-							icon="dots-vertical"
-							size={20}
-							onPress={() => setVisible(true)}
-						/>
-					}
-				>
-					<Menu.Item title="Delete" onPress={deleteExerciseItem} />
-				</Menu>
-			)}
-		</Pressable>
-	);
+  return (
+    <Pressable style={{ flexDirection: "row" }}>
+      {data.custom && (
+        <IconButton icon="pencil" size={20} onPress={navigateToEditExercise} />
+      )}
+      {data.custom && (
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={
+            <IconButton
+              icon="dots-vertical"
+              size={20}
+              onPress={() => setVisible(true)}
+            />
+          }
+        >
+          <Menu.Item title="Delete" onPress={deleteExerciseItem} />
+        </Menu>
+      )}
+    </Pressable>
+  );
 };
 
 export default ExerciseDetailsHeader;

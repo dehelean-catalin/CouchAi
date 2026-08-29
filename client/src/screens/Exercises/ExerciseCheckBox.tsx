@@ -1,51 +1,26 @@
-import { RootStackParamList } from "@/constant/routes";
-import { Exercise } from "@/model/exerciseModel";
-import { activeWorkoutSessionActions } from "@/redux/activeWorkoutSessionReducer";
-import { workoutFormActions } from "@/redux/workoutFormReducer";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import React, { FC, memo, useState } from "react";
-import { Checkbox } from "react-native-paper";
-import { useDispatch } from "react-redux";
+import { Exercise } from "@/redux/exerciseReducer";
+import Checkbox from "expo-checkbox";
+import React, { FC, useState } from "react";
+import { View } from "react-native";
 
 type Props = {
-	data: Exercise;
+  data: Exercise;
+  onSelect?: (isChecked: boolean) => void;
 };
 
-const ExerciseCheckBox: FC<Props> = ({ data }) => {
-	const dispatch = useDispatch();
-	const { navigate, goBack } = useNavigation<StackNavigationProp<any>>();
-	const { params } = useRoute<RouteProp<RootStackParamList, "Exercises">>();
-	const [checked, setChecked] = useState(false);
+const ExerciseCheckBox: FC<Props> = ({ data, onSelect: select }) => {
+  const [isChecked, setIsChecked] = useState(false);
 
-	const handleCheckPress = () => {
-		setChecked(!checked);
-		if (params.replaceExerciseId) {
-			dispatch(
-				activeWorkoutSessionActions.replaceExercise({
-					id: params.id,
-					exerciseId: params.replaceExerciseId,
-					exercise: data,
-				})
-			);
-			goBack();
-		} else if (params.session) {
-			checked
-				? dispatch(activeWorkoutSessionActions.removeExercise(data.id))
-				: dispatch(activeWorkoutSessionActions.addExercise(data));
-		} else if (checked) {
-			dispatch(workoutFormActions.removeExercise(data.id));
-		} else {
-			dispatch(workoutFormActions.addExercise(data));
-		}
-	};
+  const handleCheckPress = () => {
+    setIsChecked((value) => !value);
+    select?.(isChecked);
+  };
 
-	return (
-		<Checkbox
-			status={checked ? "checked" : "unchecked"}
-			onPress={handleCheckPress}
-		/>
-	);
+  return (
+    <View style={{ padding: 16 }}>
+      <Checkbox value={isChecked} onValueChange={handleCheckPress} />
+    </View>
+  );
 };
 
-export default memo(ExerciseCheckBox);
+export default ExerciseCheckBox;

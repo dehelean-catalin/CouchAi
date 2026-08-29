@@ -1,10 +1,13 @@
-import { RootStackParamList, RouteValues } from "@/constant/routes";
-import { Exercise } from "@/model/exerciseModel";
+import { RootStackParamList } from "@/navigation/routes";
 import { RootState } from "@/redux/store";
 import React, { useState } from "react";
-import { FlatList, Text, StyleSheet, View } from "react-native";
+import { FlatList, Text, StyleSheet, View, Pressable } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import ExerciseCard from "./ExerciseCard";
+import { Exercise } from "@/redux/exerciseReducer";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { addExerciseToWorkout } from "@/redux/workoutSlice";
 
 type ExercisesProps = NativeStackScreenProps<
   RootStackParamList,
@@ -12,33 +15,63 @@ type ExercisesProps = NativeStackScreenProps<
 >;
 
 function ExercisesScreen(props: ExercisesProps) {
-  const data = useSelector<RootState, Record<string, Exercise>>(
-    (s) => s.exercise.value,
+  const dispatch = useDispatch();
+  const exercises = useSelector<RootState, Exercise[]>(
+    (s) => s.exercises.value,
   );
+  const [selectedExercises, setSelectedExercises] = useState<string[]>([]);
 
-  const exercises = Object.values(data);
+  function handleExerciseSelect(id: string, isChecked: boolean) {
+    if (!isChecked) {
+      setSelectedExercises((prev) => [...prev, id]);
+    } else {
+      setSelectedExercises((prev) =>
+        prev.filter((exerciseId) => exerciseId !== id),
+      );
+    }
+  }
 
-  if (!exercises.length) {
-    return (
-      <View>
-        <Text>No exercise found</Text>
-      </View>
+  function handleAddExercise() {
+    dispatch(
+      addExerciseToWorkout({
+        workoutId: props.route.params.workoutId,
+        exercises: exercises.filter((exercise) =>
+          selectedExercises.includes(exercise.id),
+        ),
+      }),
     );
+    props.navigation.goBack();
   }
 
   return (
-    <FlatList<Exercise>
-      data={exercises}
-      ListHeaderComponent={<View style={[styles.searchContainer]}></View>}
-      renderItem={() => <View></View>}
-      contentContainerStyle={{ flexGrow: 1 }}
-      ListEmptyComponent={
-        <View style={styles.notFoundContainer}>
-          <Text>Not found</Text>
-        </View>
-      }
-      stickyHeaderIndices={[0]}
-    />
+    <SafeAreaView style={{ height: "100%" }}>
+      <FlatList<Exercise>
+        data={exercises}
+        renderItem={({ item }) => (
+          <ExerciseCard
+            data={item}
+            mode={props.route.params.mode}
+            onSelect={handleExerciseSelect}
+          />
+        )}
+        ListEmptyComponent={
+          <View style={styles.notFoundContainer}>
+            <Text>Not found</Text>
+          </View>
+        }
+      />
+      <View style={styles.addContainer}>
+        <Pressable
+          style={styles.addButton}
+          onPress={handleAddExercise}
+          disabled={!selectedExercises.length}
+        >
+          <Text style={{ color: "white" }}>
+            Add exercises ({selectedExercises.length})
+          </Text>
+        </Pressable>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -59,12 +92,14 @@ const styles = StyleSheet.create({
   addContainer: {
     flexDirection: "row",
     position: "absolute",
-    bottom: 0,
+    display: "flex",
+    justifyContent: "center",
+    bottom: 40,
     width: "100%",
-    padding: 10,
-    gap: 10,
   },
   addButton: {
-    flex: 1,
+    backgroundColor: "lightblue",
+    padding: 10,
+    borderRadius: 4,
   },
 });

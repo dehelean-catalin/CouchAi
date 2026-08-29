@@ -1,4 +1,4 @@
-import routes from "@/constant/routes";
+import routes from "@/navigation/routes";
 import { WorkoutDay } from "@/model/workoutModel";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";

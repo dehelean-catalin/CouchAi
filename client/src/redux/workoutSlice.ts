@@ -1,18 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-
-interface SetState {
-  id: string;
-  type: "weight" | "cardio" | "body-weight";
-  weight: number;
-  reps: number;
-  time: number;
-}
-
-interface ExerciseState {
-  name: string;
-  type: "set" | "super-set";
-  sets: SetState[];
-}
+import { Exercise } from "./exerciseReducer";
 
 type WorkoutStatus = "completed" | "in-progress" | "deleted" | null;
 
@@ -24,7 +11,7 @@ export interface WorkoutState {
   startDate: string;
   endDate: string;
   notes: string;
-  exercises: ExerciseState[];
+  exercises: Exercise[];
 }
 
 const emptyWorkout: WorkoutState = {
@@ -46,10 +33,10 @@ const workoutSlice = createSlice({
   name: "workout",
   initialState,
   reducers: {
-    startWorkout: (state) => {
+    startWorkout: (oldState) => {
       return {
         workouts: [
-          ...state.workouts,
+          ...oldState.workouts,
           {
             ...emptyWorkout,
             id: generateRandomId(),
@@ -74,11 +61,37 @@ const workoutSlice = createSlice({
         ),
       };
     },
+    addExerciseToWorkout: (
+      oldState,
+      action: PayloadAction<{ workoutId?: string; exercises: Exercise[] }>,
+    ) => {
+      const { workoutId, exercises } = action.payload;
+
+      if (!workoutId || !exercises.length) {
+        return oldState;
+      }
+
+      return {
+        workouts: oldState.workouts.map((workout) => {
+          if (workout.id === workoutId) {
+            return {
+              ...workout,
+              exercises: [...workout.exercises, ...exercises],
+            };
+          }
+          return workout;
+        }),
+      };
+    },
   },
 });
 
-export const { startWorkout, deleteWorkout, completeWorkout } =
-  workoutSlice.actions;
+export const {
+  startWorkout,
+  deleteWorkout,
+  completeWorkout,
+  addExerciseToWorkout,
+} = workoutSlice.actions;
 
 export default workoutSlice.reducer;
 
