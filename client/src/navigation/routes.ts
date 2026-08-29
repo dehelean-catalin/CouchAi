@@ -21,7 +21,7 @@ export type ExeriseListMode = "select" | undefined;
 export type RootStackParamList = {
   Home: undefined;
   Workout: { id: string };
-  ExerciseList: { workoutId?: string; mode: ExeriseListMode };
+  ExerciseList: { workoutId?: string; action: ExeriseListMode };
 
   /// not reviewed yeat
   ExerciseDetails: { id: string };

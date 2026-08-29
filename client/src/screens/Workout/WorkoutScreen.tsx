@@ -32,7 +32,7 @@ function WorkoutScreen(props: WorkoutProps) {
         onPress={() => {
           props.navigation.navigate(routes.EXERCISE_LIST, {
             workoutId: workout.id,
-            mode: "select",
+            action: "select",
           });
         }}
       />

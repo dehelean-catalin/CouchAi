@@ -50,7 +50,7 @@ function ExercisesScreen(props: ExercisesProps) {
         renderItem={({ item }) => (
           <ExerciseCard
             data={item}
-            mode={props.route.params.mode}
+            mode={props.route.params.action}
             onSelect={handleExerciseSelect}
           />
         )}
