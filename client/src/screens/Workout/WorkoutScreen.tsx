@@ -31,7 +31,7 @@ function WorkoutScreen(props: WorkoutProps) {
         item={({ item: exercise, index }) => (
           <WorkoutExerciseCard
             index={index}
-            value={exercise}
+            exercise={exercise}
             onRemove={() =>
               dispatch(
                 removeExerciseFromWorkout({
@@ -39,6 +39,17 @@ function WorkoutScreen(props: WorkoutProps) {
                   exercisePosition: index,
                 }),
               )
+            }
+            onReplace={() =>
+              props.navigation.navigate(routes.EXERCISE_LIST, {
+                workoutId: workout.id,
+                action: {
+                  type: "replace",
+                  payload: {
+                    exercisePosition: index,
+                  },
+                },
+              })
             }
           />
         )}
@@ -50,7 +61,7 @@ function WorkoutScreen(props: WorkoutProps) {
         onPress={() => {
           props.navigation.navigate(routes.EXERCISE_LIST, {
             workoutId: workout.id,
-            action: "select",
+            action: { type: "select", payload: null },
           });
         }}
       />

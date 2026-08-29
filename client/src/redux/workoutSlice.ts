@@ -63,11 +63,11 @@ const workoutSlice = createSlice({
     },
     addExerciseToWorkout: (
       oldState,
-      action: PayloadAction<{ workoutId?: string; exercises: Exercise[] }>,
+      action: PayloadAction<{ workoutId: string; exercises: Exercise[] }>,
     ) => {
       const { workoutId, exercises } = action.payload;
 
-      if (!workoutId || !exercises.length) {
+      if (!exercises.length) {
         return oldState;
       }
 
@@ -88,7 +88,6 @@ const workoutSlice = createSlice({
       action: PayloadAction<{ workoutId: string; exercisePosition: number }>,
     ) => {
       const { workoutId, exercisePosition } = action.payload;
-
       return {
         workouts: oldState.workouts.map((workout) => {
           if (workout.id === workoutId) {
@@ -97,6 +96,32 @@ const workoutSlice = createSlice({
               exercises: workout.exercises.filter(
                 (_, index) => index !== exercisePosition,
               ),
+            };
+          }
+          return workout;
+        }),
+      };
+    },
+    replaceExerciseFromWorkout: (
+      oldState,
+      action: PayloadAction<{
+        workoutId: string;
+        exercisePosition: number;
+        newExercise: Exercise;
+      }>,
+    ) => {
+      const { workoutId, exercisePosition, newExercise } = action.payload;
+      return {
+        workouts: oldState.workouts.map((workout) => {
+          if (workout.id === workoutId) {
+            return {
+              ...workout,
+              exercises: workout.exercises.map((exercise, index) => {
+                if (index === exercisePosition) {
+                  newExercise;
+                }
+                return exercise;
+              }),
             };
           }
           return workout;
@@ -112,6 +137,7 @@ export const {
   completeWorkout,
   addExerciseToWorkout,
   removeExerciseFromWorkout,
+  replaceExerciseFromWorkout,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;

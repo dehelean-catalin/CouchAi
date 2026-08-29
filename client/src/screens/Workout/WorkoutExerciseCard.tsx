@@ -11,14 +11,16 @@ import { Exercise } from "@/redux/exerciseReducer";
 
 type WorkoutSessionCardProps = {
   index: number;
-  value: Exercise;
+  exercise: Exercise;
   onRemove: () => void;
+  onReplace: () => void;
 };
 
 export function WorkoutExerciseCard({
   index,
-  value,
+  exercise,
   onRemove: remove,
+  onReplace: replace,
 }: WorkoutSessionCardProps) {
   function handleNavigateToSessionSet() {}
 
@@ -30,11 +32,14 @@ export function WorkoutExerciseCard({
         <Text>{index + 1}</Text>
       </View>
       <View style={{ flex: 1 }}>
-        <Text>{value.name}</Text>
+        <Text>{exercise.name}</Text>
         <Text>
           {0}/{4} sets completed
         </Text>
         <Text onPress={remove}>X</Text>
+        <View>
+          <Text onPress={replace}>Replace</Text>
+        </View>
       </View>
     </Pressable>
   );

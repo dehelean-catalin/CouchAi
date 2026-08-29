@@ -3,14 +3,21 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Exercise } from "@/redux/exerciseReducer";
 import { Image } from "expo-image";
 import ExerciseCheckBox from "./ExerciseCheckBox";
+import { ExerciseListAction } from "../../navigation/routes";
 
 type CardProps = {
   data: Exercise;
-  mode?: "view" | "select";
+  actionType: ExerciseListAction["type"];
   onSelect?: (id: string, isChecked: boolean) => void;
+  onReplace?: (id: string) => void;
 };
 
-function Card({ data, mode, onSelect: select }: CardProps) {
+function Card({
+  data,
+  actionType,
+  onSelect: select,
+  onReplace: replace,
+}: CardProps) {
   const initialLetter = data.name.slice(0, 1).toUpperCase();
 
   return (
@@ -28,11 +35,14 @@ function Card({ data, mode, onSelect: select }: CardProps) {
           {data.primaryMuscleGroups.map(({ name }) => name).join(", ")}
         </Text>
       </View>
-      {mode === "select" && (
+      {actionType === "select" && (
         <ExerciseCheckBox
           data={data}
           onSelect={(isChecked) => select?.(data.id, isChecked)}
         />
+      )}
+      {actionType === "replace" && (
+        <ExerciseCheckBox data={data} onSelect={() => replace?.(data.id)} />
       )}
     </Pressable>
   );

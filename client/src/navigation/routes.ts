@@ -16,12 +16,22 @@ const routes = {
 type RouteKeys = keyof typeof routes;
 export type RouteValues = (typeof routes)[RouteKeys];
 
-export type ExeriseListMode = "select" | undefined;
+export type ExerciseListAction =
+  | { type: "select"; payload: null }
+  | {
+      type: "replace";
+      payload: {
+        exercisePosition: number;
+      };
+    };
 
 export type RootStackParamList = {
   Home: undefined;
   Workout: { id: string };
-  ExerciseList: { workoutId?: string; action: ExeriseListMode };
+  ExerciseList: {
+    workoutId?: string;
+    action: ExerciseListAction;
+  };
 
   /// not reviewed yeat
   ExerciseDetails: { id: string };

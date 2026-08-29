@@ -7,7 +7,10 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import ExerciseCard from "./ExerciseCard";
 import { Exercise } from "@/redux/exerciseReducer";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { addExerciseToWorkout } from "@/redux/workoutSlice";
+import {
+  addExerciseToWorkout,
+  replaceExerciseFromWorkout,
+} from "@/redux/workoutSlice";
 import { BaseHorizontalList } from "@/components/BaseHorizontalList";
 
 type ExercisesProps = NativeStackScreenProps<
@@ -17,12 +20,16 @@ type ExercisesProps = NativeStackScreenProps<
 
 function ExercisesScreen(props: ExercisesProps) {
   const dispatch = useDispatch();
+  const {
+    action: { type: actionType, payload },
+    workoutId,
+  } = props.route.params;
   const exercises = useSelector<RootState, Exercise[]>(
     (s) => s.exercises.value,
   );
   const [selectedExercises, setSelectedExercises] = useState<string[]>([]);
 
-  function handleExerciseSelect(id: string, isChecked: boolean) {
+  function handleSelectExercise(id: string, isChecked: boolean) {
     if (!isChecked) {
       setSelectedExercises((prev) => [...prev, id]);
     } else {
@@ -33,15 +40,39 @@ function ExercisesScreen(props: ExercisesProps) {
   }
 
   function handleAddExercise() {
+    if (!workoutId) {
+      return;
+    }
     dispatch(
       addExerciseToWorkout({
-        workoutId: props.route.params.workoutId,
+        workoutId,
         exercises: exercises.filter((exercise) =>
           selectedExercises.includes(exercise.id),
         ),
       }),
     );
     props.navigation.goBack();
+  }
+
+  function handleReplaceExercise(exerciseId: string) {
+    if (!workoutId || payload?.exercisePosition === undefined) {
+      return;
+    }
+    const newExercise = exercises.find(
+      (exercise) => exercise.id === exerciseId,
+    );
+    if (!newExercise) {
+      return;
+    }
+    dispatch(
+      replaceExerciseFromWorkout({
+        workoutId,
+        exercisePosition: payload.exercisePosition,
+        newExercise,
+      }),
+    );
+    // wait for checkbox animation to finish before going back
+    setTimeout(props.navigation.goBack, 50);
   }
 
   return (
@@ -51,23 +82,26 @@ function ExercisesScreen(props: ExercisesProps) {
         item={({ item }) => (
           <ExerciseCard
             data={item}
-            mode={props.route.params.action}
-            onSelect={handleExerciseSelect}
+            actionType={actionType}
+            onSelect={handleSelectExercise}
+            onReplace={handleReplaceExercise}
           />
         )}
         emptyComponentText="Not found"
       />
-      <View style={styles.addContainer}>
-        <Pressable
-          style={styles.addButton}
-          onPress={handleAddExercise}
-          disabled={!selectedExercises.length}
-        >
-          <Text style={{ color: "white" }}>
-            Add exercises ({selectedExercises.length})
-          </Text>
-        </Pressable>
-      </View>
+      {actionType === "select" && (
+        <View style={styles.addContainer}>
+          <Pressable
+            style={styles.addButton}
+            onPress={handleAddExercise}
+            disabled={!selectedExercises.length}
+          >
+            <Text style={{ color: "white" }}>
+              Add exercises ({selectedExercises.length})
+            </Text>
+          </Pressable>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
