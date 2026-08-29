@@ -1,11 +1,14 @@
 import routes, { RootStackParamList } from "@/navigation/routes";
 import { RootState } from "@/redux/store";
 import React from "react";
-import { Button, Text, View } from "react-native";
+import { Button } from "react-native";
 import { useSelector } from "react-redux";
 import { WorkoutState } from "@/redux/workoutSlice";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { WorkoutSessionCard } from "./WorkoutSessionCard";
+import { BaseHorizontalList } from "@/components/BaseHorizontalList";
+import { Exercise } from "@/redux/exerciseReducer";
 
 type WorkoutProps = NativeStackScreenProps<RootStackParamList, "Workout">;
 
@@ -22,11 +25,14 @@ function WorkoutScreen(props: WorkoutProps) {
 
   return (
     <SafeAreaView>
-      {workout.exercises.map((exercise, index) => (
-        <View key={index}>
-          <Text>{exercise.name}</Text>
-        </View>
-      ))}
+      <BaseHorizontalList<Exercise>
+        data={workout.exercises}
+        item={({ item, index }) => {
+          return <WorkoutSessionCard index={index} value={item} />;
+        }}
+        emptyComponentText="Search for an exercise"
+      />
+
       <Button
         title="Add exercise"
         onPress={() => {

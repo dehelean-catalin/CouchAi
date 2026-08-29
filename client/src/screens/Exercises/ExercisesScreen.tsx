@@ -1,13 +1,14 @@
 import { RootStackParamList } from "@/navigation/routes";
 import { RootState } from "@/redux/store";
 import React, { useState } from "react";
-import { FlatList, Text, StyleSheet, View, Pressable } from "react-native";
+import { Text, StyleSheet, View, Pressable } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import ExerciseCard from "./ExerciseCard";
 import { Exercise } from "@/redux/exerciseReducer";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { addExerciseToWorkout } from "@/redux/workoutSlice";
+import { BaseHorizontalList } from "@/components/BaseHorizontalList";
 
 type ExercisesProps = NativeStackScreenProps<
   RootStackParamList,
@@ -45,20 +46,16 @@ function ExercisesScreen(props: ExercisesProps) {
 
   return (
     <SafeAreaView style={{ height: "100%" }}>
-      <FlatList<Exercise>
+      <BaseHorizontalList<Exercise>
         data={exercises}
-        renderItem={({ item }) => (
+        item={({ item }) => (
           <ExerciseCard
             data={item}
             mode={props.route.params.action}
             onSelect={handleExerciseSelect}
           />
         )}
-        ListEmptyComponent={
-          <View style={styles.notFoundContainer}>
-            <Text>Not found</Text>
-          </View>
-        }
+        emptyComponentText="Not found"
       />
       <View style={styles.addContainer}>
         <Pressable
