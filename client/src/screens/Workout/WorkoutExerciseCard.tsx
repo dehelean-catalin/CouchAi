@@ -12,9 +12,14 @@ import { Exercise } from "@/redux/exerciseReducer";
 type WorkoutSessionCardProps = {
   index: number;
   value: Exercise;
+  onRemove: () => void;
 };
 
-export function WorkoutSessionCard({ value, index }: WorkoutSessionCardProps) {
+export function WorkoutExerciseCard({
+  index,
+  value,
+  onRemove: remove,
+}: WorkoutSessionCardProps) {
   function handleNavigateToSessionSet() {}
 
   const chipStyle: StyleProp<ViewStyle> = [styles.chip];
@@ -29,6 +34,7 @@ export function WorkoutSessionCard({ value, index }: WorkoutSessionCardProps) {
         <Text>
           {0}/{4} sets completed
         </Text>
+        <Text onPress={remove}>X</Text>
       </View>
     </Pressable>
   );

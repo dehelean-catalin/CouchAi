@@ -83,6 +83,26 @@ const workoutSlice = createSlice({
         }),
       };
     },
+    removeExerciseFromWorkout: (
+      oldState,
+      action: PayloadAction<{ workoutId: string; exercisePosition: number }>,
+    ) => {
+      const { workoutId, exercisePosition } = action.payload;
+
+      return {
+        workouts: oldState.workouts.map((workout) => {
+          if (workout.id === workoutId) {
+            return {
+              ...workout,
+              exercises: workout.exercises.filter(
+                (_, index) => index !== exercisePosition,
+              ),
+            };
+          }
+          return workout;
+        }),
+      };
+    },
   },
 });
 
@@ -91,6 +111,7 @@ export const {
   deleteWorkout,
   completeWorkout,
   addExerciseToWorkout,
+  removeExerciseFromWorkout,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;

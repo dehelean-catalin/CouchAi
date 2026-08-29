@@ -2,11 +2,11 @@ import routes, { RootStackParamList } from "@/navigation/routes";
 import { RootState } from "@/redux/store";
 import React from "react";
 import { Button } from "react-native";
-import { useSelector } from "react-redux";
-import { WorkoutState } from "@/redux/workoutSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { removeExerciseFromWorkout, WorkoutState } from "@/redux/workoutSlice";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { WorkoutSessionCard } from "./WorkoutSessionCard";
+import { WorkoutExerciseCard } from "./WorkoutExerciseCard";
 import { BaseHorizontalList } from "@/components/BaseHorizontalList";
 import { Exercise } from "@/redux/exerciseReducer";
 
@@ -14,6 +14,7 @@ type WorkoutProps = NativeStackScreenProps<RootStackParamList, "Workout">;
 
 function WorkoutScreen(props: WorkoutProps) {
   const { id } = props.route.params;
+  const dispatch = useDispatch();
 
   const workout = useSelector<RootState, WorkoutState | undefined>((s) =>
     s.workout.workouts.find((workout) => workout.id === id),
@@ -27,9 +28,20 @@ function WorkoutScreen(props: WorkoutProps) {
     <SafeAreaView>
       <BaseHorizontalList<Exercise>
         data={workout.exercises}
-        item={({ item, index }) => {
-          return <WorkoutSessionCard index={index} value={item} />;
-        }}
+        item={({ item: exercise, index }) => (
+          <WorkoutExerciseCard
+            index={index}
+            value={exercise}
+            onRemove={() =>
+              dispatch(
+                removeExerciseFromWorkout({
+                  workoutId: workout.id,
+                  exercisePosition: index,
+                }),
+              )
+            }
+          />
+        )}
         emptyComponentText="Search for an exercise"
       />
 
