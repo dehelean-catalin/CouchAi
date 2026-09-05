@@ -34,7 +34,8 @@ enum EquipmentCategory {
   RESISTANCE_BANDS,
   KETTLEBELL,
   BENCH,
-  BODY_WEIGHT, // None
+  BODY_WEIGHT,
+  OTHER,
 }
 
 enum MuscleName {
@@ -76,7 +77,52 @@ const initialState: ExerciseState = {
       instructions: "",
       category: ExerciseCategory.WEIGHT_AND_REPS,
       standardResolutionUrl: require("../../assets/exercises/barbell-bench-press/720.gif"),
-      thumbnailUrl: require("../../assets/exercises/barbell-bench-press/720.gif"),
+      thumbnailUrl: require("../../assets/exercises/barbell-bench-press/180.gif"),
+      requiredEquipmentIds: ["1", "2"],
+      primaryMuscleGroups: [{ id: "1", name: MuscleName.CHEST }],
+      secondaryMuscleGroups: [
+        { id: "2", name: MuscleName.TRICEPS },
+        { id: "3", name: MuscleName.SHOULDERS },
+      ],
+      isCreatedByUser: false,
+    },
+    {
+      id: "2",
+      name: "Dumbbell Bench Press",
+      instructions: "",
+      category: ExerciseCategory.WEIGHT_AND_REPS,
+      standardResolutionUrl: require("../../assets/exercises/dumbbell-bench-press/180.gif"),
+      thumbnailUrl: require("../../assets/exercises/dumbbell-bench-press/720.gif"),
+      requiredEquipmentIds: ["1", "3"],
+      primaryMuscleGroups: [{ id: "1", name: MuscleName.CHEST }],
+      secondaryMuscleGroups: [
+        { id: "2", name: MuscleName.TRICEPS },
+        { id: "3", name: MuscleName.SHOULDERS },
+      ],
+      isCreatedByUser: false,
+    },
+    {
+      id: "3",
+      name: "Incline Dumbbell Bench Press",
+      instructions: "",
+      category: ExerciseCategory.WEIGHT_AND_REPS,
+      standardResolutionUrl: require("../../assets/exercises/incline-dumbbell-bench-press/180.gif"),
+      thumbnailUrl: require("../../assets/exercises/incline-dumbbell-bench-press/720.gif"),
+      requiredEquipmentIds: ["1", "3"],
+      primaryMuscleGroups: [{ id: "1", name: MuscleName.CHEST }],
+      secondaryMuscleGroups: [
+        { id: "2", name: MuscleName.TRICEPS },
+        { id: "3", name: MuscleName.SHOULDERS },
+      ],
+      isCreatedByUser: false,
+    },
+    {
+      id: "4",
+      name: "Incline Barbell Bench Press",
+      instructions: "",
+      category: ExerciseCategory.WEIGHT_AND_REPS,
+      standardResolutionUrl: require("../../assets/exercises/incline-barbell-bench-press/180.gif"),
+      thumbnailUrl: require("../../assets/exercises/incline-barbell-bench-press/720.gif"),
       requiredEquipmentIds: ["1", "2"],
       primaryMuscleGroups: [{ id: "1", name: MuscleName.CHEST }],
       secondaryMuscleGroups: [
@@ -97,6 +143,12 @@ const initialState: ExerciseState = {
       id: "2",
       name: "bench",
       category: EquipmentCategory.BODY_WEIGHT,
+      thumbnailUrl: "",
+    },
+    {
+      id: "3",
+      name: "dumbell",
+      category: EquipmentCategory.DUMBELL,
       thumbnailUrl: "",
     },
   ],

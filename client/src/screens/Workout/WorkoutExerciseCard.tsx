@@ -8,6 +8,7 @@ import {
   ViewStyle,
 } from "react-native";
 import { Exercise } from "@/redux/exerciseReducer";
+import { WorkoutExerciseCardMenu } from "./WorkoutExerciseCardMenu";
 
 type WorkoutSessionCardProps = {
   index: number;
@@ -27,21 +28,26 @@ export function WorkoutExerciseCard({
   const chipStyle: StyleProp<ViewStyle> = [styles.chip];
 
   return (
-    <Pressable style={styles.container} onPress={handleNavigateToSessionSet}>
-      <View style={chipStyle}>
-        <Text>{index + 1}</Text>
-      </View>
-      <View style={{ flex: 1 }}>
-        <Text>{exercise.name}</Text>
-        <Text>
-          {0}/{4} sets completed
-        </Text>
-        <Text onPress={remove}>X</Text>
-        <View>
-          <Text onPress={replace}>Replace</Text>
+    <View style={styles.container}>
+      <Pressable style={styles.details} onPress={handleNavigateToSessionSet}>
+        <View style={chipStyle}>
+          <Text>{index + 1}</Text>
         </View>
-      </View>
-    </Pressable>
+        <View>
+          <Text>{exercise.name}</Text>
+          <Text>
+            {0}/{4} sets completed
+          </Text>
+        </View>
+      </Pressable>
+
+      <WorkoutExerciseCardMenu
+        items={[
+          { label: "Replace", icon: "", action: replace },
+          { label: "Delete", icon: "", action: remove },
+        ]}
+      />
+    </View>
   );
 }
 
@@ -49,14 +55,19 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     borderBottomWidth: 1,
-    padding: 15,
-    gap: 15,
+    padding: 16,
+    gap: 16,
     alignItems: "center",
+  },
+  details: {
+    flexDirection: "row",
+    gap: 16,
+    flex: 1,
   },
   chip: {
     borderRadius: 50,
-    width: 42,
-    height: 42,
+    width: 40,
+    height: 40,
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
