@@ -11,6 +11,12 @@
     "lint": "expo lint",
     "prepare": "husky"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
   "dependencies": {
     "@expo/material-symbols": "^0.1.1",
     "@expo/ui": "~57.0.17",
@@ -38,6 +44,7 @@
     "eslint": "^9.0.0",
     "eslint-config-expo": "~57.0.2",
     "husky": "^9.1.7",
+    "lint-staged": "^17.5.0",
     "react-refresh": "0.14.2",
     "typescript": "~6.0.3"
   }
