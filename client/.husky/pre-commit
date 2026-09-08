@@ -1,0 +1,6 @@
+echo "🔍 Running pre-commit checks..."
+
+echo "🧹 Running ESLint..."
+npm run lint
+
+echo "✅ Pre-commit checks passed!"
