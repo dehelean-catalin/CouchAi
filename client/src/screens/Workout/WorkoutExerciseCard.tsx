@@ -10,6 +10,8 @@ import {
 import { Exercise } from "@/redux/exerciseReducer";
 import { WorkoutExerciseCardMenu } from "./WorkoutExerciseCardMenu";
 import { Icon } from "@expo/ui";
+import Trash from "@expo/material-symbols/delete.xml";
+import Arrow from "@expo/material-symbols/arrow_back_2.xml";
 
 type WorkoutSessionCardProps = {
   index: number;
@@ -20,12 +22,12 @@ type WorkoutSessionCardProps = {
 
 const replaceIcon = Icon.select({
   ios: "arrow.2.squarepath",
-  android: "",
+  android: Arrow,
 });
 
 const trashIcon = Icon.select({
   ios: "trash",
-  android: "",
+  android: Trash,
 });
 
 export function WorkoutExerciseCard({

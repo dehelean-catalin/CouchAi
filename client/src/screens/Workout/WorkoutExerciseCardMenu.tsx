@@ -4,13 +4,14 @@ import {
   Modal,
   Pressable,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { IconName } from "@expo/ui";
+import MoreVert from "@expo/material-symbols/more_vert.xml";
+import { useAppColors } from "@/theme/useAppColors";
+import { BaseText } from "@/components/BaseText";
 
 interface WorkoutExerciseCardMenuProps {
   items: {
@@ -21,6 +22,7 @@ interface WorkoutExerciseCardMenuProps {
 }
 
 export function WorkoutExerciseCardMenu(props: WorkoutExerciseCardMenuProps) {
+  const { colors } = useAppColors();
   const [isOpen, setIsOpen] = useState(false);
   const [menuPosition, setPosition] = useState({
     x: 0,
@@ -61,9 +63,17 @@ export function WorkoutExerciseCardMenu(props: WorkoutExerciseCardMenuProps) {
 
   return (
     <View ref={ref}>
-      <TouchableOpacity onPress={handleOpenMenu}>
-        <Text>Test</Text>
-      </TouchableOpacity>
+      <Pressable onPress={handleOpenMenu} style={styles.iconBadge}>
+        <Host matchContents>
+          <Icon
+            name={Icon.select({
+              ios: "ellipsis",
+              android: MoreVert,
+            })}
+            size={16}
+          />
+        </Host>
+      </Pressable>
       <SafeAreaView>
         <Modal
           visible={isOpen}
@@ -83,6 +93,7 @@ export function WorkoutExerciseCardMenu(props: WorkoutExerciseCardMenuProps) {
                 {
                   top: menuPosition.y + menuPosition.height,
                   left: menuPosition.x,
+                  backgroundColor: colors.surface1,
                 },
               ]}
             >
@@ -92,9 +103,13 @@ export function WorkoutExerciseCardMenu(props: WorkoutExerciseCardMenuProps) {
                   onPress={menuItem.action}
                   style={styles.menuItem}
                 >
-                  <Text>{menuItem.label}</Text>
+                  <BaseText text={menuItem.label} type="primary" />
                   <Host matchContents>
-                    <Icon name={menuItem.icon} size={16} />
+                    <Icon
+                      style={styles.itemIcon}
+                      name={menuItem.icon}
+                      size={16}
+                    />
                   </Host>
                 </Pressable>
               ))}
@@ -109,9 +124,10 @@ export function WorkoutExerciseCardMenu(props: WorkoutExerciseCardMenuProps) {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    backgroundColor: "gray",
     borderRadius: 8,
     padding: 8,
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 2 },
   },
   backdrop: {
     alignItems: "center",
@@ -123,5 +139,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 12,
     padding: 8,
+  },
+  iconBadge: {
+    transform: [{ rotate: "90deg" }],
+    padding: 12,
+  },
+  itemIcon: {
+    width: 20,
   },
 });
