@@ -19,14 +19,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RecentCompletedWorkout } from "./RecentCompletedWorkout";
 import { BaseText } from "@/components/BaseText";
-import { useAppColors } from "@/theme/useAppColors";
 import { trashIcon } from "@/components/icons";
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
 
 export default function HomeScreen(props: HomeScreenProps) {
   const dispatch = useDispatch();
-  const { colors } = useAppColors();
   const workouts = useSelector<RootState, WorkoutState[]>(
     (s) => s.workout.workouts,
   );
@@ -50,9 +48,7 @@ export default function HomeScreen(props: HomeScreenProps) {
   }
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: colors.surface0 }]}
-    >
+    <SafeAreaView style={styles.container}>
       <ScrollView>
         {workouts
           .filter((w) => w.status === "in-progress")

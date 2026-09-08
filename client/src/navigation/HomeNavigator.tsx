@@ -19,7 +19,9 @@ export default function HomeNavigator() {
   const dispatch = useDispatch();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{ contentStyle: { backgroundColor: "transparent" } }}
+    >
       <Stack.Screen
         name={routes.HOME}
         component={HomeScreen}
