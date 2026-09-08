@@ -13,7 +13,7 @@ import MoreVert from "@expo/material-symbols/more_vert.xml";
 import { useAppColors } from "@/theme/useAppColors";
 import { BaseText } from "@/components/BaseText";
 
-interface WorkoutExerciseCardMenuProps {
+interface BaseMenuProps {
   items: {
     label: string;
     icon: IconName;
@@ -21,7 +21,7 @@ interface WorkoutExerciseCardMenuProps {
   }[];
 }
 
-export function WorkoutExerciseCardMenu(props: WorkoutExerciseCardMenuProps) {
+export function BaseMenu(props: BaseMenuProps) {
   const { colors } = useAppColors();
   const [isOpen, setIsOpen] = useState(false);
   const [menuPosition, setPosition] = useState({
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
   },
   menuItem: {
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
     gap: 12,
     padding: 8,

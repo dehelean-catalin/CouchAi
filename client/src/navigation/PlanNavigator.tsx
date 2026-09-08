@@ -1,7 +1,7 @@
 import routes, { RootStackParamList } from "@/navigation/routes";
 import CreateExerciseScreen from "@/screens/CreateExercise/CreateExerciseScreen";
 import { ExerciseDetailsScreen } from "@/screens/ExerciseDetails/ExerciseDetailsScreen";
-import ExercisesScreen from "@/screens/Exercises/ExercisesScreen";
+import ExercisesScreen from "@/screens/v2/Exercises/ExercisesScreen";
 import { WorkoutPlansScreen } from "@/screens/Plans/PlansScreen";
 import { WorkoutPlanForm } from "@/screens/WorkoutPlanForm/WorkoutPlanForm";
 import WorkoutPlanPreview from "@/screens/WorkoutPlanPreview/WorkoutPlanPreview";

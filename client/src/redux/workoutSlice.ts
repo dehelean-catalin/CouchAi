@@ -11,7 +11,14 @@ export interface WorkoutState {
   startDate: string;
   endDate: string;
   notes: string;
-  exercises: Exercise[];
+  exercises: WorkoutExercise[];
+}
+
+export interface WorkoutExercise {
+  id: string;
+  exerciseId: string;
+  name: string;
+  thumbnailUrl: string;
 }
 
 const emptyWorkout: WorkoutState = {
@@ -63,7 +70,10 @@ const workoutSlice = createSlice({
     },
     addExerciseToWorkout: (
       oldState,
-      action: PayloadAction<{ workoutId: string; exercises: Exercise[] }>,
+      action: PayloadAction<{
+        workoutId: string;
+        exercises: WorkoutExercise[];
+      }>,
     ) => {
       const { workoutId, exercises } = action.payload;
 
@@ -107,7 +117,7 @@ const workoutSlice = createSlice({
       action: PayloadAction<{
         workoutId: string;
         exercisePosition: number;
-        newExercise: Exercise;
+        newExercise: WorkoutExercise;
       }>,
     ) => {
       const { workoutId, exercisePosition, newExercise } = action.payload;
@@ -142,7 +152,7 @@ export const {
 
 export default workoutSlice.reducer;
 
-function generateRandomId(): string {
+export function generateRandomId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
 

@@ -1,7 +1,7 @@
 import { RootStackParamList } from "@/navigation/routes";
 import { RootState } from "@/redux/store";
 import React, { useState } from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import ExerciseCard from "./ExerciseCard";
@@ -12,6 +12,8 @@ import {
   replaceExerciseFromWorkout,
 } from "@/redux/workoutSlice";
 import { BaseHorizontalList } from "@/components/BaseHorizontalList";
+import { mapExerciseToWorkoutExercise } from "./exercise.bussines";
+import { BaseFloatingButton } from "@/navigation/BaseFloatingButton";
 
 type ExercisesProps = NativeStackScreenProps<
   RootStackParamList,
@@ -43,14 +45,20 @@ function ExercisesScreen(props: ExercisesProps) {
     if (!workoutId) {
       return;
     }
-    dispatch(
-      addExerciseToWorkout({
-        workoutId,
-        exercises: exercises.filter((exercise) =>
-          selectedExercises.includes(exercise.id),
-        ),
-      }),
+    const newExercises: Exercise[] = exercises.filter((exercise) =>
+      selectedExercises.includes(exercise.id),
     );
+    if (newExercises.length) {
+      dispatch(
+        addExerciseToWorkout({
+          workoutId,
+          exercises: newExercises.map((exercise) =>
+            mapExerciseToWorkoutExercise(exercise),
+          ),
+        }),
+      );
+    }
+
     props.navigation.goBack();
   }
 
@@ -61,16 +69,16 @@ function ExercisesScreen(props: ExercisesProps) {
     const newExercise = exercises.find(
       (exercise) => exercise.id === exerciseId,
     );
-    if (!newExercise) {
-      return;
+    if (newExercise) {
+      dispatch(
+        replaceExerciseFromWorkout({
+          workoutId,
+          exercisePosition: payload.exercisePosition,
+          newExercise: mapExerciseToWorkoutExercise(newExercise),
+        }),
+      );
     }
-    dispatch(
-      replaceExerciseFromWorkout({
-        workoutId,
-        exercisePosition: payload.exercisePosition,
-        newExercise,
-      }),
-    );
+
     // wait for checkbox animation to finish before going back
     setTimeout(props.navigation.goBack, 50);
   }
@@ -91,15 +99,11 @@ function ExercisesScreen(props: ExercisesProps) {
       />
       {actionType === "select" && (
         <View style={styles.addContainer}>
-          <Pressable
-            style={styles.addButton}
-            onPress={handleAddExercise}
+          <BaseFloatingButton
+            text={`Add exercises (${selectedExercises.length})`}
             disabled={!selectedExercises.length}
-          >
-            <Text style={{ color: "white" }}>
-              Add exercises ({selectedExercises.length})
-            </Text>
-          </Pressable>
+            onPress={handleAddExercise}
+          />
         </View>
       )}
     </SafeAreaView>

@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Exercise } from "@/redux/exerciseReducer";
 import { Image } from "expo-image";
 import ExerciseCheckBox from "./ExerciseCheckBox";
-import { ExerciseListAction } from "../../navigation/routes";
+import { ExerciseListAction } from "../../../navigation/routes";
 
 type CardProps = {
   data: Exercise;

@@ -7,15 +7,15 @@ import {
   Text,
   ViewStyle,
 } from "react-native";
-import { Exercise } from "@/redux/exerciseReducer";
-import { WorkoutExerciseCardMenu } from "./WorkoutExerciseCardMenu";
+import { BaseMenu } from "../../../components/BaseMenu";
 import { Icon } from "@expo/ui";
-import Trash from "@expo/material-symbols/delete.xml";
 import Arrow from "@expo/material-symbols/arrow_back_2.xml";
+import { WorkoutExercise } from "@/redux/workoutSlice";
+import { trashIcon } from "@/components/icons";
 
 type WorkoutSessionCardProps = {
   index: number;
-  exercise: Exercise;
+  exercise: WorkoutExercise;
   onRemove: () => void;
   onReplace: () => void;
 };
@@ -23,11 +23,6 @@ type WorkoutSessionCardProps = {
 const replaceIcon = Icon.select({
   ios: "arrow.2.squarepath",
   android: Arrow,
-});
-
-const trashIcon = Icon.select({
-  ios: "trash",
-  android: Trash,
 });
 
 export function WorkoutExerciseCard({
@@ -54,7 +49,7 @@ export function WorkoutExerciseCard({
         </View>
       </Pressable>
 
-      <WorkoutExerciseCardMenu
+      <BaseMenu
         items={[
           {
             label: "Replace",

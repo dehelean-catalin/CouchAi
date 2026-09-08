@@ -4,7 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React, { FC, useLayoutEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
-import Counter from "../Workout/Counter";
+import Counter from "../v2/Workout/Counter";
 
 type Props = {
   navigation: StackNavigationProp<any>;

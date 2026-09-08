@@ -1,14 +1,17 @@
+import { IconName } from "@expo/ui";
+
 const routes = {
   HOME: "Home",
   WORKOUT: "Workout",
   EXERCISE_LIST: "ExerciseList",
+  COMPLETED_WORKOUT_PREVIEW: "CompletedWorkoutPreview",
 
   //not reviewed yeat
   PLAN: "Plan",
   CREATE_PLAN: "CreatePlan",
   CREATE_EXERCISE: "CreateExercise",
   EXERCISE_DETAILS: "ExerciseDetails",
-  WORKOUT_SESSION_SET: "Workout Session Set",
+  WORKOUT_SESSION_SET: "WorkoutSessionSet",
   WORKOUT_PREVIEW: "WorkoutPreview",
   WORKOUT_DAY_PREVIEW: "WorkoutDayPreview",
 } as const;
@@ -32,7 +35,11 @@ export type RootStackParamList = {
     workoutId?: string;
     action: ExerciseListAction;
   };
-
+  CompletedWorkoutPreview: {
+    workoutId: string;
+    bottomActions?: { label: string; action: () => void }[];
+    headerOptions?: { label: string; icon: IconName; action: () => void }[];
+  };
   /// not reviewed yeat
   ExerciseDetails: { id: string };
   Plan: undefined;

@@ -8,7 +8,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WorkoutExerciseCard } from "./WorkoutExerciseCard";
 import { BaseHorizontalList } from "@/components/BaseHorizontalList";
-import { Exercise } from "@/redux/exerciseReducer";
+import { WorkoutExercise } from "@/redux/workoutSlice";
 
 type WorkoutProps = NativeStackScreenProps<RootStackParamList, "Workout">;
 
@@ -26,7 +26,7 @@ function WorkoutScreen(props: WorkoutProps) {
 
   return (
     <SafeAreaView>
-      <BaseHorizontalList<Exercise>
+      <BaseHorizontalList<WorkoutExercise>
         data={workout.exercises}
         item={({ item: exercise, index }) => (
           <WorkoutExerciseCard
