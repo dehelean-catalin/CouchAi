@@ -6,20 +6,14 @@ import {
   WorkoutState,
 } from "@/redux/workoutSlice";
 import React from "react";
-import {
-  Button,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-} from "react-native";
+import { Button, Pressable, StyleSheet, View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RecentCompletedWorkout } from "./RecentCompletedWorkout";
 import { BaseText } from "@/components/BaseText";
 import { trashIcon } from "@/components/icons";
+import { BaseFloatingButton } from "@/navigation/BaseFloatingButton";
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -47,6 +41,16 @@ export default function HomeScreen(props: HomeScreenProps) {
     });
   }
 
+  function handleStartWorkout() {
+    dispatch(startWorkout());
+    const latestState = store.getState();
+    const latestWorkout =
+      latestState.workout.workouts[latestState.workout.workouts.length - 1];
+    props.navigation.navigate(routes.WORKOUT, {
+      id: latestWorkout.id,
+    });
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -59,8 +63,8 @@ export default function HomeScreen(props: HomeScreenProps) {
                 props.navigation.navigate(routes.WORKOUT, { id: workout.id })
               }
             >
-              <Text>Resume</Text>
-              <Text>{workout.name}</Text>
+              <BaseText text="Resume" type="primary" />
+              <BaseText text={workout.name} type="primary" />
               <Button
                 title="X"
                 onPress={() => dispatch(deleteWorkout(workout.id))}
@@ -68,22 +72,10 @@ export default function HomeScreen(props: HomeScreenProps) {
             </Pressable>
           ))}
 
-        <Pressable
-          style={({ pressed }) => [styles.button, pressed && styles.pressed]}
-          onPress={() => {
-            dispatch(startWorkout());
-            const latestState = store.getState();
-            const latestWorkout =
-              latestState.workout.workouts[
-                latestState.workout.workouts.length - 1
-              ];
-            props.navigation.navigate(routes.WORKOUT, {
-              id: latestWorkout.id,
-            });
-          }}
-        >
-          <Text>Start Workout On The Fly</Text>
-        </Pressable>
+        <BaseFloatingButton
+          text="Start new workout"
+          onPress={handleStartWorkout}
+        />
 
         <View style={styles.recentActivityContainer}>
           <BaseText text="Recent Activity" type="primary_18" />
@@ -106,8 +98,8 @@ export default function HomeScreen(props: HomeScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingLeft: 4,
-    paddingRight: 4,
+    paddingLeft: 8,
+    paddingRight: 8,
   },
   button: {
     backgroundColor: "#9abaff",

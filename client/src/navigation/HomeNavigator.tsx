@@ -12,15 +12,20 @@ import { useDispatch } from "react-redux";
 import { completeWorkout } from "@/redux/workoutSlice";
 import { CompletedWorkoutPreview } from "@/screens/v2/CompletedWorkoutPreview/CompletedWorkoutPreviewScreen";
 import { BaseMenu } from "@/components/BaseMenu";
+import { useAppColors } from "@/theme/useAppColors";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function HomeNavigator() {
+  const { colors } = useAppColors();
   const dispatch = useDispatch();
 
   return (
     <Stack.Navigator
-      screenOptions={{ contentStyle: { backgroundColor: "transparent" } }}
+      screenOptions={{
+        contentStyle: { backgroundColor: colors.surface0 },
+        headerStyle: { backgroundColor: colors.surface1 },
+      }}
     >
       <Stack.Screen
         name={routes.HOME}
