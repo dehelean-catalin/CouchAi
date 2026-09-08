@@ -4,6 +4,8 @@ import BottomTabNavigator from "@/navigation/BottomTabNavigator";
 import { Provider } from "react-redux";
 import { store } from "@/redux/store";
 
+var a;
+
 export default function App() {
   return (
     <Provider store={store}>
