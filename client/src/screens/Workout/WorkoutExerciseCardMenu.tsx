@@ -1,3 +1,4 @@
+import { Host, Icon } from "@expo/ui";
 import { useEffect, useRef, useState } from "react";
 import {
   Modal,
@@ -9,11 +10,12 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import type { IconName } from "@expo/ui";
 
 interface WorkoutExerciseCardMenuProps {
   items: {
     label: string;
-    icon: unknown;
+    icon: IconName;
     action: () => void;
   }[];
 }
@@ -91,6 +93,9 @@ export function WorkoutExerciseCardMenu(props: WorkoutExerciseCardMenuProps) {
                   style={styles.menuItem}
                 >
                   <Text>{menuItem.label}</Text>
+                  <Host matchContents>
+                    <Icon name={menuItem.icon} size={16} />
+                  </Host>
                 </Pressable>
               ))}
             </View>
@@ -104,9 +109,9 @@ export function WorkoutExerciseCardMenu(props: WorkoutExerciseCardMenuProps) {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    width: 100,
     backgroundColor: "gray",
     borderRadius: 8,
+    padding: 8,
   },
   backdrop: {
     alignItems: "center",
@@ -114,7 +119,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   menuItem: {
-    padding: 12,
-    paddingInline: 16,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 12,
+    padding: 8,
   },
 });

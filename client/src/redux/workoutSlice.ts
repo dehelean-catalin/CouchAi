@@ -118,7 +118,7 @@ const workoutSlice = createSlice({
               ...workout,
               exercises: workout.exercises.map((exercise, index) => {
                 if (index === exercisePosition) {
-                  newExercise;
+                  return newExercise;
                 }
                 return exercise;
               }),
