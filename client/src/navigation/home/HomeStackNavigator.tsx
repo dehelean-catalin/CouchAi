@@ -1,6 +1,6 @@
 import routes, { RootStackParamList } from "@/navigation/routes";
 import React from "react";
-import { HomeScreen } from "../../screens/Home/HomeScreen";
+import { HomeScreen } from "../../screens/v2/Home/HomeScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { WorkoutScreen } from "@/screens/v2/Workout/WorkoutScreen";
 import { ExercisesScreen } from "@/screens/v2/Exercises/ExercisesScreen";
