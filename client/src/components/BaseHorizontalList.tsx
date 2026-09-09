@@ -1,5 +1,6 @@
 import { ReactElement, useCallback } from "react";
-import { FlatList, Text } from "react-native";
+import { FlatList } from "react-native";
+import { BaseText } from "./BaseText";
 
 const ITEM_HEIGHT = 90;
 
@@ -32,7 +33,7 @@ export function BaseHorizontalList<T extends BaseHorizontalListItem>(
       renderItem={props.item}
       getItemLayout={handleItemLayout}
       ListEmptyComponent={() => {
-        return <Text>{props.emptyComponentText}</Text>;
+        return <BaseText text={props.emptyComponentText} type="primary_18" />;
       }}
     />
   );

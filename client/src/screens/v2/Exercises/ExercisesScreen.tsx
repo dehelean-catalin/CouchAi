@@ -78,7 +78,7 @@ export function ExercisesScreen(props: ScreenProps<"ExerciseList">) {
   }
 
   return (
-    <SafeAreaView style={{ height: "100%" }}>
+    <SafeAreaView style={styles.container}>
       <BaseHorizontalList<Exercise>
         data={exercises}
         item={({ item }) => (
@@ -105,28 +105,14 @@ export function ExercisesScreen(props: ScreenProps<"ExerciseList">) {
 }
 
 const styles = StyleSheet.create({
-  searchContainer: {
-    flexDirection: "row",
-    paddingBottom: 10,
-    paddingHorizontal: 10,
-  },
-  notFoundContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 10,
-    flex: 1,
+  container: {
+    height: "100%",
   },
   addContainer: {
-    flexDirection: "row",
-    position: "absolute",
-    display: "flex",
-    justifyContent: "center",
-    bottom: 40,
     width: "100%",
-  },
-  addButton: {
-    backgroundColor: "lightblue",
-    padding: 10,
-    borderRadius: 4,
+    position: "absolute",
+    bottom: 40,
+    flexDirection: "row",
+    justifyContent: "center",
   },
 });

@@ -3,7 +3,7 @@ import { StyleProp, Text, TextStyle } from "react-native";
 
 interface BaseTextProps {
   text: string;
-  type: "primary" | "primary_18" | "primary_bold";
+  type: "primary" | "primary_18" | "primary_bold" | "secondary";
 }
 
 export function BaseText(props: BaseTextProps) {
@@ -20,6 +20,9 @@ export function BaseText(props: BaseTextProps) {
       break;
     case "primary_18":
       textStyle = { color: textColors.primary, fontSize: 18 };
+      break;
+    case "secondary":
+      textStyle = { color: textColors.secondary, fontSize: 14 };
       break;
     default:
       textStyle = { color: textColors.primary, fontSize: 14 };

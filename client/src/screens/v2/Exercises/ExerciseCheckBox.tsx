@@ -1,14 +1,14 @@
-import { Exercise } from "@/redux/exerciseReducer";
-import Checkbox from "expo-checkbox";
-import React, { FC, useState } from "react";
-import { View } from "react-native";
+import { useAppColors } from "@/theme/useAppColors";
+import { Checkbox } from "expo-checkbox";
+import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
 
-type Props = {
-  data: Exercise;
+type ExerciseCheckBoxProps = {
   onSelect?: (isChecked: boolean) => void;
 };
 
-const ExerciseCheckBox: FC<Props> = ({ data, onSelect: select }) => {
+export function ExerciseCheckBox({ onSelect: select }: ExerciseCheckBoxProps) {
+  const { colors } = useAppColors();
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckPress = () => {
@@ -17,10 +17,18 @@ const ExerciseCheckBox: FC<Props> = ({ data, onSelect: select }) => {
   };
 
   return (
-    <View style={{ padding: 16 }}>
-      <Checkbox value={isChecked} onValueChange={handleCheckPress} />
+    <View style={styles.container}>
+      <Checkbox
+        value={isChecked}
+        onValueChange={handleCheckPress}
+        color={colors.blue0}
+      />
     </View>
   );
-};
+}
 
-export default ExerciseCheckBox;
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+  },
+});

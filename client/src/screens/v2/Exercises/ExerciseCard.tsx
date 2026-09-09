@@ -1,9 +1,11 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Exercise } from "@/redux/exerciseReducer";
 import { Image } from "expo-image";
-import ExerciseCheckBox from "./ExerciseCheckBox";
+import { ExerciseCheckBox } from "./ExerciseCheckBox";
 import { ExerciseListAction } from "../../../navigation/routes";
+import { BaseText } from "@/components/BaseText";
+import { useAppColors } from "@/theme/useAppColors";
 
 type CardProps = {
   data: Exercise;
@@ -18,31 +20,34 @@ function Card({
   onSelect: select,
   onReplace: replace,
 }: CardProps) {
+  const { colors } = useAppColors();
   const initialLetter = data.name.slice(0, 1).toUpperCase();
 
   return (
     <Pressable style={styles.card}>
-      {data.thumbnailUrl ? (
+      {!data.thumbnailUrl ? (
         <Image source={data.thumbnailUrl} style={styles.tinyLogo} />
       ) : (
-        <View style={styles.imageContainer}>
-          <Text style={styles.initial}>{initialLetter}</Text>
+        <View
+          style={[styles.emptyTumbnail, { backgroundColor: colors.surface1 }]}
+        >
+          <BaseText text={initialLetter} type="primary_18" />
         </View>
       )}
       <View style={styles.column}>
-        <Text style={styles.title}>{data.name}</Text>
-        <Text style={styles.content}>
-          {data.primaryMuscleGroups.map(({ name }) => name).join(", ")}
-        </Text>
+        <BaseText text={data.name} type="primary" />
+        <BaseText
+          text={data.primaryMuscleGroups.map(({ name }) => name).join(", ")}
+          type="secondary"
+        />
       </View>
       {actionType === "select" && (
         <ExerciseCheckBox
-          data={data}
           onSelect={(isChecked) => select?.(data.id, isChecked)}
         />
       )}
       {actionType === "replace" && (
-        <ExerciseCheckBox data={data} onSelect={() => replace?.(data.id)} />
+        <ExerciseCheckBox onSelect={() => replace?.(data.id)} />
       )}
     </Pressable>
   );
@@ -56,12 +61,6 @@ const styles = StyleSheet.create({
     gap: 16,
     padding: 2,
   },
-  title: { fontSize: 16 },
-  content: {
-    color: "gray",
-    marginTop: 2,
-    fontSize: 14,
-  },
   column: {
     flex: 1,
     justifyContent: "center",
@@ -70,21 +69,12 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
   },
-  imageContainer: {
-    width: 80,
-    height: 80,
-    backgroundColor: "white",
+  emptyTumbnail: {
+    width: 90,
+    height: 90,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  },
-  initial: {
-    fontSize: 20,
-    color: "gray",
-  },
-  checkBoxContainer: {
-    justifyContent: "center",
-    padding: 4,
   },
 });
 

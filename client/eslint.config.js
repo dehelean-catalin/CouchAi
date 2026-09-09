@@ -1,10 +1,12 @@
 // https://docs.expo.dev/guides/using-eslint/
 const { defineConfig } = require("eslint/config");
 const expoConfig = require("eslint-config-expo/flat");
+const reactNative = require("eslint-plugin-react-native");
 
 module.exports = defineConfig([
   expoConfig,
   {
+    plugins: { "react-native": reactNative },
     ignores: ["dist/*", "node_modules/*", ".expo/*"],
     rules: {
       "no-console": "error",
@@ -28,6 +30,12 @@ module.exports = defineConfig([
       "prefer-template": "error",
       "no-useless-concat": "error",
       "no-useless-return": "error",
+
+      "react-native/no-unused-styles": "error",
+      "react-native/no-color-literals": "error",
+      "react-native/no-single-element-style-arrays": "error",
+      "react-native/no-raw-text": "error",
+      "react-native/no-inline-styles": "error",
     },
   },
 ]);

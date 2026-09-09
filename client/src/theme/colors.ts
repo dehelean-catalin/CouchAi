@@ -30,11 +30,11 @@ export const COLORS: Record<ColorSchemeName, ColorValue> = {
 
 export const textColors: Record<ColorSchemeName, TextColorValue> = {
   light: {
-    primary: "rgb(10, 10, 10)",
-    secondary: "rgb(33, 33, 33)",
+    primary: "rgba(26, 26, 26, 1)",
+    secondary: "rgba(26, 26, 26, 0.6)",
   },
   dark: {
     primary: "rgb(229, 229, 229)",
-    secondary: "rgb(199, 199, 199)",
+    secondary: "rgba(229, 229, 229,0.6)",
   },
 };
