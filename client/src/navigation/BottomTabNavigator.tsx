@@ -5,6 +5,7 @@ import { HomeStackNavigator } from "./home/HomeStackNavigator";
 import { useAppColors } from "@/theme/useAppColors";
 import { BaseIcon } from "@/components/icons";
 import { StyleSheet } from "react-native";
+import { ProfileStackNavigator } from "./profile/ProfileStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -14,14 +15,12 @@ export default function BottomTabNavigator() {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
-          sceneStyle: { backgroundColor: colors.surface0 },
           tabBarStyle: [
             styles.tabBarContainer,
             {
               backgroundColor: colors.surface1,
             },
           ],
-
           tabBarShowLabel: false,
           headerShown: false,
         }}
@@ -34,8 +33,8 @@ export default function BottomTabNavigator() {
           }}
         />
         <Tab.Screen
-          name="Plans"
-          component={HomeStackNavigator}
+          name="MainProfile"
+          component={ProfileStackNavigator}
           options={{
             tabBarIcon: () => <BaseIcon name="person" />,
           }}

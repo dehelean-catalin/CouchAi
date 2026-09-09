@@ -25,7 +25,7 @@ export function ExerciseCard({
 
   return (
     <Pressable style={styles.card}>
-      {!data.thumbnailUrl ? (
+      {data.thumbnailUrl ? (
         <Image source={data.thumbnailUrl} style={styles.tinyLogo} />
       ) : (
         <View

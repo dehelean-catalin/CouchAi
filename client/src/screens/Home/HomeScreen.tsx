@@ -6,14 +6,17 @@ import {
   WorkoutState,
 } from "@/redux/workoutSlice";
 import React from "react";
-import { Button, Pressable, StyleSheet, View, ScrollView } from "react-native";
+import { Pressable, StyleSheet, View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import { RecentCompletedWorkout } from "./RecentCompletedWorkout";
 import { BaseText } from "@/components/BaseText";
 import { BaseButton } from "@/components/BaseButton";
+import { useAppColors } from "@/theme/useAppColors";
+import { BaseIcon } from "@/components/icons";
 
 export function HomeScreen(props: ScreenProps<"Home">) {
+  const { colors } = useAppColors();
   const dispatch = useDispatch();
   const workouts = useSelector<RootState, WorkoutState[]>(
     (s) => s.workout.workouts,
@@ -45,6 +48,10 @@ export function HomeScreen(props: ScreenProps<"Home">) {
           .map((workout) => (
             <Pressable
               key={workout.id}
+              style={[
+                styles.resumeWorkoutCard,
+                { backgroundColor: colors.surface1 },
+              ]}
               onPress={() =>
                 props.navigation.navigate(routes.WORKOUT, {
                   id: workout.id,
@@ -52,12 +59,14 @@ export function HomeScreen(props: ScreenProps<"Home">) {
                 })
               }
             >
-              <BaseText text="Resume" type="primary" />
-              <BaseText text={workout.name} type="primary" />
-              <Button
-                title="X"
-                onPress={() => dispatch(deleteWorkout(workout.id))}
-              />
+              <View>
+                <BaseText text="Resume" type="secondary" />
+                <BaseText text={workout.name} type="primary_18" />
+              </View>
+
+              <Pressable onPress={() => dispatch(deleteWorkout(workout.id))}>
+                <BaseIcon name="clear" />
+              </Pressable>
             </Pressable>
           ))}
 
@@ -84,8 +93,20 @@ export function HomeScreen(props: ScreenProps<"Home">) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingLeft: 8,
-    paddingRight: 8,
+  },
+  resumeWorkoutCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderRadius: 4,
+    padding: 8,
+    paddingInline: 12,
+    marginBottom: 12,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
   },
   recentActivityContainer: {
     gap: 8,

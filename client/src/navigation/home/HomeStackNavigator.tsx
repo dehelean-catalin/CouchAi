@@ -18,7 +18,7 @@ export function HomeStackNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
-        contentStyle: { backgroundColor: colors.surface0 },
+        contentStyle: { backgroundColor: colors.surface0, padding: 8 },
         headerStyle: { backgroundColor: colors.surface1 },
       }}
     >

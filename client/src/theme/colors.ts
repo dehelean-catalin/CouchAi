@@ -15,14 +15,14 @@ const BLUE_0 = "rgb(51, 146, 234)";
 
 export const COLORS: Record<ColorSchemeName, ColorValue> = {
   light: {
-    surface0: "rgb(229, 229, 229)",
-    surface1: "rgb(199, 199, 199)",
+    surface0: "rgb(180, 187, 213)",
+    surface1: "rgb(220, 220, 220)",
 
     blue0: BLUE_0,
   },
   dark: {
     surface0: "rgb(10, 10, 10)",
-    surface1: "rgb(33, 33, 33)",
+    surface1: "rgb(30, 30, 30)",
 
     blue0: BLUE_0,
   },
@@ -30,8 +30,8 @@ export const COLORS: Record<ColorSchemeName, ColorValue> = {
 
 export const textColors: Record<ColorSchemeName, TextColorValue> = {
   light: {
-    primary: "rgba(26, 26, 26, 1)",
-    secondary: "rgba(26, 26, 26, 0.6)",
+    primary: "rgb(40, 40, 40)",
+    secondary: "rgb(80, 80, 80)",
   },
   dark: {
     primary: "rgb(229, 229, 229)",

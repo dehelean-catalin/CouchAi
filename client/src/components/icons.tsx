@@ -3,6 +3,7 @@ import Trash from "@expo/material-symbols/delete.xml";
 import Home from "@expo/material-symbols/home.xml";
 import PersonIcon from "@expo/material-symbols/person.xml";
 import ReplaceIcon from "@expo/material-symbols/arrow_back_2.xml";
+import ClearIcon from "@expo/material-symbols/clear_all.xml";
 import { StyleSheet } from "react-native";
 
 const trashIcon = Icon.select({
@@ -25,8 +26,13 @@ const replaceIcon = Icon.select({
   android: ReplaceIcon,
 });
 
+const clearIcon = Icon.select({
+  ios: "xmark",
+  android: ClearIcon,
+});
+
 export interface BaseIconProps {
-  name: "trash" | "house" | "person" | "replace";
+  name: "trash" | "house" | "person" | "replace" | "clear";
 }
 
 export function BaseIcon(props: BaseIconProps) {
@@ -44,6 +50,9 @@ export function BaseIcon(props: BaseIconProps) {
     case "replace":
       iconName = replaceIcon;
       break;
+    case "clear":
+      iconName = clearIcon;
+      break;
     default:
       throw new Error("Invalid icon name");
   }
@@ -58,5 +67,6 @@ export function BaseIcon(props: BaseIconProps) {
 const styles = StyleSheet.create({
   icon: {
     width: 20,
+    paddingLeft: 4,
   },
 });
