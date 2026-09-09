@@ -45,6 +45,7 @@ export function HomeScreen(props: ScreenProps<"Home">) {
       latestState.workout.workouts[latestState.workout.workouts.length - 1];
     props.navigation.navigate(routes.WORKOUT, {
       id: latestWorkout.id,
+      name: latestWorkout.name,
     });
   }
 
@@ -57,7 +58,10 @@ export function HomeScreen(props: ScreenProps<"Home">) {
             <Pressable
               key={workout.id}
               onPress={() =>
-                props.navigation.navigate(routes.WORKOUT, { id: workout.id })
+                props.navigation.navigate(routes.WORKOUT, {
+                  id: workout.id,
+                  name: workout.name,
+                })
               }
             >
               <BaseText text="Resume" type="primary" />
@@ -94,19 +98,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 8,
     paddingRight: 8,
-  },
-  button: {
-    backgroundColor: "#9abaff",
-    padding: 12,
-    borderRadius: 4,
-    alignItems: "center",
-  },
-  pressed: {
-    opacity: 0.7,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
   },
   recentActivityContainer: {
     gap: 8,

@@ -13,6 +13,7 @@ import { completeWorkout } from "@/redux/workoutSlice";
 import { WorkoutSummaryScreen } from "@/screens/v2/WorkoutSummary/WorkoutSummaryScreen";
 import { BaseMenu } from "@/components/BaseMenu";
 import { useAppColors } from "@/theme/useAppColors";
+import { BaseText } from "@/components/BaseText";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -39,7 +40,9 @@ export default function HomeNavigator() {
           headerLeft: ({ tintColor }) => (
             <BackButton color={tintColor} navigation={navigation} />
           ),
-          headerTitle: "Workout Name",
+          headerTitle: () => (
+            <BaseText text={route.params.name} type="primary_18" />
+          ),
           headerRight: ({ tintColor }) => (
             <Pressable
               onPress={() => {
@@ -63,12 +66,18 @@ export default function HomeNavigator() {
           presentation: "fullScreenModal",
         })}
       />
-      <Stack.Screen name={routes.EXERCISE_LIST} component={ExercisesScreen} />
+      <Stack.Screen
+        name={routes.EXERCISE_LIST}
+        component={ExercisesScreen}
+        options={{
+          headerTitle: () => <BaseText text="Exercises" type="primary_18" />,
+        }}
+      />
       <Stack.Screen
         name={routes.WORKOUT_SUMMARY}
         component={WorkoutSummaryScreen}
         options={({ navigation, route }) => ({
-          headerTitle: "Summary",
+          headerTitle: () => <BaseText text="Summary" type="primary_18" />,
           headerLeft: ({ tintColor }) => (
             <BackButton color={tintColor} navigation={navigation} />
           ),
