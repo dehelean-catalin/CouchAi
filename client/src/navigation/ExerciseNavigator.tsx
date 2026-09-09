@@ -1,7 +1,7 @@
 import routes, { RootStackParamList } from "@/navigation/routes";
 import CreateExerciseScreen from "@/screens/CreateExercise/CreateExerciseScreen";
 import { ExerciseDetailsScreen } from "@/screens/ExerciseDetails/ExerciseDetailsScreen";
-import ExercisesScreen from "@/screens/v2/Exercises/ExercisesScreen";
+import { ExercisesScreen } from "@/screens/v2/Exercises/ExercisesScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 

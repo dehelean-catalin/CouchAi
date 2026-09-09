@@ -12,7 +12,7 @@ import {
 } from "@/redux/workoutSlice";
 import { BaseHorizontalList } from "@/components/BaseHorizontalList";
 import { mapExerciseToWorkoutExercise } from "./exercise.bussines";
-import { BaseButton } from "@/components/BaseFloatingButton";
+import { BaseButton } from "@/components/BaseButton";
 
 export function ExercisesScreen(props: ScreenProps<"ExerciseList">) {
   const dispatch = useDispatch();

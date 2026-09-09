@@ -1,11 +1,7 @@
-import routes, { RootStackParamList, RouteValues } from "@/navigation/routes";
+import routes, { RootStackParamList } from "@/navigation/routes";
 import React from "react";
-import { Pressable, Text } from "react-native";
 import { HomeScreen } from "../screens/Home/HomeScreen";
-import {
-  createNativeStackNavigator,
-  NativeStackNavigationProp,
-} from "@react-navigation/native-stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { WorkoutScreen } from "@/screens/v2/Workout/WorkoutScreen";
 import { ExercisesScreen } from "@/screens/v2/Exercises/ExercisesScreen";
 import { useDispatch } from "react-redux";
@@ -14,6 +10,7 @@ import { WorkoutSummaryScreen } from "@/screens/v2/WorkoutSummary/WorkoutSummary
 import { BaseMenu } from "@/components/BaseMenu";
 import { useAppColors } from "@/theme/useAppColors";
 import { BaseText } from "@/components/BaseText";
+import { BaseButton } from "@/components/BaseButton";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -37,15 +34,21 @@ export default function HomeNavigator() {
         name={routes.WORKOUT}
         component={WorkoutScreen}
         options={({ navigation, route }) => ({
-          headerLeft: ({ tintColor }) => (
-            <BackButton color={tintColor} navigation={navigation} />
+          headerLeft: () => (
+            <BaseButton
+              text="Back"
+              type="normal"
+              onPress={() => navigation.goBack()}
+            />
           ),
           headerTitle: () => (
             <BaseText text={route.params.name} type="primary_18" />
           ),
-          headerRight: ({ tintColor }) => (
-            <Pressable
-              onPress={() => {
+          headerRight: () => (
+            <BaseButton
+              text="Complete"
+              type="normal"
+              onPress={() =>
                 navigation.navigate(routes.WORKOUT_SUMMARY, {
                   workoutId: route.params.id,
                   bottomActions: [
@@ -57,11 +60,9 @@ export default function HomeNavigator() {
                       },
                     },
                   ],
-                });
-              }}
-            >
-              <Text style={{ color: tintColor }}>Complete</Text>
-            </Pressable>
+                })
+              }
+            />
           ),
           presentation: "fullScreenModal",
         })}
@@ -78,8 +79,12 @@ export default function HomeNavigator() {
         component={WorkoutSummaryScreen}
         options={({ navigation, route }) => ({
           headerTitle: () => <BaseText text="Summary" type="primary_18" />,
-          headerLeft: ({ tintColor }) => (
-            <BackButton color={tintColor} navigation={navigation} />
+          headerLeft: () => (
+            <BaseButton
+              text="Back"
+              type="normal"
+              onPress={() => navigation.goBack()}
+            />
           ),
           headerRight: () => {
             const headerOptions = route.params.headerOptions;
@@ -92,19 +97,5 @@ export default function HomeNavigator() {
         })}
       />
     </Stack.Navigator>
-  );
-}
-
-function BackButton({
-  color,
-  navigation,
-}: {
-  color?: string;
-  navigation: NativeStackNavigationProp<RootStackParamList, RouteValues>;
-}) {
-  return (
-    <Pressable onPress={() => navigation.goBack()}>
-      <Text style={{ color }}>Back</Text>
-    </Pressable>
   );
 }

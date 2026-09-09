@@ -5,28 +5,37 @@ import { Pressable, StyleSheet } from "react-native";
 interface BaseFloatingButtonProps {
   text: string;
   disabled?: boolean;
+  type?: "fill" | "normal";
   onPress: () => void;
 }
 
-export function BaseButton(props: BaseFloatingButtonProps) {
+export function BaseButton({
+  text,
+  type = "fill",
+  disabled,
+  onPress: press,
+}: BaseFloatingButtonProps) {
   const { colors } = useAppColors();
+  let buttonStyle = null;
+  if (type === "fill") {
+    buttonStyle = { backgroundColor: colors.blue0 };
+  }
+
   return (
     <Pressable
-      style={[styles.button, { backgroundColor: colors.blue0 }]}
-      disabled={props.disabled}
-      onPress={props.onPress}
+      style={[styles.button, buttonStyle]}
+      disabled={disabled}
+      onPress={press}
     >
-      <BaseText text={props.text} type="primary_bold" />
+      <BaseText text={text} type="primary_bold" />
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    padding: 16,
-    paddingInline: 24,
+    padding: 8,
     borderRadius: 4,
-    width: "auto",
     alignItems: "center",
     margin: "auto",
   },

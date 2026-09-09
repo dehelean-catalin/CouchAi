@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RecentCompletedWorkout } from "./RecentCompletedWorkout";
 import { BaseText } from "@/components/BaseText";
 import { trashIcon } from "@/components/icons";
-import { BaseButton } from "@/components/BaseFloatingButton";
+import { BaseButton } from "@/components/BaseButton";
 
 export function HomeScreen(props: ScreenProps<"Home">) {
   const dispatch = useDispatch();

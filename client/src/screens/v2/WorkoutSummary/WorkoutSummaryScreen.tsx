@@ -1,6 +1,6 @@
 import { BaseHorizontalList } from "@/components/BaseHorizontalList";
 import { BaseText } from "@/components/BaseText";
-import { BaseButton } from "@/components/BaseFloatingButton";
+import { BaseButton } from "@/components/BaseButton";
 import { ScreenProps } from "@/navigation/routes";
 import { RootState } from "@/redux/store";
 import { WorkoutExercise, WorkoutState } from "@/redux/workoutSlice";
