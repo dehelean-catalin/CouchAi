@@ -1,6 +1,6 @@
 import { BaseHorizontalList } from "@/components/BaseHorizontalList";
 import { BaseText } from "@/components/BaseText";
-import { BaseFloatingButton } from "@/navigation/BaseFloatingButton";
+import { BaseButton } from "@/components/BaseFloatingButton";
 import { ScreenProps } from "@/navigation/routes";
 import { RootState } from "@/redux/store";
 import { WorkoutExercise, WorkoutState } from "@/redux/workoutSlice";
@@ -30,7 +30,7 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
         emptyComponentText="No exercises"
       />
       {props.route.params.bottomActions?.map((bottomAction, index) => (
-        <BaseFloatingButton
+        <BaseButton
           key={index}
           text={bottomAction.label}
           onPress={bottomAction.action}

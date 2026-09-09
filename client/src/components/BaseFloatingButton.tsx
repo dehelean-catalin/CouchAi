@@ -8,7 +8,7 @@ interface BaseFloatingButtonProps {
   onPress: () => void;
 }
 
-export function BaseFloatingButton(props: BaseFloatingButtonProps) {
+export function BaseButton(props: BaseFloatingButtonProps) {
   const { colors } = useAppColors();
   return (
     <Pressable

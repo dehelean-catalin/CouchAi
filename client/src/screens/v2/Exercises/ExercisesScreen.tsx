@@ -12,7 +12,7 @@ import {
 } from "@/redux/workoutSlice";
 import { BaseHorizontalList } from "@/components/BaseHorizontalList";
 import { mapExerciseToWorkoutExercise } from "./exercise.bussines";
-import { BaseFloatingButton } from "@/navigation/BaseFloatingButton";
+import { BaseButton } from "@/components/BaseFloatingButton";
 
 export function ExercisesScreen(props: ScreenProps<"ExerciseList">) {
   const dispatch = useDispatch();
@@ -93,7 +93,7 @@ export function ExercisesScreen(props: ScreenProps<"ExerciseList">) {
       />
       {actionType === "select" && (
         <View style={styles.addContainer}>
-          <BaseFloatingButton
+          <BaseButton
             text={`Add exercises (${selectedExercises.length})`}
             disabled={!selectedExercises.length}
             onPress={handleAddExercise}

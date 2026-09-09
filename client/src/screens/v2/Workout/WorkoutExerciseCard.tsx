@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     gap: 16,
     padding: 16,
     marginBottom: 8,
-    backgroundColor: "gray",
     borderRadius: 8,
   },
   details: {

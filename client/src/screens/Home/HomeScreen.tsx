@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RecentCompletedWorkout } from "./RecentCompletedWorkout";
 import { BaseText } from "@/components/BaseText";
 import { trashIcon } from "@/components/icons";
-import { BaseFloatingButton } from "@/navigation/BaseFloatingButton";
+import { BaseButton } from "@/components/BaseFloatingButton";
 
 export function HomeScreen(props: ScreenProps<"Home">) {
   const dispatch = useDispatch();
@@ -69,10 +69,7 @@ export function HomeScreen(props: ScreenProps<"Home">) {
             </Pressable>
           ))}
 
-        <BaseFloatingButton
-          text="Start new workout"
-          onPress={handleStartWorkout}
-        />
+        <BaseButton text="Start new workout" onPress={handleStartWorkout} />
 
         <View style={styles.recentActivityContainer}>
           <BaseText text="Recent Activity" type="primary_18" />

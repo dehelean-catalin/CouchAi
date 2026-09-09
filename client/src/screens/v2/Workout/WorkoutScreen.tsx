@@ -10,7 +10,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WorkoutExerciseCard } from "./WorkoutExerciseCard";
 import { BaseHorizontalList } from "@/components/BaseHorizontalList";
-import { BaseFloatingButton } from "@/navigation/BaseFloatingButton";
+import { BaseButton } from "@/components/BaseFloatingButton";
 import { StyleSheet } from "react-native";
 
 export function WorkoutScreen(props: ScreenProps<"Workout">) {
@@ -68,7 +68,7 @@ export function WorkoutScreen(props: ScreenProps<"Workout">) {
         emptyComponentText="Search for an exercise"
       />
 
-      <BaseFloatingButton
+      <BaseButton
         text="Add exercise"
         onPress={() => handleAddExercise(workout.id)}
       />
