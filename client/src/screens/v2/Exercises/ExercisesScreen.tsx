@@ -3,7 +3,7 @@ import { RootState } from "@/redux/store";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import ExerciseCard from "./ExerciseCard";
+import { ExerciseCard } from "./ExerciseCard";
 import { Exercise } from "@/redux/exerciseReducer";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {

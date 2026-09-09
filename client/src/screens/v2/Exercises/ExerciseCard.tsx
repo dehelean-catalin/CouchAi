@@ -14,7 +14,7 @@ type CardProps = {
   onReplace?: (id: string) => void;
 };
 
-function Card({
+export function ExerciseCard({
   data,
   actionType,
   onSelect: select,
@@ -77,5 +77,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-export default Card;
