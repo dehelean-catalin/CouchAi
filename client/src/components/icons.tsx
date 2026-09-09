@@ -4,7 +4,10 @@ import Home from "@expo/material-symbols/home.xml";
 import PersonIcon from "@expo/material-symbols/person.xml";
 import ReplaceIcon from "@expo/material-symbols/arrow_back_2.xml";
 import ClearIcon from "@expo/material-symbols/clear_all.xml";
+import MoreVert from "@expo/material-symbols/more_vert.xml";
+
 import { StyleSheet } from "react-native";
+import { useAppColors } from "@/theme/useAppColors";
 
 const trashIcon = Icon.select({
   ios: "trash",
@@ -31,11 +34,17 @@ const clearIcon = Icon.select({
   android: ClearIcon,
 });
 
+const ellipsisIcon = Icon.select({
+  ios: "ellipsis",
+  android: MoreVert,
+});
+
 export interface BaseIconProps {
-  name: "trash" | "house" | "person" | "replace" | "clear";
+  name: "trash" | "house" | "person" | "replace" | "clear" | "ellipsis";
 }
 
 export function BaseIcon(props: BaseIconProps) {
+  const { theme } = useAppColors();
   let iconName = null;
   switch (props.name) {
     case "trash":
@@ -53,12 +62,15 @@ export function BaseIcon(props: BaseIconProps) {
     case "clear":
       iconName = clearIcon;
       break;
+    case "ellipsis":
+      iconName = ellipsisIcon;
+      break;
     default:
       throw new Error("Invalid icon name");
   }
 
   return (
-    <Host matchContents>
+    <Host matchContents colorScheme={theme}>
       <Icon name={iconName} style={styles.icon} size={16} />
     </Host>
   );

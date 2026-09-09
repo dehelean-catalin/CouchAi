@@ -1,4 +1,3 @@
-import { Host, Icon } from "@expo/ui";
 import { useEffect, useRef, useState } from "react";
 import {
   Modal,
@@ -8,7 +7,6 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import MoreVert from "@expo/material-symbols/more_vert.xml";
 import { useAppColors } from "@/theme/useAppColors";
 import { BaseText } from "@/components/BaseText";
 import { BaseIcon, BaseIconProps } from "./icons";
@@ -65,15 +63,7 @@ export function BaseMenu(props: BaseMenuProps) {
   return (
     <View ref={ref}>
       <Pressable onPress={handleOpenMenu} style={styles.iconBadge}>
-        <Host matchContents>
-          <Icon
-            name={Icon.select({
-              ios: "ellipsis",
-              android: MoreVert,
-            })}
-            size={16}
-          />
-        </Host>
+        <BaseIcon name="ellipsis" />
       </Pressable>
       <SafeAreaView>
         <Modal

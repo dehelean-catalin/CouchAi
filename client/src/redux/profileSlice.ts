@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type ProfileTheme = "dark" | "light" | "unspecified";
+export type ProfileTheme = "dark" | "light";
 
 interface ProfileState {
   theme: ProfileTheme;
 }
 
 const initialState: ProfileState = {
-  theme: "unspecified",
+  theme: "light",
 };
 
 const profileSlice = createSlice({

@@ -5,8 +5,5 @@ import { ProfileTheme } from "@/redux/profileSlice";
 
 export function useAppColors() {
   const theme = useSelector<RootState, ProfileTheme>((s) => s.profile.theme);
-  if (theme === "unspecified") {
-    return { colors: COLORS["light"], textColors: textColors["light"] };
-  }
-  return { colors: COLORS[theme], textColors: textColors[theme] };
+  return { colors: COLORS[theme], textColors: textColors[theme], theme };
 }
