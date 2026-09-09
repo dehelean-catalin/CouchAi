@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Exercise } from "./exerciseReducer";
 
 type WorkoutStatus = "completed" | "in-progress" | "deleted" | null;
 

@@ -11,7 +11,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import { RecentCompletedWorkout } from "./RecentCompletedWorkout";
 import { BaseText } from "@/components/BaseText";
-import { trashIcon } from "@/components/icons";
 import { BaseButton } from "@/components/BaseButton";
 
 export function HomeScreen(props: ScreenProps<"Home">) {
@@ -20,21 +19,10 @@ export function HomeScreen(props: ScreenProps<"Home">) {
     (s) => s.workout.workouts,
   );
 
-  function handleDeleteWorkout(workoutId: string) {
-    dispatch(deleteWorkout(workoutId));
-    props.navigation.goBack();
-  }
-
   function handleViewWorkoutSummary(workoutId: string) {
     props.navigation.navigate(routes.WORKOUT_SUMMARY, {
       workoutId,
-      headerOptions: [
-        {
-          label: "Delete",
-          icon: trashIcon,
-          action: () => handleDeleteWorkout(workoutId),
-        },
-      ],
+      action: "review",
     });
   }
 

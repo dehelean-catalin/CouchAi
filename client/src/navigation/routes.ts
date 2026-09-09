@@ -1,4 +1,3 @@
-import { IconName } from "@expo/ui";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 const routes = {
@@ -38,8 +37,7 @@ export type RootStackParamList = {
   };
   WorkoutSummary: {
     workoutId: string;
-    bottomActions?: { label: string; action: () => void }[];
-    headerOptions?: { label: string; icon: IconName; action: () => void }[];
+    action: "preview" | "review";
   };
   /// not reviewed yeat
   ExerciseDetails: { id: string };

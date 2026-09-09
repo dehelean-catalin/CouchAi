@@ -8,15 +8,15 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import type { IconName } from "@expo/ui";
 import MoreVert from "@expo/material-symbols/more_vert.xml";
 import { useAppColors } from "@/theme/useAppColors";
 import { BaseText } from "@/components/BaseText";
+import { BaseIcon, BaseIconProps } from "./icons";
 
 interface BaseMenuProps {
   items: {
     label: string;
-    icon: IconName;
+    icon: BaseIconProps["name"];
     action: () => void;
   }[];
 }
@@ -59,6 +59,7 @@ export function BaseMenu(props: BaseMenuProps) {
         }));
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   return (
@@ -104,13 +105,7 @@ export function BaseMenu(props: BaseMenuProps) {
                   style={styles.menuItem}
                 >
                   <BaseText text={menuItem.label} type="primary" />
-                  <Host matchContents>
-                    <Icon
-                      style={styles.itemIcon}
-                      name={menuItem.icon}
-                      size={16}
-                    />
-                  </Host>
+                  <BaseIcon name={menuItem.icon} />
                 </Pressable>
               ))}
             </View>
@@ -144,8 +139,5 @@ const styles = StyleSheet.create({
   iconBadge: {
     transform: [{ rotate: "90deg" }],
     padding: 12,
-  },
-  itemIcon: {
-    width: 20,
   },
 });

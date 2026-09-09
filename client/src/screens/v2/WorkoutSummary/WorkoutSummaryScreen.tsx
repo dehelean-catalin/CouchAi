@@ -3,14 +3,25 @@ import { BaseText } from "@/components/BaseText";
 import { BaseButton } from "@/components/BaseButton";
 import { ScreenProps } from "@/navigation/routes";
 import { RootState } from "@/redux/store";
-import { WorkoutExercise, WorkoutState } from "@/redux/workoutSlice";
+import {
+  completeWorkout,
+  WorkoutExercise,
+  WorkoutState,
+} from "@/redux/workoutSlice";
 import { View } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
+  const dispatch = useDispatch();
   const workout = useSelector<RootState, WorkoutState | undefined>((s) =>
     s.workout.workouts.find((w) => w.id === props.route.params.workoutId),
   );
+
+  function handleSave() {
+    dispatch(completeWorkout(props.route.params.workoutId));
+    props.navigation.popToTop();
+  }
+
   if (!workout) {
     return null;
   }
@@ -29,13 +40,9 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
         )}
         emptyComponentText="No exercises"
       />
-      {props.route.params.bottomActions?.map((bottomAction, index) => (
-        <BaseButton
-          key={index}
-          text={bottomAction.label}
-          onPress={bottomAction.action}
-        />
-      ))}
+      {props.route.params.action === "preview" && (
+        <BaseButton text="Save" onPress={handleSave} />
+      )}
     </View>
   );
 }

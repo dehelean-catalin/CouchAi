@@ -1,8 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import HomeNavigator from "./HomeNavigator";
+import { HomeStackNavigator } from "./home/HomeStackNavigator";
 import { useAppColors } from "@/theme/useAppColors";
+import { BaseIcon } from "@/components/icons";
+import { StyleSheet } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -13,31 +15,41 @@ export default function BottomTabNavigator() {
       <Tab.Navigator
         screenOptions={{
           sceneStyle: { backgroundColor: colors.surface0 },
-          tabBarStyle: {
-            backgroundColor: colors.surface1,
-            borderTopWidth: 0,
-            height: 70,
-            paddingBottom: 8,
-            paddingTop: 8,
-          },
-          tabBarActiveTintColor: colors.blue0,
+          tabBarStyle: [
+            styles.tabBarContainer,
+            {
+              backgroundColor: colors.surface1,
+            },
+          ],
+
+          tabBarShowLabel: false,
+          headerShown: false,
         }}
       >
         <Tab.Screen
           name="Main"
-          component={HomeNavigator}
+          component={HomeStackNavigator}
           options={{
-            headerShown: false,
+            tabBarIcon: () => <BaseIcon name="house" />,
           }}
         />
         <Tab.Screen
           name="Plans"
-          component={HomeNavigator}
+          component={HomeStackNavigator}
           options={{
-            headerShown: false,
+            tabBarIcon: () => <BaseIcon name="person" />,
           }}
         />
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBarContainer: {
+    borderTopWidth: 0,
+    height: 70,
+    paddingBottom: 8,
+    paddingTop: 8,
+  },
+});
