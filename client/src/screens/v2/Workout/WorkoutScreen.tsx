@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { WorkoutExerciseCard } from "./WorkoutExerciseCard";
 import { BaseHorizontalList } from "@/components/BaseHorizontalList";
 import { BaseFloatingButton } from "@/navigation/BaseFloatingButton";
+import { StyleSheet } from "react-native";
 
 export function WorkoutScreen(props: ScreenProps<"Workout">) {
   const { id } = props.route.params;
@@ -53,7 +54,7 @@ export function WorkoutScreen(props: ScreenProps<"Workout">) {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <BaseHorizontalList<WorkoutExercise>
         data={workout.exercises}
         item={({ item: exercise, index }) => (
@@ -74,3 +75,9 @@ export function WorkoutScreen(props: ScreenProps<"Workout">) {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    margin: 8,
+  },
+});

@@ -1,10 +1,12 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { BaseMenu } from "../../../components/BaseMenu";
 import { Icon } from "@expo/ui";
 import Arrow from "@expo/material-symbols/arrow_back_2.xml";
 import { WorkoutExercise } from "@/redux/workoutSlice";
 import { trashIcon } from "@/components/icons";
+import { BaseText } from "@/components/BaseText";
+import { useAppColors } from "@/theme/useAppColors";
 
 type WorkoutSessionCardProps = {
   index: number;
@@ -24,18 +26,14 @@ export function WorkoutExerciseCard({
   onRemove: remove,
   onReplace: replace,
 }: WorkoutSessionCardProps) {
+  const { textColors, colors } = useAppColors();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.surface1 }]}>
       <View style={styles.details}>
-        <View style={styles.chip}>
-          <Text>{index + 1}</Text>
+        <View style={[styles.chip, { borderColor: textColors.primary }]}>
+          <BaseText text={`${index + 1}`} type="primary" />
         </View>
-        <View>
-          <Text>{exercise.name}</Text>
-          <Text>
-            {0}/{4} sets completed
-          </Text>
-        </View>
+        <BaseText text={exercise.name} type="primary" />
       </View>
 
       <BaseMenu
@@ -59,22 +57,25 @@ export function WorkoutExerciseCard({
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    borderBottomWidth: 1,
-    padding: 16,
-    gap: 16,
     alignItems: "center",
+    gap: 16,
+    padding: 16,
+    marginBottom: 8,
+    backgroundColor: "gray",
+    borderRadius: 8,
   },
   details: {
-    flexDirection: "row",
-    gap: 16,
     flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
   },
   chip: {
-    borderRadius: 50,
     width: 40,
     height: 40,
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50,
     borderWidth: 1,
   },
 });
