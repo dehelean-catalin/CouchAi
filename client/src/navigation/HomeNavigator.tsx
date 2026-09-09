@@ -1,16 +1,16 @@
 import routes, { RootStackParamList, RouteValues } from "@/navigation/routes";
 import React from "react";
 import { Pressable, Text } from "react-native";
-import HomeScreen from "../screens/Home/HomeScreen";
+import { HomeScreen } from "../screens/Home/HomeScreen";
 import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from "@react-navigation/native-stack";
-import WorkoutScreen from "@/screens/v2/Workout/WorkoutScreen";
-import ExercisesScreen from "@/screens/v2/Exercises/ExercisesScreen";
+import { WorkoutScreen } from "@/screens/v2/Workout/WorkoutScreen";
+import { ExercisesScreen } from "@/screens/v2/Exercises/ExercisesScreen";
 import { useDispatch } from "react-redux";
 import { completeWorkout } from "@/redux/workoutSlice";
-import { CompletedWorkoutPreview } from "@/screens/v2/CompletedWorkoutPreview/CompletedWorkoutPreviewScreen";
+import { WorkoutSummaryScreen } from "@/screens/v2/WorkoutSummary/WorkoutSummaryScreen";
 import { BaseMenu } from "@/components/BaseMenu";
 import { useAppColors } from "@/theme/useAppColors";
 
@@ -43,7 +43,7 @@ export default function HomeNavigator() {
           headerRight: ({ tintColor }) => (
             <Pressable
               onPress={() => {
-                navigation.navigate(routes.COMPLETED_WORKOUT_PREVIEW, {
+                navigation.navigate(routes.WORKOUT_SUMMARY, {
                   workoutId: route.params.id,
                   bottomActions: [
                     {
@@ -65,8 +65,8 @@ export default function HomeNavigator() {
       />
       <Stack.Screen name={routes.EXERCISE_LIST} component={ExercisesScreen} />
       <Stack.Screen
-        name={routes.COMPLETED_WORKOUT_PREVIEW}
-        component={CompletedWorkoutPreview}
+        name={routes.WORKOUT_SUMMARY}
+        component={WorkoutSummaryScreen}
         options={({ navigation, route }) => ({
           headerTitle: "Summary",
           headerLeft: ({ tintColor }) => (

@@ -1,10 +1,11 @@
 import { IconName } from "@expo/ui";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 const routes = {
   HOME: "Home",
   WORKOUT: "Workout",
   EXERCISE_LIST: "ExerciseList",
-  COMPLETED_WORKOUT_PREVIEW: "CompletedWorkoutPreview",
+  WORKOUT_SUMMARY: "WorkoutSummary",
 
   //not reviewed yeat
   PLAN: "Plan",
@@ -35,7 +36,7 @@ export type RootStackParamList = {
     workoutId?: string;
     action: ExerciseListAction;
   };
-  CompletedWorkoutPreview: {
+  WorkoutSummary: {
     workoutId: string;
     bottomActions?: { label: string; action: () => void }[];
     headerOptions?: { label: string; icon: IconName; action: () => void }[];
@@ -49,5 +50,10 @@ export type RootStackParamList = {
   WorkoutSessionSet: { id: string; workoutId: string };
   WorkoutDayPreview: { id: string; workoutDayId: string };
 };
+
+export type ScreenProps<T extends RouteValues> = NativeStackScreenProps<
+  RootStackParamList,
+  T
+>;
 
 export default routes;

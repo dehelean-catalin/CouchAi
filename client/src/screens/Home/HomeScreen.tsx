@@ -1,4 +1,4 @@
-import routes, { RootStackParamList } from "@/navigation/routes";
+import routes, { ScreenProps } from "@/navigation/routes";
 import { RootState, store } from "@/redux/store";
 import {
   deleteWorkout,
@@ -9,15 +9,12 @@ import React from "react";
 import { Button, Pressable, StyleSheet, View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RecentCompletedWorkout } from "./RecentCompletedWorkout";
 import { BaseText } from "@/components/BaseText";
 import { trashIcon } from "@/components/icons";
 import { BaseFloatingButton } from "@/navigation/BaseFloatingButton";
 
-type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
-
-export default function HomeScreen(props: HomeScreenProps) {
+export function HomeScreen(props: ScreenProps<"Home">) {
   const dispatch = useDispatch();
   const workouts = useSelector<RootState, WorkoutState[]>(
     (s) => s.workout.workouts,
@@ -29,7 +26,7 @@ export default function HomeScreen(props: HomeScreenProps) {
   }
 
   function handleViewWorkoutSummary(workoutId: string) {
-    props.navigation.navigate(routes.COMPLETED_WORKOUT_PREVIEW, {
+    props.navigation.navigate(routes.WORKOUT_SUMMARY, {
       workoutId,
       headerOptions: [
         {

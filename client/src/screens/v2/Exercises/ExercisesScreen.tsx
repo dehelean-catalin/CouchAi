@@ -1,9 +1,8 @@
-import { RootStackParamList } from "@/navigation/routes";
+import { ScreenProps } from "@/navigation/routes";
 import { RootState } from "@/redux/store";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import ExerciseCard from "./ExerciseCard";
 import { Exercise } from "@/redux/exerciseReducer";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,12 +14,7 @@ import { BaseHorizontalList } from "@/components/BaseHorizontalList";
 import { mapExerciseToWorkoutExercise } from "./exercise.bussines";
 import { BaseFloatingButton } from "@/navigation/BaseFloatingButton";
 
-type ExercisesProps = NativeStackScreenProps<
-  RootStackParamList,
-  "ExerciseList"
->;
-
-function ExercisesScreen(props: ExercisesProps) {
+export function ExercisesScreen(props: ScreenProps<"ExerciseList">) {
   const dispatch = useDispatch();
   const {
     action: { type: actionType, payload },
@@ -109,8 +103,6 @@ function ExercisesScreen(props: ExercisesProps) {
     </SafeAreaView>
   );
 }
-
-export default ExercisesScreen;
 
 const styles = StyleSheet.create({
   searchContainer: {

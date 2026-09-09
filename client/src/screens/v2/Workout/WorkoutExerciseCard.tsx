@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Pressable,
-  StyleProp,
-  StyleSheet,
-  View,
-  Text,
-  ViewStyle,
-} from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { BaseMenu } from "../../../components/BaseMenu";
 import { Icon } from "@expo/ui";
 import Arrow from "@expo/material-symbols/arrow_back_2.xml";
@@ -31,14 +24,10 @@ export function WorkoutExerciseCard({
   onRemove: remove,
   onReplace: replace,
 }: WorkoutSessionCardProps) {
-  function handleNavigateToSessionSet() {}
-
-  const chipStyle: StyleProp<ViewStyle> = [styles.chip];
-
   return (
     <View style={styles.container}>
-      <Pressable style={styles.details} onPress={handleNavigateToSessionSet}>
-        <View style={chipStyle}>
+      <View style={styles.details}>
+        <View style={styles.chip}>
           <Text>{index + 1}</Text>
         </View>
         <View>
@@ -47,7 +36,7 @@ export function WorkoutExerciseCard({
             {0}/{4} sets completed
           </Text>
         </View>
-      </Pressable>
+      </View>
 
       <BaseMenu
         items={[
