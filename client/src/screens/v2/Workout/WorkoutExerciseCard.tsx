@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { BaseMenu } from "../../../components/BaseMenu";
 import { WorkoutExercise } from "@/redux/workoutSlice";
 import { BaseText } from "@/components/BaseText";
@@ -10,6 +10,7 @@ type WorkoutSessionCardProps = {
   exercise: WorkoutExercise;
   onRemove: () => void;
   onReplace: () => void;
+  onPress: () => void;
 };
 
 export function WorkoutExerciseCard({
@@ -17,10 +18,14 @@ export function WorkoutExerciseCard({
   exercise,
   onRemove: remove,
   onReplace: replace,
+  onPress: press,
 }: WorkoutSessionCardProps) {
   const { textColors, colors } = useAppColors();
   return (
-    <View style={[styles.container, { backgroundColor: colors.surface1 }]}>
+    <Pressable
+      style={[styles.container, { backgroundColor: colors.surface1 }]}
+      onPress={press}
+    >
       <View style={styles.details}>
         <View style={[styles.chip, { borderColor: textColors.primary }]}>
           <BaseText text={`${index + 1}`} type="primary" />
@@ -42,7 +47,7 @@ export function WorkoutExerciseCard({
           },
         ]}
       />
-    </View>
+    </Pressable>
   );
 }
 

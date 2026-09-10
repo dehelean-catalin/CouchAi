@@ -10,6 +10,7 @@ import { BaseText } from "@/components/BaseText";
 import { BaseButton } from "@/components/BaseButton";
 import { WorkoutSummaryOptions } from "./WorkoutSummaryOptions";
 import { EditWorkoutSummaryScreen } from "@/screens/v2/EditWorkoutSummary/EditWorkoutSummary";
+import { WorkoutExerciseScreen } from "@/screens/v2/WorkoutExercise/WorkoutExercise";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -75,6 +76,17 @@ export function HomeStackNavigator() {
         options={{
           headerTitle: () => <BaseText text="Edit Workout" type="primary_18" />,
         }}
+      />
+      <Stack.Screen
+        name={routes.WORKOUT_EXERCISE}
+        component={WorkoutExerciseScreen}
+        options={({ navigation }) => ({
+          presentation: "fullScreenModal",
+          headerTitle: "",
+          headerLeft: () => (
+            <BaseButton text="Back" onPress={() => navigation.goBack()} />
+          ),
+        })}
       />
     </Stack.Navigator>
   );

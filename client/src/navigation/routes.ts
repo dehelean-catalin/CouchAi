@@ -3,6 +3,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 const routes = {
   HOME: "Home",
   WORKOUT: "Workout",
+  WORKOUT_EXERCISE: "WorkoutExercise",
   EXERCISE_LIST: "ExerciseList",
   WORKOUT_SUMMARY: "WorkoutSummary",
   EDIT_WORKOUT_SUMMARY: "EditWorkoutSummary",
@@ -13,7 +14,6 @@ const routes = {
   CREATE_PLAN: "CreatePlan",
   CREATE_EXERCISE: "CreateExercise",
   EXERCISE_DETAILS: "ExerciseDetails",
-  WORKOUT_SESSION_SET: "WorkoutSessionSet",
   WORKOUT_PREVIEW: "WorkoutPreview",
   WORKOUT_DAY_PREVIEW: "WorkoutDayPreview",
 } as const;
@@ -33,6 +33,7 @@ export type ExerciseListAction =
 export type RootStackParamList = {
   Home: undefined;
   Workout: { id: string; name: string };
+  WorkoutExercise: { workoutId: string; exerciseId: string };
   ExerciseList: {
     workoutId?: string;
     action: ExerciseListAction;
@@ -46,13 +47,13 @@ export type RootStackParamList = {
     workoutName: string;
   };
   Profile: undefined;
+
   /// not reviewed yeat
   ExerciseDetails: { id: string };
   Plan: undefined;
   CreatePlan: undefined;
   CreateExercise: undefined;
   WorkoutPreview: { id: string };
-  WorkoutSessionSet: { id: string; workoutId: string };
   WorkoutDayPreview: { id: string; workoutDayId: string };
 };
 
