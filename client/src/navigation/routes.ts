@@ -5,6 +5,7 @@ const routes = {
   WORKOUT: "Workout",
   EXERCISE_LIST: "ExerciseList",
   WORKOUT_SUMMARY: "WorkoutSummary",
+  EDIT_WORKOUT_SUMMARY: "EditWorkoutSummary",
   PROFILE: "Profile",
 
   //not reviewed yeat
@@ -39,6 +40,10 @@ export type RootStackParamList = {
   WorkoutSummary: {
     workoutId: string;
     action: "preview" | "review";
+  };
+  EditWorkoutSummary: {
+    workoutId: string;
+    workoutName: string;
   };
   Profile: undefined;
   /// not reviewed yeat

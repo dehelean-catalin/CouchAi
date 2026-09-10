@@ -137,6 +137,19 @@ const workoutSlice = createSlice({
         }),
       };
     },
+    updateWorkoutDetails: (
+      oldState,
+      action: PayloadAction<{ workoutId: string; newWorkoutName: string }>,
+    ) => {
+      return {
+        workouts: oldState.workouts.map((workout) => {
+          if (workout.id === action.payload.workoutId) {
+            return { ...workout, name: action.payload.newWorkoutName };
+          }
+          return workout;
+        }),
+      };
+    },
   },
 });
 
@@ -147,6 +160,7 @@ export const {
   addExerciseToWorkout,
   removeExerciseFromWorkout,
   replaceExerciseFromWorkout,
+  updateWorkoutDetails,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;

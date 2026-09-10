@@ -9,6 +9,7 @@ import { useAppColors } from "@/theme/useAppColors";
 import { BaseText } from "@/components/BaseText";
 import { BaseButton } from "@/components/BaseButton";
 import { WorkoutSummaryOptions } from "./WorkoutSummaryOptions";
+import { EditWorkoutSummaryScreen } from "@/screens/v2/EditWorkoutSummary/EditWorkoutSummary";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -67,6 +68,10 @@ export function HomeStackNavigator() {
         name={routes.WORKOUT_SUMMARY}
         component={WorkoutSummaryScreen}
         options={WorkoutSummaryOptions}
+      />
+      <Stack.Screen
+        name={routes.EDIT_WORKOUT_SUMMARY}
+        component={EditWorkoutSummaryScreen}
       />
     </Stack.Navigator>
   );

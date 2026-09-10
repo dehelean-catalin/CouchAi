@@ -1,6 +1,6 @@
 import routes, { ScreenProps } from "@/navigation/routes";
 import { RootState } from "@/redux/store";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   removeExerciseFromWorkout,
@@ -20,6 +20,13 @@ export function WorkoutScreen(props: ScreenProps<"Workout">) {
   const workout = useSelector<RootState, WorkoutState | undefined>((s) =>
     s.workout.workouts.find((w) => w.id === id),
   );
+
+  useEffect(() => {
+    if (workout && workout?.name !== props.route.params.name) {
+      props.navigation.setParams({ name: workout.name });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [workout?.name, props.route.params.name]);
 
   function handleRemoveExercise(workoutId: string, exercisePosition: number) {
     dispatch(
