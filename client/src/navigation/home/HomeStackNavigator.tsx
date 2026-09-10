@@ -72,6 +72,9 @@ export function HomeStackNavigator() {
       <Stack.Screen
         name={routes.EDIT_WORKOUT_SUMMARY}
         component={EditWorkoutSummaryScreen}
+        options={{
+          headerTitle: () => <BaseText text="Edit Workout" type="primary_18" />,
+        }}
       />
     </Stack.Navigator>
   );
