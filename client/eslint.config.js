@@ -25,6 +25,7 @@ module.exports = defineConfig([
       "no-redeclare": "error",
       "no-shadow": "error",
       "no-param-reassign": "warn",
+      "max-params": ["error", 3],
 
       "object-shorthand": "error",
       "prefer-template": "error",

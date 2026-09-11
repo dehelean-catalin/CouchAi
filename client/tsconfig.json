@@ -6,6 +6,7 @@
     "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true,
     "baseUrl": ".",
+    "types": ["jest"],
     "paths": {
       "@/*": ["src/*"]
     },

@@ -27,6 +27,7 @@ export type ExerciseListAction =
       type: "replace";
       payload: {
         exercisePosition: number;
+        exerciseId: string;
       };
     };
 

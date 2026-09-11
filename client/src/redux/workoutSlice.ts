@@ -20,6 +20,13 @@ export interface WorkoutExercise {
   thumbnailUrl: string;
 }
 
+export interface WorkoutExerciseSet {
+  id: string;
+  weight: number;
+  reps: number;
+  isCompleted: boolean;
+}
+
 const emptyWorkout: WorkoutState = {
   id: "",
   planId: "",
@@ -31,41 +38,41 @@ const emptyWorkout: WorkoutState = {
   exercises: [],
 };
 
-const initialState: { workouts: WorkoutState[] } = {
+type Sets = Record<string, WorkoutExerciseSet[]>;
+
+const initialState: { workouts: WorkoutState[]; sets: Sets } = {
   workouts: [],
+  sets: {},
 };
 
 const workoutSlice = createSlice({
   name: "workout",
   initialState,
   reducers: {
-    startWorkout: (oldState) => {
-      return {
-        workouts: [
-          ...oldState.workouts,
-          {
-            ...emptyWorkout,
-            id: generateRandomId(),
-            name: "Workout on the fly",
-            status: "in-progress",
-            startDate: new Date().toISOString(),
-          },
-        ],
-      };
+    startWorkout(oldState) {
+      oldState.workouts.push({
+        ...emptyWorkout,
+        id: generateRandomId(),
+        name: "Workout on the fly",
+        status: "in-progress",
+        startDate: new Date().toISOString(),
+      });
     },
     deleteWorkout: (oldState, action: PayloadAction<string>) => {
-      return {
-        workouts: oldState.workouts.map((workout) =>
-          updateStatus(workout, action.payload, "deleted"),
-        ),
-      };
+      const workoutToUpdate = oldState.workouts.find(
+        (workout) => workout.id === action.payload,
+      );
+      if (workoutToUpdate) {
+        workoutToUpdate.status = "deleted";
+      }
     },
     completeWorkout: (oldState, action: PayloadAction<string>) => {
-      return {
-        workouts: oldState.workouts.map((workout) =>
-          updateStatus(workout, action.payload, "completed"),
-        ),
-      };
+      const workoutToUpdate = oldState.workouts.find(
+        (workout) => workout.id === action.payload,
+      );
+      if (workoutToUpdate) {
+        workoutToUpdate.status = "completed";
+      }
     },
     addExerciseToWorkout: (
       oldState,
@@ -80,75 +87,90 @@ const workoutSlice = createSlice({
         return oldState;
       }
 
-      return {
-        workouts: oldState.workouts.map((workout) => {
-          if (workout.id === workoutId) {
-            return {
-              ...workout,
-              exercises: [...workout.exercises, ...exercises],
-            };
-          }
-          return workout;
-        }),
-      };
+      const workoutToUpdate = oldState.workouts.find(
+        (workout) => workout.id === workoutId,
+      );
+      if (workoutToUpdate) {
+        exercises.forEach((exercise) => {
+          workoutToUpdate.exercises.push(exercise);
+          oldState.sets[exercise.id] = [generateInitialWorkingExerciseSet()];
+        });
+      }
     },
     removeExerciseFromWorkout: (
       oldState,
-      action: PayloadAction<{ workoutId: string; exercisePosition: number }>,
+      action: PayloadAction<{
+        workoutId: string;
+        exerciseId: string;
+        exercisePosition: number;
+      }>,
     ) => {
-      const { workoutId, exercisePosition } = action.payload;
-      return {
-        workouts: oldState.workouts.map((workout) => {
-          if (workout.id === workoutId) {
-            return {
-              ...workout,
-              exercises: workout.exercises.filter(
-                (_, index) => index !== exercisePosition,
-              ),
-            };
-          }
-          return workout;
-        }),
-      };
+      const { workoutId, exercisePosition, exerciseId } = action.payload;
+
+      const workoutToUpdate = oldState.workouts.find(
+        (workout) => workout.id === workoutId,
+      );
+      if (!workoutToUpdate) {
+        return oldState;
+      }
+
+      workoutToUpdate.exercises.splice(exercisePosition, 1);
+      delete oldState.sets[exerciseId];
     },
     replaceExerciseFromWorkout: (
       oldState,
       action: PayloadAction<{
         workoutId: string;
         exercisePosition: number;
+        exerciseId: string;
         newExercise: WorkoutExercise;
       }>,
     ) => {
-      const { workoutId, exercisePosition, newExercise } = action.payload;
-      return {
-        workouts: oldState.workouts.map((workout) => {
-          if (workout.id === workoutId) {
-            return {
-              ...workout,
-              exercises: workout.exercises.map((exercise, index) => {
-                if (index === exercisePosition) {
-                  return newExercise;
-                }
-                return exercise;
-              }),
-            };
-          }
-          return workout;
-        }),
-      };
+      const { workoutId, exercisePosition, exerciseId, newExercise } =
+        action.payload;
+
+      const workoutToUpdate = oldState.workouts.find(
+        (workout) => workout.id === workoutId,
+      );
+      const setsToReplace = oldState.sets[exerciseId];
+      if (!workoutToUpdate || !setsToReplace) {
+        return oldState;
+      }
+
+      workoutToUpdate.exercises.splice(exercisePosition, 1, newExercise);
+
+      delete oldState.sets[exerciseId];
+      oldState.sets[newExercise.id] = [];
+
+      if (setsToReplace.length === 0) {
+        oldState.sets[newExercise.id].push(generateInitialWorkingExerciseSet());
+      } else {
+        for (let i = 0; i < setsToReplace.length; i++) {
+          oldState.sets[newExercise.id].push(
+            generateInitialWorkingExerciseSet(),
+          );
+        }
+      }
     },
     updateWorkoutDetails: (
       oldState,
       action: PayloadAction<{ workoutId: string; newWorkoutName: string }>,
     ) => {
-      return {
-        workouts: oldState.workouts.map((workout) => {
-          if (workout.id === action.payload.workoutId) {
-            return { ...workout, name: action.payload.newWorkoutName };
-          }
-          return workout;
-        }),
-      };
+      const workoutToUpdate = oldState.workouts.find(
+        (workout) => workout.id === action.payload.workoutId,
+      );
+      if (!workoutToUpdate) {
+        return oldState;
+      }
+      workoutToUpdate.name = action.payload.newWorkoutName;
+    },
+    addSetToWorkoutExercise: (
+      oldState,
+      action: PayloadAction<{ exerciseId: string }>,
+    ) => {
+      oldState.sets[action.payload.exerciseId].push(
+        generateInitialWorkingExerciseSet(),
+      );
     },
   },
 });
@@ -161,6 +183,7 @@ export const {
   removeExerciseFromWorkout,
   replaceExerciseFromWorkout,
   updateWorkoutDetails,
+  addSetToWorkoutExercise,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;
@@ -169,16 +192,6 @@ export function generateRandomId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
 
-function updateStatus(
-  workout: WorkoutState,
-  id: string,
-  newStatus: WorkoutStatus,
-): WorkoutState {
-  if (workout.id === id) {
-    return {
-      ...workout,
-      status: newStatus,
-    };
-  }
-  return workout;
+function generateInitialWorkingExerciseSet() {
+  return { id: generateRandomId(), isCompleted: false, weight: 0, reps: 0 };
 }

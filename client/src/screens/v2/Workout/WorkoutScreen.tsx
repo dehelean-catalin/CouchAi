@@ -28,22 +28,32 @@ export function WorkoutScreen(props: ScreenProps<"Workout">) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workout?.name, props.route.params.name]);
 
-  function handleRemoveExercise(workoutId: string, exercisePosition: number) {
+  function handleRemoveExercise(
+    workoutId: string,
+    exerciseId: string,
+    exercisePosition: number,
+  ) {
     dispatch(
       removeExerciseFromWorkout({
         workoutId,
+        exerciseId,
         exercisePosition,
       }),
     );
   }
 
-  function handleReplaceExercise(workoutId: string, exercisePosition: number) {
+  function handleReplaceExercise(
+    workoutId: string,
+    exerciseId: string,
+    exercisePosition: number,
+  ) {
     props.navigation.navigate(routes.EXERCISE_LIST, {
       workoutId,
       action: {
         type: "replace",
         payload: {
           exercisePosition,
+          exerciseId,
         },
       },
     });
@@ -75,8 +85,12 @@ export function WorkoutScreen(props: ScreenProps<"Workout">) {
           <WorkoutExerciseCard
             index={index}
             exercise={exercise}
-            onRemove={() => handleRemoveExercise(workout.id, index)}
-            onReplace={() => handleReplaceExercise(workout.id, index)}
+            onRemove={() =>
+              handleRemoveExercise(workout.id, exercise.id, index)
+            }
+            onReplace={() =>
+              handleReplaceExercise(workout.id, exercise.id, index)
+            }
             onPress={() => handleNavigateToExercise(workout.id, exercise.id)}
           />
         )}

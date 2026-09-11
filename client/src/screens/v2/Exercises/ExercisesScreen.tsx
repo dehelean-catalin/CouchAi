@@ -68,6 +68,7 @@ export function ExercisesScreen(props: ScreenProps<"ExerciseList">) {
         replaceExerciseFromWorkout({
           workoutId,
           exercisePosition: payload.exercisePosition,
+          exerciseId: payload.exerciseId,
           newExercise: mapExerciseToWorkoutExercise(newExercise),
         }),
       );

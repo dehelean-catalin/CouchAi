@@ -23,9 +23,9 @@ export const COLORS: Record<ColorSchemeName, ColorValue> = {
     blue0: BLUE_0,
   },
   dark: {
-    surface0: "rgb(32, 38, 48)",
-    surface1: "rgb(12, 14, 18)",
-    surface2: "rgb(50, 58, 70)",
+    surface0: "rgb(20, 23, 29)",
+    surface1: "rgb(58, 67, 82)",
+    surface2: "rgb(47, 53, 64)",
 
     blue0: BLUE_0,
   },
