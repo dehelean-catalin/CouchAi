@@ -15,10 +15,11 @@ export function WorkoutExerciseSetField(props: WorkoutExerciseSetFieldProps) {
   const { colors, textColors } = useAppColors();
   const iconStyle = [
     styles.icon,
-    { backgroundColor: colors.surface2, borderColor: colors.surface0 },
+    { backgroundColor: colors.surface1, borderColor: colors.surface0 },
   ];
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.surface_blue }]}>
       <View style={styles.label}>
         <BaseText text={props.label} type="primary_bold_16" />
       </View>
@@ -34,7 +35,7 @@ export function WorkoutExerciseSetField(props: WorkoutExerciseSetFieldProps) {
           style={[
             styles.input,
             {
-              backgroundColor: colors.surface2,
+              backgroundColor: colors.surface1,
               borderColor: colors.surface0,
               color: textColors.primary,
             },
@@ -51,16 +52,20 @@ export function WorkoutExerciseSetField(props: WorkoutExerciseSetFieldProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    minWidth: "100%",
+    borderRadius: 16,
+    padding: 12,
+    paddingTop: 0,
   },
   label: {
     alignItems: "center",
-    marginBottom: 8,
+    margin: 12,
   },
   row: {
     flexDirection: "row",
     flex: 1,
     alignItems: "center",
-    gap: 8,
+    gap: 12,
   },
   input: {
     height: 48,
@@ -73,8 +78,8 @@ const styles = StyleSheet.create({
     fontWeight: 600,
   },
   icon: {
-    height: 40,
-    width: 40,
+    height: 48,
+    width: 48,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 50,

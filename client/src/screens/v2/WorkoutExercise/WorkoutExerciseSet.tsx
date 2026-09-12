@@ -71,7 +71,14 @@ export function WorkoutExcerciseWheightAndRepsSet(
   }
   return (
     <>
-      <BaseCard>
+      <BaseCard flexDirection="column">
+        <View style={styles.header}>
+          <BaseText
+            text={`Set ${props.index + 1}`}
+            type="primary_bold_16"
+            transform="uppercase"
+          />
+        </View>
         <WorkoutExerciseSetField
           label="Weight"
           value={weight}
@@ -79,8 +86,6 @@ export function WorkoutExcerciseWheightAndRepsSet(
           onIncreasePress={handleWeightIncrease}
           onDecreasePress={handleWeightDecrease}
         />
-      </BaseCard>
-      <BaseCard>
         <WorkoutExerciseSetField
           label="Reps"
           value={reps}
@@ -88,14 +93,14 @@ export function WorkoutExcerciseWheightAndRepsSet(
           onIncreasePress={handleRepsIncrease}
           onDecreasePress={handleRepsDecrease}
         />
+        <BaseButton
+          text="Compleate"
+          type="rounded"
+          onPress={() =>
+            props.onComplete({ weight: Number(weight), reps: Number(reps) })
+          }
+        />
       </BaseCard>
-      <BaseButton
-        text="Compleate"
-        type="normal"
-        onPress={() =>
-          props.onComplete({ weight: Number(weight), reps: Number(reps) })
-        }
-      />
     </>
   );
 }
@@ -127,5 +132,10 @@ function isPositiveNumber(value: string) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  header: {
+    width: "100%",
+    padding: 4,
+    alignItems: "center",
   },
 });

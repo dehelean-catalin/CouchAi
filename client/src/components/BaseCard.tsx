@@ -1,38 +1,49 @@
 import { useAppColors } from "@/theme/useAppColors";
 import { ReactNode } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from "react-native";
 
 interface BaseCardProps {
   children: ReactNode;
+  flexDirection?: "row" | "column";
   onPress?: () => void;
 }
 
-export function BaseCard(props: BaseCardProps) {
+export function BaseCard({
+  flexDirection = "row",
+  onPress: press,
+  children,
+}: BaseCardProps) {
   const { colors } = useAppColors();
-  const cardStyle = [
+  const cardStyle: StyleProp<ViewStyle> = [
     [
       styles.card,
       {
         backgroundColor: colors.surface1,
         shadowColor: colors.surfaceShadow,
+        flexDirection,
       },
     ],
   ];
 
-  if (!!props.onPress) {
+  if (!!press) {
     return (
-      <Pressable style={cardStyle} onPress={props.onPress}>
-        {props.children}
+      <Pressable style={cardStyle} onPress={press}>
+        {children}
       </Pressable>
     );
   }
 
-  return <View style={cardStyle}>{props.children}</View>;
+  return <View style={cardStyle}>{children}</View>;
 }
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: "row",
     alignItems: "center",
     gap: 12,
     borderRadius: 16,

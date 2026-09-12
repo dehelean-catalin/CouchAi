@@ -1,6 +1,6 @@
 import { useAppColors } from "@/theme/useAppColors";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { BaseText } from "./BaseText";
+import { BaseText, BaseTextProps } from "./BaseText";
 
 interface BaseChipProps {
   value: string;
@@ -13,14 +13,18 @@ export function BaseChip(props: BaseChipProps) {
     styles.chip,
     { borderColor: textColors.primary },
   ];
+  let textType: BaseTextProps["type"] = "primary_regular_16";
   if (props?.type === "success") {
     chipStyle.push({
-      backgroundColor: colors.surface2,
+      backgroundColor: colors.blue_0,
+      borderColor: colors.blue_0,
     });
+    textType = "light";
   }
+
   return (
     <View style={chipStyle}>
-      <BaseText text={props.value} type="primary" />
+      <BaseText text={props.value} type={textType} />
     </View>
   );
 }

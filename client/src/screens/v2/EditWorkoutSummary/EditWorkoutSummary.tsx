@@ -48,7 +48,6 @@ export function EditWorkoutSummaryScreen(
           style={[
             styles.inputRow,
             {
-              backgroundColor: colors.surface2,
               borderColor: isFocused ? colors.blue_0 : colors.surface0,
             },
           ]}
