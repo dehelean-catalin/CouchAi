@@ -40,9 +40,7 @@ export function HomeStackNavigator() {
               onPress={() => navigation.goBack()}
             />
           ),
-          headerTitle: () => (
-            <BaseText text={route.params.name} type="primary_18" />
-          ),
+          headerTitle: "",
           headerRight: () => (
             <BaseButton
               text="Complete"

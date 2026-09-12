@@ -33,7 +33,7 @@ export type ExerciseListAction =
 
 export type RootStackParamList = {
   Home: undefined;
-  Workout: { id: string; name: string };
+  Workout: { id: string };
   WorkoutExercise: { workoutId: string; exerciseId: string };
   ExerciseList: {
     workoutId?: string;
