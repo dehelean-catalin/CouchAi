@@ -20,7 +20,9 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  View,
 } from "react-native";
+import { BaseIcon } from "@/components/icons";
 
 export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
   const dispatch = useDispatch();
@@ -76,12 +78,14 @@ export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
                 />
               );
             })}
-
-            <BaseButton
-              text="Add Set"
-              type="normal"
-              onPress={() => handleAddSet(props.route.params.exerciseId)}
-            />
+            <View style={styles.addButtonContainer}>
+              <BaseIcon name="plus" />
+              <BaseButton
+                text="Add Set"
+                type="normal"
+                onPress={() => handleAddSet(props.route.params.exerciseId)}
+              />
+            </View>
           </Pressable>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -97,5 +101,10 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingBottom: 20,
+  },
+  addButtonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

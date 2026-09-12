@@ -48,6 +48,5 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 4,
     alignItems: "center",
-    margin: "auto",
   },
 });
