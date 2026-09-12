@@ -26,11 +26,11 @@ export const COLORS: Record<ColorSchemeName, ColorValue> = {
     blue_0: BLUE_0,
   },
   dark: {
-    surface0: "rgb(20, 23, 29)",
-    surface1: "rgb(58, 67, 82)",
+    surface0: "rgb(16, 19, 23)",
+    surface1: "rgb(51, 59, 72)",
     surface2: "rgb(47, 53, 64)",
 
-    surfaceShadow: "rgb(90, 100, 119)",
+    surfaceShadow: "rgb(77, 86, 102)",
 
     blue_0: BLUE_0,
   },
