@@ -46,7 +46,7 @@ export function BaseButton({
 const styles = StyleSheet.create({
   button: {
     padding: 8,
-    borderRadius: 4,
+    borderRadius: 16,
     alignItems: "center",
   },
 });

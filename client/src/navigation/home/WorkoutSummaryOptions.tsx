@@ -12,11 +12,7 @@ export function WorkoutSummaryOptions(
   const defaultProps: NativeStackNavigationOptions = {
     headerTitle: () => <BaseText text="Summary" type="primary_18" />,
     headerLeft: () => (
-      <BaseButton
-        text="Back"
-        type="normal"
-        onPress={() => props.navigation.goBack()}
-      />
+      <BaseButton text="Back" onPress={() => props.navigation.goBack()} />
     ),
     presentation: "fullScreenModal",
   };

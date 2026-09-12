@@ -34,17 +34,12 @@ export function HomeStackNavigator() {
         component={WorkoutScreen}
         options={({ navigation, route }) => ({
           headerLeft: () => (
-            <BaseButton
-              text="Back"
-              type="normal"
-              onPress={() => navigation.goBack()}
-            />
+            <BaseButton text="Back" onPress={() => navigation.goBack()} />
           ),
           headerTitle: "",
           headerRight: () => (
             <BaseButton
               text="Complete"
-              type="normal"
               onPress={() =>
                 navigation.navigate(routes.WORKOUT_SUMMARY, {
                   workoutId: route.params.id,
@@ -71,9 +66,12 @@ export function HomeStackNavigator() {
       <Stack.Screen
         name={routes.EDIT_WORKOUT_SUMMARY}
         component={EditWorkoutSummaryScreen}
-        options={{
+        options={({ navigation }) => ({
           headerTitle: () => <BaseText text="Edit Workout" type="primary_18" />,
-        }}
+          headerLeft: () => (
+            <BaseButton text="Back" onPress={() => navigation.goBack()} />
+          ),
+        })}
       />
       <Stack.Screen
         name={routes.WORKOUT_EXERCISE}
