@@ -6,6 +6,7 @@ import { RootState } from "@/redux/store";
 import {
   addSetToWorkoutExercise,
   compleateWorkoutSet,
+  editWorkoutSet,
   WorkoutExerciseSet,
 } from "@/redux/workoutSlice";
 import { WorkoutExcerciseWheightAndRepsSet } from "./WorkoutExerciseSet";
@@ -49,6 +50,7 @@ export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
         >
           <Pressable onPress={Keyboard.dismiss}>
             {sets.map((set, index) => {
+              const { exerciseId } = props.route.params;
               return (
                 <WorkoutExcerciseWheightAndRepsSet
                   key={set.id}
@@ -60,16 +62,19 @@ export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
                         weight,
                         reps,
                         setId: set.id,
-                        exerciseId: props.route.params.exerciseId,
+                        exerciseId,
                       }),
                     )
+                  }
+                  onEdit={() =>
+                    dispatch(editWorkoutSet({ exerciseId, setId: set.id }))
                   }
                 />
               );
             })}
 
             <BaseButton
-              text="Create Set"
+              text="Add Set"
               type="normal"
               onPress={() => handleAddSet(props.route.params.exerciseId)}
             />

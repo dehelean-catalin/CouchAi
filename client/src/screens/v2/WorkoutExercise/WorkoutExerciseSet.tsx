@@ -5,14 +5,16 @@ import { WorkoutExerciseSet } from "@/redux/workoutSlice";
 import { useState } from "react";
 import { WorkoutExerciseSetField } from "./WorkoutExerciseSetField";
 import { BaseChip } from "@/components/BaseChip";
+import { BaseMenu } from "@/components/BaseMenu";
+import { StyleSheet, View } from "react-native";
 
 interface WorkoutExcerciseWheightAndRepsSetProps {
   index: number;
   data: WorkoutExerciseSet;
   onComplete: ({ weight, reps }: { weight: number; reps: number }) => void;
+  onEdit: () => void;
 }
 
-// keboard dismiss on compleate / click outside / add set
 export function WorkoutExcerciseWheightAndRepsSet(
   props: WorkoutExcerciseWheightAndRepsSetProps,
 ) {
@@ -47,7 +49,15 @@ export function WorkoutExcerciseWheightAndRepsSet(
     return (
       <BaseCard>
         <BaseChip value={`${props.index + 1}`} type="success" />
-        <BaseText text={`${weight} kg x ${reps} reps`} type="primary" />
+        <View style={styles.container}>
+          <BaseText
+            text={`${weight} kg x ${reps} reps`}
+            type="primary_regular_16"
+          />
+        </View>
+        <BaseMenu
+          items={[{ icon: "edit", label: "Edit", action: props.onEdit }]}
+        />
       </BaseCard>
     );
   }
@@ -105,3 +115,9 @@ function isPositiveNumber(value: string) {
     value.trim() !== "" && Number.isFinite(Number(value)) && Number(value) >= 0
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

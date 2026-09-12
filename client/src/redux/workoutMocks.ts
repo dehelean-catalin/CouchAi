@@ -6,6 +6,10 @@ export function SetBuilder() {
       set.id = id;
       return this;
     },
+    isCompleted(isCompleted: boolean) {
+      set.isCompleted = isCompleted;
+      return this;
+    },
     build() {
       return { ...set };
     },

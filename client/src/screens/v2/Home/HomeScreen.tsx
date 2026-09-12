@@ -57,7 +57,10 @@ export function HomeScreen(props: ScreenProps<"Home">) {
                 <BaseText text="Resume" type="secondary" />
                 <BaseText text={workout.name} type="primary_18" />
               </View>
-              <Pressable onPress={() => dispatch(deleteWorkout(workout.id))}>
+              <Pressable
+                style={styles.icon}
+                onPress={() => dispatch(deleteWorkout(workout.id))}
+              >
                 <BaseIcon name="clear" />
               </Pressable>
             </BaseCard>
@@ -90,5 +93,8 @@ const styles = StyleSheet.create({
   recentActivityContainer: {
     gap: 8,
     marginTop: 8,
+  },
+  icon: {
+    marginLeft: "auto",
   },
 });

@@ -190,6 +190,20 @@ const workoutSlice = createSlice({
         }
       });
     },
+    editWorkoutSet(
+      oldState,
+      action: PayloadAction<{
+        exerciseId: string;
+        setId: string;
+      }>,
+    ) {
+      const { exerciseId, setId } = action.payload;
+      oldState.sets[exerciseId].forEach((set) => {
+        if (set.id === setId) {
+          set.isCompleted = false;
+        }
+      });
+    },
   },
 });
 
@@ -203,6 +217,7 @@ export const {
   updateWorkoutDetails,
   addSetToWorkoutExercise,
   compleateWorkoutSet,
+  editWorkoutSet,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;

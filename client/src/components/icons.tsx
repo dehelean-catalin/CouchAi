@@ -7,6 +7,7 @@ import ClearIcon from "@expo/material-symbols/clear_all.xml";
 import MoreVert from "@expo/material-symbols/more_vert.xml";
 import PlusIcon from "@expo/material-symbols/add.xml";
 import MinusIcon from "@expo/material-symbols/remove.xml";
+import PencilIcon from "@expo/material-symbols/stylus_pencil.xml";
 
 import { StyleSheet } from "react-native";
 import { useAppColors } from "@/theme/useAppColors";
@@ -51,6 +52,11 @@ const minusIcon = Icon.select({
   android: MinusIcon,
 });
 
+const editIcon = Icon.select({
+  ios: "pencil.tip.crop.circle",
+  android: PencilIcon,
+});
+
 export interface BaseIconProps {
   name:
     | "trash"
@@ -60,7 +66,8 @@ export interface BaseIconProps {
     | "clear"
     | "ellipsis"
     | "plus"
-    | "minus";
+    | "minus"
+    | "edit";
 }
 
 export function BaseIcon(props: BaseIconProps) {
@@ -90,6 +97,9 @@ export function BaseIcon(props: BaseIconProps) {
       break;
     case "minus":
       iconName = minusIcon;
+      break;
+    case "edit":
+      iconName = editIcon;
       break;
     default:
       throw new Error("Invalid icon name");

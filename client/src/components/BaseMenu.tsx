@@ -32,6 +32,7 @@ export function BaseMenu(props: BaseMenuProps) {
   const menuRef = useRef<View>(null);
 
   function handleOpenMenu() {
+    // eslint-disable-next-line max-params
     ref.current?.measureInWindow((x, y, _, height) => {
       setPosition({ x, y, height });
     });
@@ -44,6 +45,7 @@ export function BaseMenu(props: BaseMenuProps) {
 
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line max-params
       menuRef.current?.measureInWindow((x, y, menuWidth, menuHeight) => {
         let newMenuYposition = menuPosition.y;
         if (screenHeight - menuHeight < menuPosition.y + menuPosition.height) {

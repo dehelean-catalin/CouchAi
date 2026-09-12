@@ -14,7 +14,9 @@ export function BaseChip(props: BaseChipProps) {
     { borderColor: textColors.primary },
   ];
   if (props?.type === "success") {
-    chipStyle.push({ backgroundColor: colors.blue_1 });
+    chipStyle.push({
+      backgroundColor: colors.surface2,
+    });
   }
   return (
     <View style={chipStyle}>
@@ -25,8 +27,8 @@ export function BaseChip(props: BaseChipProps) {
 
 const styles = StyleSheet.create({
   chip: {
-    width: 40,
-    height: 40,
+    width: 42,
+    height: 42,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 50,
