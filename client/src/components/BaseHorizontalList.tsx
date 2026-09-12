@@ -29,7 +29,7 @@ export function BaseHorizontalList<T extends BaseHorizontalListItem>(
   return (
     <FlatList<T>
       data={props.data}
-      keyExtractor={(item, _) => item.id}
+      keyExtractor={(item) => item.id}
       renderItem={props.item}
       getItemLayout={handleItemLayout}
       ListEmptyComponent={() => {

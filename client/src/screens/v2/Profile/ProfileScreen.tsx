@@ -1,5 +1,4 @@
 import { BaseText } from "@/components/BaseText";
-import { ScreenProps } from "@/navigation/routes";
 import { ProfileTheme, toggleTheme } from "@/redux/profileSlice";
 import { RootState } from "@/redux/store";
 import { useAppColors } from "@/theme/useAppColors";
@@ -7,7 +6,7 @@ import { Host, Switch } from "@expo/ui";
 import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-export function ProfileScreen(props: ScreenProps<"Profile">) {
+export function ProfileScreen() {
   const dispatch = useDispatch();
   const { colors } = useAppColors();
   const theme = useSelector<RootState, ProfileTheme>((s) => s.profile.theme);

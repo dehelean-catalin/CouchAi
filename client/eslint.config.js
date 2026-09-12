@@ -11,13 +11,6 @@ module.exports = defineConfig([
     rules: {
       "no-console": "error",
       "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          caughtErrors: "all",
-          ignoreRestSiblings: true,
-        },
-      ],
       "no-var": "error",
       "no-unreachable": "error",
 
@@ -44,6 +37,15 @@ module.exports = defineConfig([
       "react-native/no-single-element-style-arrays": "error",
       "react-native/no-raw-text": "error",
       "react-native/no-inline-styles": "error",
+
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          caughtErrors: "all",
+          ignoreRestSiblings: true,
+        },
+      ],
+      "@typescript-eslint/no-explicit-any": "error",
     },
   },
 ]);
