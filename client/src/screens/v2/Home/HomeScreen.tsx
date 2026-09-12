@@ -9,14 +9,12 @@ import React from "react";
 import { Pressable, StyleSheet, View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
-import { RecentCompletedWorkout } from "./RecentCompletedWorkout";
 import { BaseText } from "@/components/BaseText";
 import { BaseButton } from "@/components/BaseButton";
-import { useAppColors } from "@/theme/useAppColors";
 import { BaseIcon } from "@/components/icons";
+import { BaseCard } from "@/components/BaseCard";
 
 export function HomeScreen(props: ScreenProps<"Home">) {
-  const { colors } = useAppColors();
   const dispatch = useDispatch();
   const workouts = useSelector<RootState, WorkoutState[]>(
     (s) => s.workout.workouts,
@@ -46,12 +44,8 @@ export function HomeScreen(props: ScreenProps<"Home">) {
         {workouts
           .filter((w) => w.status === "in-progress")
           .map((workout) => (
-            <Pressable
+            <BaseCard
               key={workout.id}
-              style={[
-                styles.resumeWorkoutCard,
-                { backgroundColor: colors.surface1 },
-              ]}
               onPress={() =>
                 props.navigation.navigate(routes.WORKOUT, {
                   id: workout.id,
@@ -63,11 +57,10 @@ export function HomeScreen(props: ScreenProps<"Home">) {
                 <BaseText text="Resume" type="secondary" />
                 <BaseText text={workout.name} type="primary_18" />
               </View>
-
               <Pressable onPress={() => dispatch(deleteWorkout(workout.id))}>
                 <BaseIcon name="clear" />
               </Pressable>
-            </Pressable>
+            </BaseCard>
           ))}
 
         <BaseButton text="Start new workout" onPress={handleStartWorkout} />
@@ -77,12 +70,12 @@ export function HomeScreen(props: ScreenProps<"Home">) {
           {workouts
             .filter((workout) => workout.status === "completed")
             .map((completedWorkout) => (
-              <RecentCompletedWorkout
+              <BaseCard
                 key={completedWorkout.id}
-                id={completedWorkout.id}
-                name={completedWorkout.name}
-                onChange={() => handleViewWorkoutSummary(completedWorkout.id)}
-              />
+                onPress={() => handleViewWorkoutSummary(completedWorkout.id)}
+              >
+                <BaseText text={completedWorkout.name} type="primary" />
+              </BaseCard>
             ))}
         </View>
       </ScrollView>
@@ -93,20 +86,6 @@ export function HomeScreen(props: ScreenProps<"Home">) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  resumeWorkoutCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderRadius: 4,
-    padding: 8,
-    paddingInline: 12,
-    marginBottom: 12,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.2,
   },
   recentActivityContainer: {
     gap: 8,

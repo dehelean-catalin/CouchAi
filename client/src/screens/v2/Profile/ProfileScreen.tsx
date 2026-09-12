@@ -30,7 +30,7 @@ export function ProfileScreen(props: ScreenProps<"Profile">) {
       </View>
       <View style={styles.row}>
         <BaseText text="Enable Dark Mode" type="primary" />
-        <Host matchContents seedColor={colors.blue0}>
+        <Host matchContents seedColor={colors.blue_0}>
           <Switch value={theme === "dark"} onValueChange={handleThemeToggle} />
         </Host>
       </View>

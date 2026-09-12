@@ -18,7 +18,7 @@ export function BaseButton({
   const { colors } = useAppColors();
   let buttonStyle = null;
   if (type === "fill") {
-    buttonStyle = { backgroundColor: colors.blue0 };
+    buttonStyle = { backgroundColor: colors.blue_0 };
   }
 
   return (
@@ -27,7 +27,7 @@ export function BaseButton({
       disabled={disabled}
       onPress={press}
     >
-      <BaseText text={text} type="primary_bold" />
+      <BaseText text={text} type="primary_bold_16" />
     </Pressable>
   );
 }

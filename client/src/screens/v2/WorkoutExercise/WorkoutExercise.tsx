@@ -1,15 +1,24 @@
 import React from "react";
-import { View } from "react-native";
 import { ScreenProps } from "@/navigation/routes";
-import { BaseText } from "@/components/BaseText";
 import { BaseButton } from "@/components/BaseButton";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import {
   addSetToWorkoutExercise,
+  compleateWorkoutSet,
   WorkoutExerciseSet,
 } from "@/redux/workoutSlice";
 import { WorkoutExcerciseWheightAndRepsSet } from "./WorkoutExerciseSet";
+import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+} from "react-native";
 
 export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
   const dispatch = useDispatch();
@@ -26,23 +35,58 @@ export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
   }
 
   return (
-    <View>
-      <BaseText text="Workout Exercise" type="primary" />
-      {sets.map((set) => {
-        return (
-          <WorkoutExcerciseWheightAndRepsSet
-            key={set.id}
-            weight={set.weight}
-            reps={set.reps}
-          />
-        );
-      })}
+    <SafeAreaView edges={["top"]} style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+        keyboardVerticalOffset={100}
+      >
+        <ScrollView
+          style={styles.container}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          <Pressable onPress={Keyboard.dismiss}>
+            {sets.map((set, index) => {
+              return (
+                <WorkoutExcerciseWheightAndRepsSet
+                  key={set.id}
+                  data={set}
+                  index={index}
+                  onComplete={({ weight, reps }) =>
+                    dispatch(
+                      compleateWorkoutSet({
+                        weight,
+                        reps,
+                        setId: set.id,
+                        exerciseId: props.route.params.exerciseId,
+                      }),
+                    )
+                  }
+                />
+              );
+            })}
 
-      <BaseButton
-        text="Create Set"
-        type="normal"
-        onPress={() => handleAddSet(props.route.params.exerciseId)}
-      />
-    </View>
+            <BaseButton
+              text="Create Set"
+              type="normal"
+              onPress={() => handleAddSet(props.route.params.exerciseId)}
+            />
+          </Pressable>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+    marginTop: 4,
+  },
+  scrollContent: {
+    paddingBottom: 20,
+  },
+});

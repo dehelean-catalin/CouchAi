@@ -172,6 +172,24 @@ const workoutSlice = createSlice({
         generateInitialWorkingExerciseSet(),
       );
     },
+    compleateWorkoutSet(
+      oldState,
+      action: PayloadAction<{
+        exerciseId: string;
+        setId: string;
+        weight: number;
+        reps: number;
+      }>,
+    ) {
+      const { exerciseId, setId, reps, weight } = action.payload;
+      oldState.sets[exerciseId].forEach((set) => {
+        if (set.id === setId) {
+          set.reps = reps;
+          set.weight = weight;
+          set.isCompleted = true;
+        }
+      });
+    },
   },
 });
 
@@ -184,6 +202,7 @@ export const {
   replaceExerciseFromWorkout,
   updateWorkoutDetails,
   addSetToWorkoutExercise,
+  compleateWorkoutSet,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;

@@ -43,13 +43,13 @@ export function EditWorkoutSummaryScreen(
       accessible={false}
     >
       <View style={[styles.card, { backgroundColor: colors.surface1 }]}>
-        <BaseText text="Name" type="primary_bold" />
+        <BaseText text="Name" type="primary_bold_16" />
         <View
           style={[
             styles.inputRow,
             {
               backgroundColor: colors.surface2,
-              borderColor: isFocused ? colors.blue0 : colors.surface0,
+              borderColor: isFocused ? colors.blue_0 : colors.surface0,
             },
           ]}
         >
@@ -60,8 +60,8 @@ export function EditWorkoutSummaryScreen(
             autoCapitalize="words"
             autoCorrect={false}
             placeholderTextColor={textColors.secondary}
-            selectionColor={colors.blue0}
-            cursorColor={colors.blue0}
+            selectionColor={colors.blue_0}
+            cursorColor={colors.blue_0}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             style={[

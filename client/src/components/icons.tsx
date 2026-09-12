@@ -5,6 +5,8 @@ import PersonIcon from "@expo/material-symbols/person.xml";
 import ReplaceIcon from "@expo/material-symbols/arrow_back_2.xml";
 import ClearIcon from "@expo/material-symbols/clear_all.xml";
 import MoreVert from "@expo/material-symbols/more_vert.xml";
+import PlusIcon from "@expo/material-symbols/add.xml";
+import MinusIcon from "@expo/material-symbols/remove.xml";
 
 import { StyleSheet } from "react-native";
 import { useAppColors } from "@/theme/useAppColors";
@@ -39,8 +41,26 @@ const ellipsisIcon = Icon.select({
   android: MoreVert,
 });
 
+const plusIcon = Icon.select({
+  ios: "plus",
+  android: PlusIcon,
+});
+
+const minusIcon = Icon.select({
+  ios: "minus",
+  android: MinusIcon,
+});
+
 export interface BaseIconProps {
-  name: "trash" | "house" | "person" | "replace" | "clear" | "ellipsis";
+  name:
+    | "trash"
+    | "house"
+    | "person"
+    | "replace"
+    | "clear"
+    | "ellipsis"
+    | "plus"
+    | "minus";
 }
 
 export function BaseIcon(props: BaseIconProps) {
@@ -65,6 +85,12 @@ export function BaseIcon(props: BaseIconProps) {
     case "ellipsis":
       iconName = ellipsisIcon;
       break;
+    case "plus":
+      iconName = plusIcon;
+      break;
+    case "minus":
+      iconName = minusIcon;
+      break;
     default:
       throw new Error("Invalid icon name");
   }
@@ -79,6 +105,5 @@ export function BaseIcon(props: BaseIconProps) {
 const styles = StyleSheet.create({
   icon: {
     width: 20,
-    paddingLeft: 4,
   },
 });

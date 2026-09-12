@@ -1,9 +1,10 @@
 import React from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { BaseMenu } from "../../../components/BaseMenu";
 import { WorkoutExercise } from "@/redux/workoutSlice";
 import { BaseText } from "@/components/BaseText";
-import { useAppColors } from "@/theme/useAppColors";
+import { BaseCard } from "@/components/BaseCard";
+import { BaseChip } from "@/components/BaseChip";
 
 type WorkoutSessionCardProps = {
   index: number;
@@ -20,19 +21,12 @@ export function WorkoutExerciseCard({
   onReplace: replace,
   onPress: press,
 }: WorkoutSessionCardProps) {
-  const { textColors, colors } = useAppColors();
   return (
-    <Pressable
-      style={[styles.container, { backgroundColor: colors.surface1 }]}
-      onPress={press}
-    >
-      <View style={styles.details}>
-        <View style={[styles.chip, { borderColor: textColors.primary }]}>
-          <BaseText text={`${index + 1}`} type="primary" />
-        </View>
+    <BaseCard onPress={press}>
+      <BaseChip value={`${index + 1}`} />
+      <View style={styles.container}>
         <BaseText text={exercise.name} type="primary" />
       </View>
-
       <BaseMenu
         items={[
           {
@@ -47,31 +41,12 @@ export function WorkoutExerciseCard({
           },
         ]}
       />
-    </Pressable>
+    </BaseCard>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 16,
-    padding: 16,
-    marginBottom: 8,
-    borderRadius: 8,
-  },
-  details: {
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 16,
-  },
-  chip: {
-    width: 40,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 50,
-    borderWidth: 1,
   },
 });

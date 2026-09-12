@@ -21,7 +21,7 @@ export function ExerciseCheckBox({ onSelect: select }: ExerciseCheckBoxProps) {
       <Checkbox
         value={isChecked}
         onValueChange={handleCheckPress}
-        color={colors.blue0}
+        color={colors.blue_0}
       />
     </View>
   );
