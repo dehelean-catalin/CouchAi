@@ -6,7 +6,6 @@ interface ColorValue {
   surface2: string;
   surfaceShadow: string;
   blue_0: string;
-  blue_1: string;
 }
 
 interface TextColorValue {
@@ -15,7 +14,6 @@ interface TextColorValue {
 }
 
 const BLUE_0 = "rgb(51, 146, 234)";
-const BLUE_1 = "rgba(191, 255, 164, 0.29)";
 
 export const COLORS: Record<ColorSchemeName, ColorValue> = {
   light: {
@@ -26,7 +24,6 @@ export const COLORS: Record<ColorSchemeName, ColorValue> = {
     surfaceShadow: "rgb(86, 88, 92)",
 
     blue_0: BLUE_0,
-    blue_1: BLUE_1,
   },
   dark: {
     surface0: "rgb(20, 23, 29)",
@@ -36,7 +33,6 @@ export const COLORS: Record<ColorSchemeName, ColorValue> = {
     surfaceShadow: "rgb(90, 100, 119)",
 
     blue_0: BLUE_0,
-    blue_1: BLUE_1,
   },
 };
 
