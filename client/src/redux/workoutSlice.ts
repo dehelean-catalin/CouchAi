@@ -1,4 +1,5 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "./store";
 
 type WorkoutStatus = "completed" | "in-progress" | "deleted" | null;
 
@@ -245,4 +246,11 @@ export function generateRandomId(): string {
 
 function generateInitialWorkingExerciseSet() {
   return { id: generateRandomId(), isCompleted: false, weight: 0, reps: 0 };
+}
+
+export function setsSelector(exerciseId: string) {
+  return createSelector(
+    [(state: RootState) => state.workout.sets],
+    (s) => s[exerciseId],
+  );
 }

@@ -10,7 +10,14 @@ module.exports = defineConfig([
     ignores: ["dist/*", "node_modules/*", ".expo/*"],
     rules: {
       "no-console": "error",
-      "no-unused-vars": "error",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          caughtErrors: "all",
+          ignoreRestSiblings: true,
+        },
+      ],
       "no-var": "error",
       "no-unreachable": "error",
 

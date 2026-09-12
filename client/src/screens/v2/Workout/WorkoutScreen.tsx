@@ -59,10 +59,22 @@ export function WorkoutScreen(props: ScreenProps<"Workout">) {
     });
   }
 
-  function handleNavigateToExercise(workoutId: string, exerciseId: string) {
+  function handleNavigateToExercise({
+    workoutId,
+    exerciseId,
+    exerciseName,
+    thumbnailUrl,
+  }: {
+    workoutId: string;
+    exerciseId: string;
+    exerciseName: string;
+    thumbnailUrl: string;
+  }) {
     props.navigation.navigate(routes.WORKOUT_EXERCISE, {
       workoutId,
       exerciseId,
+      exerciseName,
+      thumbnailUrl,
     });
   }
 
@@ -84,7 +96,14 @@ export function WorkoutScreen(props: ScreenProps<"Workout">) {
             onReplace={() =>
               handleReplaceExercise(workout.id, exercise.id, index)
             }
-            onPress={() => handleNavigateToExercise(workout.id, exercise.id)}
+            onPress={() =>
+              handleNavigateToExercise({
+                workoutId: workout.id,
+                exerciseId: exercise.id,
+                exerciseName: exercise.name,
+                thumbnailUrl: exercise.thumbnailUrl,
+              })
+            }
           />
         )}
         emptyComponentText="Search for an exercise"

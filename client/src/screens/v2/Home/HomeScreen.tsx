@@ -34,7 +34,6 @@ export function HomeScreen(props: ScreenProps<"Home">) {
       latestState.workout.workouts[latestState.workout.workouts.length - 1];
     props.navigation.navigate(routes.WORKOUT, {
       id: latestWorkout.id,
-      name: latestWorkout.name,
     });
   }
 
@@ -49,7 +48,6 @@ export function HomeScreen(props: ScreenProps<"Home">) {
               onPress={() =>
                 props.navigation.navigate(routes.WORKOUT, {
                   id: workout.id,
-                  name: workout.name,
                 })
               }
             >

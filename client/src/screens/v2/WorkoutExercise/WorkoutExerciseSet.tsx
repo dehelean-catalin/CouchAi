@@ -94,6 +94,7 @@ export function WorkoutExcerciseWheightAndRepsSet(
         <WorkoutExerciseSetField
           label="Weight"
           value={weight}
+          keyboardType="decimal-pad"
           onChange={handleChangeWeight}
           onIncreasePress={handleWeightIncrease}
           onDecreasePress={handleWeightDecrease}
@@ -101,6 +102,7 @@ export function WorkoutExcerciseWheightAndRepsSet(
         <WorkoutExerciseSetField
           label="Reps"
           value={reps}
+          keyboardType="number-pad"
           onChange={handleChangeReps}
           onIncreasePress={handleRepsIncrease}
           onDecreasePress={handleRepsDecrease}

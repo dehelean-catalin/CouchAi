@@ -6,6 +6,7 @@ import { Pressable, StyleSheet, TextInput, View } from "react-native";
 interface WorkoutExerciseSetFieldProps {
   label: string;
   value: string;
+  keyboardType: "number-pad" | "decimal-pad";
   onChange: (value: string) => void;
   onIncreasePress: () => void;
   onDecreasePress: () => void;
@@ -31,7 +32,7 @@ export function WorkoutExerciseSetField(props: WorkoutExerciseSetFieldProps) {
         <TextInput
           value={props.value}
           onChangeText={props.onChange}
-          keyboardType="numeric"
+          keyboardType={props.keyboardType}
           style={[
             styles.input,
             {

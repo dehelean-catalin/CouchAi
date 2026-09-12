@@ -1,11 +1,10 @@
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Exercise } from "@/redux/exerciseReducer";
-import { Image } from "expo-image";
 import { ExerciseCheckBox } from "./ExerciseCheckBox";
 import { ExerciseListAction } from "../../../navigation/routes";
 import { BaseText } from "@/components/BaseText";
-import { useAppColors } from "@/theme/useAppColors";
+import { BaseThumbnail } from "@/components/BaseThumbnail";
 
 type CardProps = {
   data: Exercise;
@@ -20,20 +19,9 @@ export function ExerciseCard({
   onSelect: select,
   onReplace: replace,
 }: CardProps) {
-  const { colors } = useAppColors();
-  const initialLetter = data.name.slice(0, 1).toUpperCase();
-
   return (
     <Pressable style={styles.card}>
-      {data.thumbnailUrl ? (
-        <Image source={data.thumbnailUrl} style={styles.tinyLogo} />
-      ) : (
-        <View
-          style={[styles.emptyTumbnail, { backgroundColor: colors.surface1 }]}
-        >
-          <BaseText text={initialLetter} type="primary_18" />
-        </View>
-      )}
+      <BaseThumbnail thumbnailUrl={data.thumbnailUrl} name={data.name} />
       <View style={styles.column}>
         <BaseText text={data.name} type="primary" />
         <BaseText
@@ -63,17 +51,6 @@ const styles = StyleSheet.create({
   },
   column: {
     flex: 1,
-    justifyContent: "center",
-  },
-  tinyLogo: {
-    width: 90,
-    height: 90,
-  },
-  emptyTumbnail: {
-    width: 90,
-    height: 90,
-    display: "flex",
-    alignItems: "center",
     justifyContent: "center",
   },
 });
