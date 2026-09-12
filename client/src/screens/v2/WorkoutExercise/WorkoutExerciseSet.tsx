@@ -13,6 +13,7 @@ interface WorkoutExcerciseWheightAndRepsSetProps {
   data: WorkoutExerciseSet;
   onComplete: ({ weight, reps }: { weight: number; reps: number }) => void;
   onEdit: () => void;
+  onDelete: () => void;
 }
 
 export function WorkoutExcerciseWheightAndRepsSet(
@@ -56,7 +57,14 @@ export function WorkoutExcerciseWheightAndRepsSet(
           />
         </View>
         <BaseMenu
-          items={[{ icon: "edit", label: "Edit", action: props.onEdit }]}
+          items={[
+            { icon: "edit", label: "Edit", action: props.onEdit },
+            {
+              icon: "trash",
+              label: "Delete",
+              action: props.onDelete,
+            },
+          ]}
         />
       </BaseCard>
     );

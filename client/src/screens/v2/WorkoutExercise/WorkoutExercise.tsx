@@ -6,6 +6,7 @@ import { RootState } from "@/redux/store";
 import {
   addSetToWorkoutExercise,
   compleateWorkoutSet,
+  deleteWorkoutSet,
   editWorkoutSet,
   WorkoutExerciseSet,
 } from "@/redux/workoutSlice";
@@ -68,6 +69,9 @@ export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
                   }
                   onEdit={() =>
                     dispatch(editWorkoutSet({ exerciseId, setId: set.id }))
+                  }
+                  onDelete={() =>
+                    dispatch(deleteWorkoutSet({ exerciseId, setId: set.id }))
                   }
                 />
               );

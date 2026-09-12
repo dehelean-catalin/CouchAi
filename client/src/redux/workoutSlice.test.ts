@@ -2,6 +2,7 @@ import { describe, expect, test } from "@jest/globals";
 import reducer, {
   addSetToWorkoutExercise,
   compleateWorkoutSet,
+  deleteWorkoutSet,
   editWorkoutSet,
 } from "./workoutSlice";
 import { SetBuilder } from "./workoutMocks";
@@ -141,6 +142,53 @@ describe(editWorkoutSet.name, () => {
     const state = reducer(
       initialState,
       editWorkoutSet({
+        exerciseId,
+        setId: "missing-set",
+      }),
+    );
+
+    expect(state.sets[exerciseId]).toEqual(initialState.sets[exerciseId]);
+  });
+});
+
+describe(deleteWorkoutSet.name, () => {
+  test("it should remove the matching set from the list", () => {
+    const exerciseId = "exerciseMockId";
+    const firstSet = SetBuilder().setId("set-1").build();
+    const secondSet = SetBuilder().setId("set-2").build();
+
+    const state = reducer(
+      {
+        workouts: [],
+        sets: {
+          [exerciseId]: [firstSet, secondSet],
+        },
+      },
+      deleteWorkoutSet({
+        exerciseId,
+        setId: firstSet.id,
+      }),
+    );
+
+    expect(state.sets[exerciseId]).toHaveLength(1);
+    expect(state.sets[exerciseId]).toEqual([secondSet]);
+  });
+
+  test("it should keep the sets unchanged when no set id matches", () => {
+    const exerciseId = "exerciseMockId";
+    const firstSet = SetBuilder().setId("set-1").build();
+    const secondSet = SetBuilder().setId("set-2").build();
+
+    const initialState = {
+      workouts: [],
+      sets: {
+        [exerciseId]: [firstSet, secondSet],
+      },
+    };
+
+    const state = reducer(
+      initialState,
+      deleteWorkoutSet({
         exerciseId,
         setId: "missing-set",
       }),

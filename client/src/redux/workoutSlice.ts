@@ -204,6 +204,22 @@ const workoutSlice = createSlice({
         }
       });
     },
+    deleteWorkoutSet(
+      oldState,
+      action: PayloadAction<{
+        exerciseId: string;
+        setId: string;
+      }>,
+    ) {
+      const { exerciseId, setId } = action.payload;
+      const indexToDelete = oldState.sets[exerciseId].findIndex(
+        (set) => set.id === setId,
+      );
+      if (indexToDelete === -1) {
+        return oldState;
+      }
+      oldState.sets[exerciseId].splice(indexToDelete, 1);
+    },
   },
 });
 
@@ -218,6 +234,7 @@ export const {
   addSetToWorkoutExercise,
   compleateWorkoutSet,
   editWorkoutSet,
+  deleteWorkoutSet,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;

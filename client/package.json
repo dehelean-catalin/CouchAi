@@ -10,7 +10,8 @@
     "ts:check": "tsc",
     "lint": "expo lint",
     "prepare": "husky",
-    "test": "jest --watchAll"
+    "test": "jest",
+    "test-watch": "jest --watchAll"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
