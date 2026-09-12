@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     alignItems: "center",
-    gap: 12,
+    gap: 8,
   },
   input: {
     height: 48,

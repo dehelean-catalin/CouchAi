@@ -78,6 +78,18 @@ export function WorkoutExcerciseWheightAndRepsSet(
             type="primary_bold_16"
             transform="uppercase"
           />
+
+          <View style={styles.menuContainer}>
+            <BaseMenu
+              items={[
+                {
+                  icon: "trash",
+                  label: "Delete",
+                  action: props.onDelete,
+                },
+              ]}
+            />
+          </View>
         </View>
         <WorkoutExerciseSetField
           label="Weight"
@@ -135,7 +147,14 @@ const styles = StyleSheet.create({
   },
   header: {
     width: "100%",
-    padding: 4,
+    paddingTop: 4,
+    paddingBottom: 4,
     alignItems: "center",
+  },
+  menuContainer: {
+    alignSelf: "flex-end",
+    position: "relative",
+    height: 0,
+    bottom: 24,
   },
 });

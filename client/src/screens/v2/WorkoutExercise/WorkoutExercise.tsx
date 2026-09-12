@@ -42,16 +42,16 @@ export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
     <SafeAreaView edges={["top"]} style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
         keyboardVerticalOffset={100}
       >
         <ScrollView
-          style={styles.container}
           keyboardShouldPersistTaps="handled"
-          contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          <Pressable onPress={Keyboard.dismiss}>
+          <Pressable
+            onPress={Keyboard.dismiss}
+            style={styles.scrollViewContent}
+          >
             {sets.map((set, index) => {
               const { exerciseId } = props.route.params;
               return (
@@ -97,14 +97,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-    marginTop: 4,
+    marginTop: 12,
   },
-  scrollContent: {
-    paddingBottom: 20,
-  },
+
   addButtonContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+  },
+  scrollViewContent: {
+    marginBottom: 240,
   },
 });
