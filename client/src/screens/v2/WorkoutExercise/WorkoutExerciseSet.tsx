@@ -7,6 +7,12 @@ import { WorkoutExerciseSetField } from "./WorkoutExerciseSetField";
 import { BaseChip } from "@/components/BaseChip";
 import { BaseMenu } from "@/components/BaseMenu";
 import { StyleSheet, View } from "react-native";
+import {
+  computeValidWeight,
+  decreasePositiveValue,
+  increasePositiveValue,
+  toFixedSize,
+} from "./numericInput";
 
 interface WorkoutExcerciseWheightAndRepsSetProps {
   index: number;
@@ -15,6 +21,8 @@ interface WorkoutExcerciseWheightAndRepsSetProps {
   onEdit: () => void;
   onDelete: () => void;
 }
+const MAX_DIGITS = 9;
+const WEIGHT_AMOUNT = 2.5;
 
 export function WorkoutExcerciseWheightAndRepsSet(
   props: WorkoutExcerciseWheightAndRepsSetProps,
@@ -23,19 +31,26 @@ export function WorkoutExcerciseWheightAndRepsSet(
   const [reps, setReps] = useState(props.data.reps.toString());
 
   function handleChangeWeight(value: string) {
-    setWeight(value);
+    setWeight((prev) => {
+      const formattedValue = value.replace(",", ".");
+      return toFixedSize(formattedValue, prev, MAX_DIGITS);
+    });
   }
 
   function handleWeightDecrease() {
-    setWeight((currentValue) => decreasePositiveValue(currentValue, 2.5));
+    setWeight((currentValue) =>
+      decreasePositiveValue(currentValue, WEIGHT_AMOUNT),
+    );
   }
 
   function handleWeightIncrease() {
-    setWeight((currentValue) => increasePositiveValue(currentValue, 2.5));
+    setWeight((currentValue) =>
+      increasePositiveValue(currentValue, WEIGHT_AMOUNT),
+    );
   }
 
   function handleChangeReps(value: string) {
-    setReps(value);
+    setReps((prev) => toFixedSize(value, prev, MAX_DIGITS));
   }
 
   function handleRepsDecrease() {
@@ -110,36 +125,17 @@ export function WorkoutExcerciseWheightAndRepsSet(
         <BaseButton
           text="Compleate"
           type="rounded"
-          onPress={() =>
-            props.onComplete({ weight: Number(weight), reps: Number(reps) })
-          }
+          onPress={() => {
+            const validWeight = computeValidWeight(weight);
+            props.onComplete({
+              weight: validWeight,
+              reps: Number(reps),
+            });
+            setWeight(validWeight.toString());
+          }}
         />
       </BaseCard>
     </>
-  );
-}
-
-function increasePositiveValue(value: string, amount: number) {
-  if (isPositiveNumber(value)) {
-    return (Number(value) + amount).toString();
-  }
-  return value;
-}
-
-function decreasePositiveValue(value: string, amount: number) {
-  if (isPositiveNumber(value)) {
-    const numValue = Number(value);
-    if (numValue === 0) {
-      return value;
-    }
-    return (Number(value) - amount).toString();
-  }
-  return value;
-}
-
-function isPositiveNumber(value: string) {
-  return (
-    value.trim() !== "" && Number.isFinite(Number(value)) && Number(value) >= 0
   );
 }
 
