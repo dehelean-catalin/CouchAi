@@ -7,7 +7,7 @@ import {
   compleateWorkoutSet,
   deleteWorkoutSet,
   editWorkoutSet,
-  setsSelector,
+  selectSetsForExercise,
 } from "@/redux/workoutSlice";
 import { WorkoutExcerciseWheightAndRepsSet } from "./WorkoutExerciseSet";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -24,16 +24,19 @@ import {
 import { BaseIcon } from "@/components/icons";
 import { BaseText } from "@/components/BaseText";
 import { BaseThumbnail, ThumbnailSize } from "@/components/BaseThumbnail";
+import { RootState } from "@/redux/store";
 
 export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
   const dispatch = useDispatch();
-  const sets = useSelector(setsSelector(props.route.params.exerciseId));
+  const sets = useSelector((s: RootState) =>
+    selectSetsForExercise(s, props.route.params.exerciseId),
+  );
 
   function handleAddSet(exerciseId: string) {
     dispatch(addSetToWorkoutExercise({ exerciseId }));
   }
 
-  if (!sets) {
+  if (!sets || sets?.length === 0) {
     return null;
   }
 

@@ -31,8 +31,8 @@ export function BaseChip(props: BaseChipProps) {
 
 const styles = StyleSheet.create({
   chip: {
-    width: 42,
-    height: 42,
+    width: 40,
+    height: 40,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 50,

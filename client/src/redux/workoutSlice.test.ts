@@ -1,11 +1,59 @@
 import { describe, expect, test } from "@jest/globals";
 import reducer, {
   addSetToWorkoutExercise,
+  completeWorkout,
   compleateWorkoutSet,
   deleteWorkoutSet,
   editWorkoutSet,
 } from "./workoutSlice";
-import { SetBuilder } from "./workoutMocks";
+import { SetBuilder, WorkoutBuilder } from "./workoutMocks";
+
+describe(completeWorkout.name, () => {
+  test("it should mark the matching workout as completed and set the end date", () => {
+    const endDate = "2026-09-14T18:00:00.000Z";
+    const state = reducer(
+      {
+        workouts: [
+          WorkoutBuilder().build(),
+          WorkoutBuilder()
+            .withId("workout-2")
+            .withPlanId("plan-2")
+            .withName("Leg Day")
+            .withStartDate("2026-09-14T16:00:00.000Z")
+            .build(),
+        ],
+        sets: {},
+      },
+      completeWorkout({ workoutId: "workout-1", endDate }),
+    );
+
+    expect(state.workouts[0]).toMatchObject({
+      id: "workout-1",
+      status: "completed",
+      endDate,
+    });
+    expect(state.workouts[1]).toMatchObject({
+      id: "workout-2",
+      status: "in-progress",
+      endDate: "",
+    });
+  });
+
+  test("it should keep the workouts unchanged when the workout id does not exist", () => {
+    const endDate = "2026-09-14T18:00:00.000Z";
+    const initialState = {
+      workouts: [WorkoutBuilder().build()],
+      sets: {},
+    };
+
+    const state = reducer(
+      initialState,
+      completeWorkout({ workoutId: "missing-workout", endDate }),
+    );
+
+    expect(state).toEqual(initialState);
+  });
+});
 
 describe(addSetToWorkoutExercise.name, () => {
   test("it should add a new working set to an empty exercise set list", () => {

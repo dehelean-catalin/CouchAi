@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { BaseMenu } from "../../../components/BaseMenu";
-import { setsSelector, WorkoutExercise } from "@/redux/workoutSlice";
+import { selectSetsForExercise, WorkoutExercise } from "@/redux/workoutSlice";
 import { BaseText } from "@/components/BaseText";
 import { BaseCard } from "@/components/BaseCard";
 import { BaseChip } from "@/components/BaseChip";
 import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 type WorkoutSessionCardProps = {
   index: number;
@@ -22,7 +23,9 @@ export function WorkoutExerciseCard({
   onReplace: replace,
   onPress: press,
 }: WorkoutSessionCardProps) {
-  const sets = useSelector(setsSelector(exercise.id));
+  const sets = useSelector((s: RootState) =>
+    selectSetsForExercise(s, exercise.id),
+  );
 
   const numberOfTotalSets = sets.length;
   const numberOfCompletedSets = sets.filter((set) => set.isCompleted).length;

@@ -67,12 +67,16 @@ const workoutSlice = createSlice({
         workoutToUpdate.status = "deleted";
       }
     },
-    completeWorkout: (oldState, action: PayloadAction<string>) => {
+    completeWorkout: (
+      oldState,
+      action: PayloadAction<{ workoutId: string; endDate: string }>,
+    ) => {
       const workoutToUpdate = oldState.workouts.find(
-        (workout) => workout.id === action.payload,
+        (workout) => workout.id === action.payload.workoutId,
       );
       if (workoutToUpdate) {
         workoutToUpdate.status = "completed";
+        workoutToUpdate.endDate = action.payload.endDate;
       }
     },
     addExerciseToWorkout: (
@@ -248,9 +252,25 @@ function generateInitialWorkingExerciseSet() {
   return { id: generateRandomId(), isCompleted: false, weight: 0, reps: 0 };
 }
 
-export function setsSelector(exerciseId: string) {
-  return createSelector(
-    [(state: RootState) => state.workout.sets],
-    (s) => s[exerciseId],
-  );
-}
+const selectSets = (state: RootState) => state.workout.sets;
+
+export const selectSetsForExercise = createSelector(
+  [selectSets, (_, exerciseId: string) => exerciseId],
+  (s, exerciseId): WorkoutExerciseSet[] | undefined => s[exerciseId],
+);
+
+export const selectWorkout = createSelector(
+  [
+    (state: RootState) => state.workout.workouts,
+    (_, workoutId: string) => workoutId,
+  ],
+  (workouts, workoutId) => workouts.find((workout) => workout.id === workoutId),
+);
+
+export const selectWorkoutSummary = createSelector(
+  [selectWorkout, selectSets],
+  (workout, sets) =>
+    workout?.exercises.map((exercise) => {
+      return { exercise, sets: sets[exercise.id] };
+    }),
+);
