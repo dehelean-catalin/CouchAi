@@ -3,9 +3,9 @@ import { Checkbox } from "expo-checkbox";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-type ExerciseCheckBoxProps = {
+interface ExerciseCheckBoxProps {
   onSelect?: (isChecked: boolean) => void;
-};
+}
 
 export function ExerciseCheckBox({ onSelect: select }: ExerciseCheckBoxProps) {
   const { colors } = useAppColors();

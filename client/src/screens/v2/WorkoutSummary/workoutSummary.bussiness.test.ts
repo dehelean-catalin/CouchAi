@@ -186,10 +186,10 @@ describe(formatDuration.name, () => {
   });
 });
 
-type DateRange = {
+interface DateRange {
   startDate: string;
   endDate: string;
-};
+}
 
 function DateRangeBuilder() {
   const range: DateRange = {
@@ -212,11 +212,11 @@ function DateRangeBuilder() {
   };
 }
 
-type Duration = {
+interface Duration {
   seconds: number;
   minutes: number;
   hours: number;
-};
+}
 function DurationBuilder() {
   const duration: Duration = {
     seconds: 0,

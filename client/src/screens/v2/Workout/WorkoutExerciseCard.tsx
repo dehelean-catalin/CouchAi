@@ -8,13 +8,13 @@ import { BaseChip } from "@/components/BaseChip";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
-type WorkoutSessionCardProps = {
+interface WorkoutSessionCardProps {
   index: number;
   exercise: WorkoutExercise;
   onRemove: () => void;
   onReplace: () => void;
   onPress: () => void;
-};
+}
 
 export function WorkoutExerciseCard({
   index,
@@ -27,8 +27,13 @@ export function WorkoutExerciseCard({
     selectSetsForExercise(s, exercise.id),
   );
 
+  if (!sets) {
+    return null;
+  }
+
   const numberOfTotalSets = sets.length;
   const numberOfCompletedSets = sets.filter((set) => set.isCompleted).length;
+
   return (
     <BaseCard onPress={press}>
       <BaseChip

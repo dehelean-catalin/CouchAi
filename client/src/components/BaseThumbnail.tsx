@@ -8,11 +8,11 @@ export enum ThumbnailSize {
   LARGE = 90,
 }
 
-type BaseThumbnailProps = {
+interface BaseThumbnailProps {
   thumbnailUrl?: string | null;
   name: string;
   size?: ThumbnailSize.SMALL | ThumbnailSize.LARGE;
-};
+}
 
 export function BaseThumbnail({
   thumbnailUrl,

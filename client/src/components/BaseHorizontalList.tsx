@@ -8,11 +8,11 @@ interface BaseHorizontalListItem {
   id: string;
 }
 
-type BaseHorizontalListProps<T extends BaseHorizontalListItem> = {
+interface BaseHorizontalListProps<T extends BaseHorizontalListItem> {
   data: T[];
   item: (props: { item: T; index: number }) => ReactElement;
   emptyComponentText: string;
-};
+}
 
 export function BaseHorizontalList<T extends BaseHorizontalListItem>(
   props: BaseHorizontalListProps<T>,

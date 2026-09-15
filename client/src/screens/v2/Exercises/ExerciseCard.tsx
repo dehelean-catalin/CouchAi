@@ -6,12 +6,12 @@ import { ExerciseListAction } from "../../../navigation/routes";
 import { BaseText } from "@/components/BaseText";
 import { BaseThumbnail } from "@/components/BaseThumbnail";
 
-type CardProps = {
+interface CardProps {
   data: Exercise;
   actionType: ExerciseListAction["type"];
   onSelect?: (id: string, isChecked: boolean) => void;
   onReplace?: (id: string) => void;
-};
+}
 
 export function ExerciseCard({
   data,

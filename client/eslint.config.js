@@ -17,6 +17,9 @@ module.exports = defineConfig([
       "no-undef": "error",
       "no-dupe-keys": "error",
       "no-duplicate-case": "error",
+      "no-duplicate-imports": "error",
+      "no-new-wrappers": "error",
+      "no-return-await": "error",
       "no-fallthrough": "error",
 
       eqeqeq: ["error", "always"],
@@ -46,6 +49,15 @@ module.exports = defineConfig([
         },
       ],
       "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/consistent-type-assertions": [
+        "error",
+        { assertionStyle: "never" },
+      ],
+      "@typescript-eslint/no-non-null-assertion": "error",
+      "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
+
+      "max-lines": ["error", 500],
+      "no-fallthrough": "error",
     },
   },
 ]);
