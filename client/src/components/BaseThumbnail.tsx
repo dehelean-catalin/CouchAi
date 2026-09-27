@@ -3,22 +3,14 @@ import { Image } from "expo-image";
 import { BaseText } from "./BaseText";
 import { StyleSheet, View } from "react-native";
 
-export enum ThumbnailSize {
-  SMALL = 70,
-  LARGE = 90,
-}
+const ThumbnailSize = 70;
 
 interface BaseThumbnailProps {
   thumbnailUrl?: string | null;
   name: string;
-  size?: ThumbnailSize.SMALL | ThumbnailSize.LARGE;
 }
 
-export function BaseThumbnail({
-  thumbnailUrl,
-  name,
-  size = ThumbnailSize.LARGE,
-}: BaseThumbnailProps) {
+export function BaseThumbnail({ thumbnailUrl, name }: BaseThumbnailProps) {
   const { colors } = useAppColors();
   const initialLetter = name.slice(0, 1).toUpperCase();
 
@@ -26,7 +18,10 @@ export function BaseThumbnail({
     return (
       <Image
         source={thumbnailUrl}
-        style={[styles.tinyLogo, { width: size, height: size }]}
+        style={[
+          styles.tinyLogo,
+          { width: ThumbnailSize, height: ThumbnailSize },
+        ]}
       />
     );
   }
@@ -35,7 +30,11 @@ export function BaseThumbnail({
     <View
       style={[
         styles.emptyThumbnail,
-        { backgroundColor: colors.surface1, width: size, height: size },
+        {
+          backgroundColor: colors.surface1,
+          width: ThumbnailSize,
+          height: ThumbnailSize,
+        },
       ]}
     >
       <BaseText text={initialLetter} type="primary_18" />
@@ -45,13 +44,9 @@ export function BaseThumbnail({
 
 const styles = StyleSheet.create({
   tinyLogo: {
-    width: 90,
-    height: 90,
     borderRadius: 8,
   },
   emptyThumbnail: {
-    width: 90,
-    height: 90,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

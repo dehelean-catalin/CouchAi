@@ -23,7 +23,7 @@ import {
 } from "react-native";
 import { BaseIcon } from "@/components/icons";
 import { BaseText } from "@/components/BaseText";
-import { BaseThumbnail, ThumbnailSize } from "@/components/BaseThumbnail";
+import { BaseThumbnail } from "@/components/BaseThumbnail";
 import { RootState } from "@/redux/store";
 
 export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
@@ -59,7 +59,6 @@ export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
                 <BaseThumbnail
                   thumbnailUrl={props.route.params.thumbnailUrl}
                   name={props.route.params.exerciseName}
-                  size={ThumbnailSize.SMALL}
                 />
               </View>
               <View style={styles.headerContent}>

@@ -8,8 +8,8 @@ export interface Exercise {
   thumbnailUrl: string;
   standardResolutionUrl: string;
   requiredEquipmentIds: string[];
-  primaryMuscleGroups: MuscleGroup[];
-  secondaryMuscleGroups: MuscleGroup[];
+  primaryMuscleGroups: MuscleName[];
+  secondaryMuscleGroups: MuscleName[];
   isCreatedByUser: boolean;
 }
 
@@ -49,19 +49,14 @@ enum MuscleName {
   // LATS,
   // UPPER_BACK,
   // LOWER_BACK,
-  // GLUTES,
+  Glutes = "Glutes",
   // ADDUCTORS,
   // ABDUCTORS,
   // QUADRICEPS,
-  // HAMSTRINGS,
-  // CALVES,
+  HAMSTRINGS = "Hamstrings",
+  Calves = "Calves",
   // ABDOMINALS,
   // CARDIO,
-}
-
-interface MuscleGroup {
-  id: string;
-  name: MuscleName;
 }
 
 export interface ExerciseState {
@@ -79,11 +74,8 @@ const initialState: ExerciseState = {
       standardResolutionUrl: require("../../assets/exercises/barbell-bench-press/720.gif"),
       thumbnailUrl: require("../../assets/exercises/barbell-bench-press/180.gif"),
       requiredEquipmentIds: ["1", "2"],
-      primaryMuscleGroups: [{ id: "1", name: MuscleName.CHEST }],
-      secondaryMuscleGroups: [
-        { id: "2", name: MuscleName.TRICEPS },
-        { id: "3", name: MuscleName.SHOULDERS },
-      ],
+      primaryMuscleGroups: [MuscleName.CHEST],
+      secondaryMuscleGroups: [MuscleName.TRICEPS, MuscleName.SHOULDERS],
       isCreatedByUser: false,
     },
     {
@@ -94,11 +86,8 @@ const initialState: ExerciseState = {
       standardResolutionUrl: require("../../assets/exercises/dumbbell-bench-press/180.gif"),
       thumbnailUrl: require("../../assets/exercises/dumbbell-bench-press/720.gif"),
       requiredEquipmentIds: ["1", "3"],
-      primaryMuscleGroups: [{ id: "1", name: MuscleName.CHEST }],
-      secondaryMuscleGroups: [
-        { id: "2", name: MuscleName.TRICEPS },
-        { id: "3", name: MuscleName.SHOULDERS },
-      ],
+      primaryMuscleGroups: [MuscleName.CHEST],
+      secondaryMuscleGroups: [MuscleName.TRICEPS, MuscleName.SHOULDERS],
       isCreatedByUser: false,
     },
     {
@@ -109,11 +98,8 @@ const initialState: ExerciseState = {
       standardResolutionUrl: require("../../assets/exercises/incline-dumbbell-bench-press/180.gif"),
       thumbnailUrl: require("../../assets/exercises/incline-dumbbell-bench-press/720.gif"),
       requiredEquipmentIds: ["1", "3"],
-      primaryMuscleGroups: [{ id: "1", name: MuscleName.CHEST }],
-      secondaryMuscleGroups: [
-        { id: "2", name: MuscleName.TRICEPS },
-        { id: "3", name: MuscleName.SHOULDERS },
-      ],
+      primaryMuscleGroups: [MuscleName.CHEST],
+      secondaryMuscleGroups: [MuscleName.TRICEPS, MuscleName.SHOULDERS],
       isCreatedByUser: false,
     },
     {
@@ -124,11 +110,20 @@ const initialState: ExerciseState = {
       standardResolutionUrl: require("../../assets/exercises/incline-barbell-bench-press/180.gif"),
       thumbnailUrl: require("../../assets/exercises/incline-barbell-bench-press/720.gif"),
       requiredEquipmentIds: ["1", "2"],
-      primaryMuscleGroups: [{ id: "1", name: MuscleName.CHEST }],
-      secondaryMuscleGroups: [
-        { id: "2", name: MuscleName.TRICEPS },
-        { id: "3", name: MuscleName.SHOULDERS },
-      ],
+      primaryMuscleGroups: [MuscleName.CHEST],
+      secondaryMuscleGroups: [MuscleName.TRICEPS, MuscleName.SHOULDERS],
+      isCreatedByUser: false,
+    },
+    {
+      id: "5",
+      name: "Seated Leg Curl",
+      instructions: "",
+      category: ExerciseCategory.WEIGHT_AND_REPS,
+      standardResolutionUrl: require("../../assets/exercises/seated-leg-curl/180.gif"),
+      thumbnailUrl: require("../../assets/exercises/seated-leg-curl/720.gif"),
+      requiredEquipmentIds: [],
+      primaryMuscleGroups: [MuscleName.HAMSTRINGS],
+      secondaryMuscleGroups: [MuscleName.Calves, MuscleName.Glutes],
       isCreatedByUser: false,
     },
   ],
@@ -149,6 +144,12 @@ const initialState: ExerciseState = {
       id: "3",
       name: "dumbell",
       category: EquipmentCategory.DUMBELL,
+      thumbnailUrl: "",
+    },
+    {
+      id: "4",
+      name: "machine",
+      category: EquipmentCategory.MACHINE,
       thumbnailUrl: "",
     },
   ],

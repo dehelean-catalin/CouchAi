@@ -25,7 +25,7 @@ export function ExerciseCard({
       <View style={styles.column}>
         <BaseText text={data.name} type="primary" />
         <BaseText
-          text={data.primaryMuscleGroups.map(({ name }) => name).join(", ")}
+          text={data.primaryMuscleGroups.map((name) => name).join(", ")}
           type="secondary"
         />
       </View>
