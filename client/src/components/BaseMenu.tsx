@@ -6,7 +6,6 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useAppColors } from "@/theme/useAppColors";
 import { BaseText } from "@/components/BaseText";
 import { BaseIcon, BaseIconProps } from "./icons";
@@ -67,54 +66,57 @@ export function BaseMenu(props: BaseMenuProps) {
       <Pressable onPress={handleOpenMenu} style={styles.iconBadge}>
         <BaseIcon name="ellipsis" />
       </Pressable>
-      <SafeAreaView>
-        <Modal
-          visible={isOpen}
-          onRequestClose={handleRequestClose}
-          transparent
-          animationType="fade"
-        >
-          <View style={styles.backdrop}>
-            <Pressable
-              style={StyleSheet.absoluteFill}
-              onPress={handleRequestClose}
-            />
-            <View
-              ref={menuRef}
-              style={[
-                styles.container,
-                {
-                  top: menuPosition.y + menuPosition.height,
-                  left: menuPosition.x,
-                  backgroundColor: colors.surface1,
-                },
-              ]}
-            >
-              {props.items.map((menuItem, key) => (
-                <Pressable
-                  key={key}
-                  onPress={menuItem.action}
-                  style={styles.menuItem}
-                >
-                  <BaseText text={menuItem.label} type="primary" />
-                  <BaseIcon name={menuItem.icon} />
-                </Pressable>
-              ))}
-            </View>
+      <Modal
+        visible={isOpen}
+        onRequestClose={handleRequestClose}
+        transparent
+        animationType="fade"
+      >
+        <View style={styles.backdrop}>
+          <Pressable
+            style={StyleSheet.absoluteFill}
+            onPress={handleRequestClose}
+          />
+          <View
+            ref={menuRef}
+            style={[
+              styles.container,
+              {
+                top: menuPosition.y + menuPosition.height,
+                left: menuPosition.x,
+                backgroundColor: colors.surface1,
+              },
+            ]}
+          >
+            {props.items.map((menuItem, key) => (
+              <Pressable
+                key={key}
+                onPress={menuItem.action}
+                style={styles.menuItem}
+              >
+                <BaseText text={menuItem.label} type="primary" />
+                <BaseIcon name={menuItem.icon} />
+              </Pressable>
+            ))}
           </View>
-        </Modal>
-      </SafeAreaView>
+        </View>
+      </Modal>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  iconBadge: {
+    padding: 12,
+    paddingRight: 4,
+  },
   container: {
     position: "absolute",
     borderRadius: 8,
     padding: 8,
     shadowOpacity: 0.5,
     shadowOffset: { width: 0, height: 2 },
+    elevation: 4,
   },
   backdrop: {
     alignItems: "center",
@@ -127,9 +129,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 12,
     padding: 8,
-  },
-  iconBadge: {
-    transform: [{ rotate: "90deg" }],
-    padding: 12,
   },
 });

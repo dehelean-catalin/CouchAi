@@ -2,20 +2,15 @@ import { Host, Icon } from "@expo/ui";
 import Trash from "@expo/material-symbols/delete.xml";
 import Home from "@expo/material-symbols/home.xml";
 import PersonIcon from "@expo/material-symbols/person.xml";
-import ReplaceIcon from "@expo/material-symbols/arrow_back_2.xml";
-import ClearIcon from "@expo/material-symbols/clear_all.xml";
-import MoreVert from "@expo/material-symbols/more_vert.xml";
+import ReplaceIcon from "@expo/material-symbols/sync.xml";
+import ClearIcon from "@expo/material-symbols/close.xml";
+import MoreVert from "@expo/material-symbols/more_horiz.xml";
 import PlusIcon from "@expo/material-symbols/add.xml";
 import MinusIcon from "@expo/material-symbols/remove.xml";
-import PencilIcon from "@expo/material-symbols/stylus_pencil.xml";
+import PencilIcon from "@expo/material-symbols/edit.xml";
 
 import { StyleSheet } from "react-native";
 import { useAppColors } from "@/theme/useAppColors";
-
-const trashIcon = Icon.select({
-  ios: "trash",
-  android: Trash,
-});
 
 const houseIcon = Icon.select({
   ios: "house",
@@ -27,8 +22,13 @@ const personIcon = Icon.select({
   android: PersonIcon,
 });
 
+const trashIcon = Icon.select({
+  ios: "trash",
+  android: Trash,
+});
+
 const replaceIcon = Icon.select({
-  ios: "arrow.2.squarepath",
+  ios: "arrow.2.circlepath",
   android: ReplaceIcon,
 });
 
@@ -53,7 +53,7 @@ const minusIcon = Icon.select({
 });
 
 const editIcon = Icon.select({
-  ios: "pencil.tip.crop.circle",
+  ios: "pencil",
   android: PencilIcon,
 });
 
