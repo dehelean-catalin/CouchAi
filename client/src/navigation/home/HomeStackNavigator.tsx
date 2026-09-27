@@ -14,20 +14,30 @@ import { WorkoutExerciseScreen } from "@/screens/v2/WorkoutExercise/WorkoutExerc
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+export const stackNavigatorScreenOptions = {
+  padding: 8,
+  paddingBottom: 16,
+};
+
 export function HomeStackNavigator() {
   const { colors } = useAppColors();
 
   return (
     <Stack.Navigator
       screenOptions={{
-        contentStyle: { backgroundColor: colors.surface0, paddingInline: 8 },
+        contentStyle: {
+          backgroundColor: colors.surface0,
+          ...stackNavigatorScreenOptions,
+        },
         headerStyle: { backgroundColor: colors.surface1 },
       }}
     >
       <Stack.Screen
         name={routes.HOME}
         component={HomeScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerTitle: () => <BaseText text="Gym One" type="primary_18" />,
+        }}
       />
       <Stack.Screen
         name={routes.WORKOUT}

@@ -7,12 +7,12 @@ import {
 } from "@/redux/workoutSlice";
 import React from "react";
 import { Pressable, StyleSheet, View, ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import { BaseText } from "@/components/BaseText";
 import { BaseButton } from "@/components/BaseButton";
 import { BaseIcon } from "@/components/icons";
 import { BaseCard } from "@/components/BaseCard";
+import { BaseSafeAreaView } from "@/components/BaseSafeArea";
 
 export function HomeScreen(props: ScreenProps<"Home">) {
   const dispatch = useDispatch();
@@ -36,9 +36,12 @@ export function HomeScreen(props: ScreenProps<"Home">) {
       id: latestWorkout.id,
     });
   }
+  const completedWorkouts = workouts.filter(
+    (workout) => workout.status === "completed",
+  );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <BaseSafeAreaView>
       <ScrollView>
         {workouts
           .filter((w) => w.status === "in-progress")
@@ -66,11 +69,10 @@ export function HomeScreen(props: ScreenProps<"Home">) {
 
         <BaseButton text="Start new workout" onPress={handleStartWorkout} />
 
-        <View style={styles.recentActivityContainer}>
-          <BaseText text="Recent Activity" type="primary_18" />
-          {workouts
-            .filter((workout) => workout.status === "completed")
-            .map((completedWorkout) => (
+        {completedWorkouts.length > 0 && (
+          <View style={styles.recentActivityContainer}>
+            <BaseText text="Recent Activity" type="primary_18" />
+            {completedWorkouts.map((completedWorkout) => (
               <BaseCard
                 key={completedWorkout.id}
                 onPress={() => handleViewWorkoutSummary(completedWorkout.id)}
@@ -78,16 +80,14 @@ export function HomeScreen(props: ScreenProps<"Home">) {
                 <BaseText text={completedWorkout.name} type="primary" />
               </BaseCard>
             ))}
-        </View>
+          </View>
+        )}
       </ScrollView>
-    </SafeAreaView>
+    </BaseSafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   recentActivityContainer: {
     gap: 8,
     marginTop: 8,

@@ -5,7 +5,6 @@ import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { ExerciseCard } from "./ExerciseCard";
 import { Exercise } from "@/redux/exerciseReducer";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {
   addExerciseToWorkout,
   replaceExerciseFromWorkout,
@@ -13,6 +12,7 @@ import {
 import { BaseHorizontalList } from "@/components/BaseHorizontalList";
 import { mapExerciseToWorkoutExercise } from "./exercise.bussines";
 import { BaseButton } from "@/components/BaseButton";
+import { BaseSafeAreaView } from "@/components/BaseSafeArea";
 
 export function ExercisesScreen(props: ScreenProps<"ExerciseList">) {
   const dispatch = useDispatch();
@@ -79,7 +79,7 @@ export function ExercisesScreen(props: ScreenProps<"ExerciseList">) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <BaseSafeAreaView>
       <BaseHorizontalList<Exercise>
         data={exercises}
         item={({ item }) => (
@@ -101,18 +101,15 @@ export function ExercisesScreen(props: ScreenProps<"ExerciseList">) {
           />
         </View>
       )}
-    </SafeAreaView>
+    </BaseSafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: "100%",
-  },
   addContainer: {
     width: "100%",
     position: "absolute",
-    bottom: 40,
+    bottom: 0,
     flexDirection: "row",
     justifyContent: "center",
   },

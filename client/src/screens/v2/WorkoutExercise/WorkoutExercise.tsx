@@ -10,14 +10,12 @@ import {
   selectSetsForExercise,
 } from "@/redux/workoutSlice";
 import { WorkoutExcerciseWheightAndRepsSet } from "./WorkoutExerciseSet";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   Pressable,
   ScrollView,
-  StatusBar,
   StyleSheet,
   View,
 } from "react-native";
@@ -25,6 +23,7 @@ import { BaseIcon } from "@/components/icons";
 import { BaseText } from "@/components/BaseText";
 import { BaseThumbnail } from "@/components/BaseThumbnail";
 import { RootState } from "@/redux/store";
+import { BaseSafeAreaView } from "@/components/BaseSafeArea";
 
 export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
   const dispatch = useDispatch();
@@ -41,10 +40,11 @@ export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
   }
 
   return (
-    <SafeAreaView edges={["top"]} style={styles.container}>
+    <BaseSafeAreaView>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={100}
+        style={styles.container}
       >
         <ScrollView
           keyboardShouldPersistTaps="handled"
@@ -106,15 +106,13 @@ export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
           </Pressable>
         </ScrollView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </BaseSafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
-    marginTop: 12,
   },
   header: {
     flexDirection: "row",

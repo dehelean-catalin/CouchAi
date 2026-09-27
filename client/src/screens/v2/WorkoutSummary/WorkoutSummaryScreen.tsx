@@ -7,7 +7,7 @@ import {
   selectWorkout,
   selectWorkoutSummary,
 } from "@/redux/workoutSlice";
-import { SectionList, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { BaseCard } from "@/components/BaseCard";
 import { useMemo } from "react";
@@ -17,11 +17,10 @@ import {
   formatDuration,
 } from "./workoutSummary.bussiness";
 import { WorkoutSummaryExercise } from "./WorkoutSummaryExercise";
-import { useAppColors } from "@/theme/useAppColors";
+import { BaseSafeAreaView } from "@/components/BaseSafeArea";
 
 export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
   const { workoutId } = props.route.params;
-  const { colors } = useAppColors();
   const dispatch = useDispatch();
   const workout = useSelector((s: RootState) => selectWorkout(s, workoutId));
   const workoutSummary = useSelector((s: RootState) =>
@@ -55,89 +54,74 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
   );
 
   return (
-    <View style={styles.container}>
-      <BaseText text={workout.name} type="primary_18" />
-      <BaseButton
-        text="Edit Name and Date"
-        type="normal"
-        onPress={() => handleEditWorkoutDetails(workout.id, workout.name)}
-      />
-      <BaseCard flexDirection="column">
-        <BaseText text="Statistics" type="primary_18" />
-        <View style={styles.statsRow}>
-          <View>
-            <BaseText text="Duration" type="secondary" />
-            <BaseText
-              text={formatDuration(workoutDuration)}
-              type="primary_bold_16"
-            />
+    <BaseSafeAreaView>
+      <ScrollView>
+        <BaseText text={workout.name} type="primary_18" />
+        <BaseButton
+          text="Edit Name and Date"
+          type="normal"
+          onPress={() => handleEditWorkoutDetails(workout.id, workout.name)}
+        />
+        <BaseCard flexDirection="column">
+          <BaseText text="Statistics" type="primary_18" />
+          <View style={styles.statsRow}>
+            <View>
+              <BaseText text="Duration" type="secondary" />
+              <BaseText
+                text={formatDuration(workoutDuration)}
+                type="primary_bold_16"
+              />
+            </View>
+            <View>
+              <BaseText text="Volume" type="secondary" />
+              <BaseText
+                text={`${calculateWorkoutStats(workoutSummary).totalSets} sets`}
+                type="primary_bold_16"
+              />
+            </View>
+            <View>
+              <BaseText text="Weight" type="primary" />
+              <BaseText
+                text={`${calculateWorkoutStats(workoutSummary).totalWeight} kg`}
+                type="primary_bold_16"
+              />
+            </View>
           </View>
-          <View>
-            <BaseText text="Volume" type="secondary" />
-            <BaseText
-              text={`${calculateWorkoutStats(workoutSummary).totalSets} sets`}
-              type="primary_bold_16"
-            />
-          </View>
-          <View>
-            <BaseText text="Weight" type="primary" />
-            <BaseText
-              text={`${calculateWorkoutStats(workoutSummary).totalWeight} kg`}
-              type="primary_bold_16"
-            />
-          </View>
-        </View>
-      </BaseCard>
+        </BaseCard>
 
-      <SectionList
-        sections={workoutSummary.map((workoutExercise) => {
-          return {
-            title: workoutExercise.exercise.name,
-            data: workoutExercise.sets,
-          };
+        {workoutSummary.map((summary) => {
+          return (
+            <View key={summary.exercise.id}>
+              <View style={styles.sectionHeader}>
+                <BaseText
+                  type="primary_regular_16"
+                  text={summary.exercise.name}
+                />
+              </View>
+              {summary.sets.map((set, index) => (
+                <WorkoutSummaryExercise key={set.id} set={set} index={index} />
+              ))}
+            </View>
+          );
         })}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item: set, index }) => (
-          <WorkoutSummaryExercise key={set.id} set={set} index={index} />
-        )}
-        renderSectionHeader={({ section }) => (
-          <View style={styles.sectionHeader}>
-            <BaseText type="primary_regular_16" text={section.title} />
-          </View>
-        )}
-        renderSectionFooter={() => (
-          <View
-            style={[
-              styles.sectionFooter,
-              { borderColor: colors.surfaceShadow },
-            ]}
-          ></View>
-        )}
-      />
+      </ScrollView>
       {props.route.params.action === "preview" && (
         <BaseButton
           text="Save"
           onPress={() => handleSave(workoutId, workoutEndDate)}
         />
       )}
-    </View>
+    </BaseSafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 8,
-  },
   statsRow: {
     flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
   },
   sectionHeader: {
-    marginBottom: 16,
-  },
-  sectionFooter: {
-    borderBottomWidth: 1,
     marginBottom: 8,
   },
 });

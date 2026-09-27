@@ -1,5 +1,5 @@
 import { ReactElement, useCallback } from "react";
-import { FlatList } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { BaseText } from "./BaseText";
 
 const ITEM_HEIGHT = 90;
@@ -33,8 +33,19 @@ export function BaseHorizontalList<T extends BaseHorizontalListItem>(
       renderItem={props.item}
       getItemLayout={handleItemLayout}
       ListEmptyComponent={() => {
-        return <BaseText text={props.emptyComponentText} type="primary_18" />;
+        return (
+          <View style={styles.emptyContainer}>
+            <BaseText text={props.emptyComponentText} type="primary_18" />
+          </View>
+        );
       }}
     />
   );
 }
+
+const styles = StyleSheet.create({
+  emptyContainer: {
+    alignItems: "center",
+    padding: 12,
+  },
+});

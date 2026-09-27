@@ -7,11 +7,10 @@ import {
   WorkoutState,
   WorkoutExercise,
 } from "@/redux/workoutSlice";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { WorkoutExerciseCard } from "./WorkoutExerciseCard";
 import { BaseHorizontalList } from "@/components/BaseHorizontalList";
 import { BaseButton } from "@/components/BaseButton";
-import { StyleSheet } from "react-native";
+import { BaseSafeAreaView } from "@/components/BaseSafeArea";
 
 export function WorkoutScreen(props: ScreenProps<"Workout">) {
   const { id } = props.route.params;
@@ -83,7 +82,7 @@ export function WorkoutScreen(props: ScreenProps<"Workout">) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <BaseSafeAreaView>
       <BaseHorizontalList<WorkoutExercise>
         data={workout.exercises}
         item={({ item: exercise, index }) => (
@@ -108,17 +107,10 @@ export function WorkoutScreen(props: ScreenProps<"Workout">) {
         )}
         emptyComponentText="Search for an exercise"
       />
-
       <BaseButton
         text="Add exercise"
         onPress={() => handleAddExercise(workout.id)}
       />
-    </SafeAreaView>
+    </BaseSafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    margin: 8,
-  },
-});

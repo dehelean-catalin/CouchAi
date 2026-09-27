@@ -3,6 +3,7 @@ import routes, { RootStackParamList } from "../routes";
 import { BaseText } from "@/components/BaseText";
 import { useAppColors } from "@/theme/useAppColors";
 import { ProfileScreen } from "@/screens/v2/Profile/ProfileScreen";
+import { stackNavigatorScreenOptions } from "../home/HomeStackNavigator";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -14,8 +15,7 @@ export function ProfileStackNavigator() {
       screenOptions={{
         contentStyle: {
           backgroundColor: colors.surface0,
-          padding: 8,
-          paddingTop: 12,
+          ...stackNavigatorScreenOptions,
         },
         headerStyle: { backgroundColor: colors.surface1 },
       }}
