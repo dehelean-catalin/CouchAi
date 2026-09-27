@@ -1,7 +1,6 @@
 import { ScreenProps } from "@/navigation/routes";
 import { RootState } from "@/redux/store";
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { ExerciseCard } from "./ExerciseCard";
 import { Exercise } from "@/redux/exerciseReducer";
@@ -93,24 +92,12 @@ export function ExercisesScreen(props: ScreenProps<"ExerciseList">) {
         emptyComponentText="Not found"
       />
       {actionType === "select" && (
-        <View style={styles.addContainer}>
-          <BaseButton
-            text={`Add exercises (${selectedExercises.length})`}
-            disabled={!selectedExercises.length}
-            onPress={handleAddExercise}
-          />
-        </View>
+        <BaseButton
+          text={`Add exercises (${selectedExercises.length})`}
+          disabled={!selectedExercises.length}
+          onPress={handleAddExercise}
+        />
       )}
     </BaseSafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  addContainer: {
-    width: "100%",
-    position: "absolute",
-    bottom: 0,
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-});
