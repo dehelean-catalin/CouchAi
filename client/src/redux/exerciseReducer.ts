@@ -8,8 +8,8 @@ export interface Exercise {
   thumbnailUrl: string;
   standardResolutionUrl: string;
   requiredEquipmentIds: string[];
-  primaryMuscleGroups: MuscleName[];
-  secondaryMuscleGroups: MuscleName[];
+  primaryMuscleGroups: MuscleGroup[];
+  secondaryMuscleGroups: MuscleGroup[];
   isCreatedByUser: boolean;
 }
 
@@ -38,13 +38,13 @@ enum EquipmentCategory {
   OTHER,
 }
 
-enum MuscleName {
+enum MuscleGroup {
   // NECK,
   // TRAPS,
-  SHOULDERS = "Shoulders",
-  CHEST = "Chest",
-  BICEPS = "Biceps",
-  TRICEPS = "Triceps",
+  Shoulders = "Shoulders",
+  Chest = "Chest",
+  Biceps = "Biceps",
+  Triceps = "Triceps",
   // FOREARMS,
   // LATS,
   // UPPER_BACK,
@@ -74,8 +74,8 @@ const initialState: ExerciseState = {
       standardResolutionUrl: require("../../assets/exercises/barbell-bench-press/720.gif"),
       thumbnailUrl: require("../../assets/exercises/barbell-bench-press/180.gif"),
       requiredEquipmentIds: ["1", "2"],
-      primaryMuscleGroups: [MuscleName.CHEST],
-      secondaryMuscleGroups: [MuscleName.TRICEPS, MuscleName.SHOULDERS],
+      primaryMuscleGroups: [MuscleGroup.Chest],
+      secondaryMuscleGroups: [MuscleGroup.Triceps, MuscleGroup.Shoulders],
       isCreatedByUser: false,
     },
     {
@@ -86,8 +86,8 @@ const initialState: ExerciseState = {
       standardResolutionUrl: require("../../assets/exercises/dumbbell-bench-press/180.gif"),
       thumbnailUrl: require("../../assets/exercises/dumbbell-bench-press/720.gif"),
       requiredEquipmentIds: ["1", "3"],
-      primaryMuscleGroups: [MuscleName.CHEST],
-      secondaryMuscleGroups: [MuscleName.TRICEPS, MuscleName.SHOULDERS],
+      primaryMuscleGroups: [MuscleGroup.Chest],
+      secondaryMuscleGroups: [MuscleGroup.Triceps, MuscleGroup.Shoulders],
       isCreatedByUser: false,
     },
     {
@@ -98,8 +98,8 @@ const initialState: ExerciseState = {
       standardResolutionUrl: require("../../assets/exercises/incline-dumbbell-bench-press/180.gif"),
       thumbnailUrl: require("../../assets/exercises/incline-dumbbell-bench-press/720.gif"),
       requiredEquipmentIds: ["1", "3"],
-      primaryMuscleGroups: [MuscleName.CHEST],
-      secondaryMuscleGroups: [MuscleName.TRICEPS, MuscleName.SHOULDERS],
+      primaryMuscleGroups: [MuscleGroup.Chest],
+      secondaryMuscleGroups: [MuscleGroup.Triceps, MuscleGroup.Shoulders],
       isCreatedByUser: false,
     },
     {
@@ -110,8 +110,8 @@ const initialState: ExerciseState = {
       standardResolutionUrl: require("../../assets/exercises/incline-barbell-bench-press/180.gif"),
       thumbnailUrl: require("../../assets/exercises/incline-barbell-bench-press/720.gif"),
       requiredEquipmentIds: ["1", "2"],
-      primaryMuscleGroups: [MuscleName.CHEST],
-      secondaryMuscleGroups: [MuscleName.TRICEPS, MuscleName.SHOULDERS],
+      primaryMuscleGroups: [MuscleGroup.Chest],
+      secondaryMuscleGroups: [MuscleGroup.Triceps, MuscleGroup.Shoulders],
       isCreatedByUser: false,
     },
     {
@@ -122,8 +122,8 @@ const initialState: ExerciseState = {
       standardResolutionUrl: require("../../assets/exercises/seated-leg-curl/180.gif"),
       thumbnailUrl: require("../../assets/exercises/seated-leg-curl/720.gif"),
       requiredEquipmentIds: [],
-      primaryMuscleGroups: [MuscleName.Hamstrings],
-      secondaryMuscleGroups: [MuscleName.Calves],
+      primaryMuscleGroups: [MuscleGroup.Hamstrings],
+      secondaryMuscleGroups: [MuscleGroup.Calves],
       isCreatedByUser: false,
     },
     {
@@ -134,8 +134,8 @@ const initialState: ExerciseState = {
       standardResolutionUrl: require("../../assets/exercises/lying-leg-curl/180.gif"),
       thumbnailUrl: require("../../assets/exercises/lying-leg-curl/720.gif"),
       requiredEquipmentIds: [],
-      primaryMuscleGroups: [MuscleName.Hamstrings],
-      secondaryMuscleGroups: [MuscleName.Calves, MuscleName.Glutes],
+      primaryMuscleGroups: [MuscleGroup.Hamstrings],
+      secondaryMuscleGroups: [MuscleGroup.Calves, MuscleGroup.Glutes],
       isCreatedByUser: false,
     },
     {
@@ -146,11 +146,11 @@ const initialState: ExerciseState = {
       standardResolutionUrl: require("../../assets/exercises/hack-squat-machine/180.gif"),
       thumbnailUrl: require("../../assets/exercises/hack-squat-machine/720.gif"),
       requiredEquipmentIds: [],
-      primaryMuscleGroups: [MuscleName.Quadriceps],
+      primaryMuscleGroups: [MuscleGroup.Quadriceps],
       secondaryMuscleGroups: [
-        MuscleName.Hamstrings,
-        MuscleName.Glutes,
-        MuscleName.Adductors,
+        MuscleGroup.Hamstrings,
+        MuscleGroup.Glutes,
+        MuscleGroup.Adductors,
       ],
       isCreatedByUser: false,
     },
@@ -162,11 +162,11 @@ const initialState: ExerciseState = {
       standardResolutionUrl: require("../../assets/exercises/barbell-romanian-deadlift/180.gif"),
       thumbnailUrl: require("../../assets/exercises/barbell-romanian-deadlift/720.gif"),
       requiredEquipmentIds: [],
-      primaryMuscleGroups: [MuscleName.Hamstrings],
+      primaryMuscleGroups: [MuscleGroup.Hamstrings],
       secondaryMuscleGroups: [
-        MuscleName.Glutes,
-        MuscleName.Calves,
-        MuscleName.Quadriceps,
+        MuscleGroup.Glutes,
+        MuscleGroup.Calves,
+        MuscleGroup.Quadriceps,
       ],
       isCreatedByUser: false,
     },
