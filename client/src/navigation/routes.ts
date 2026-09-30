@@ -52,6 +52,8 @@ export type RootStackParamList = {
   EditWorkoutSummary: {
     workoutId: string;
     workoutName: string;
+    workoutStartDate: string;
+    workoutEndDate: string;
   };
   Profile: undefined;
 

@@ -7,6 +7,7 @@ import { useAppColors } from "@/theme/useAppColors";
 import { useState } from "react";
 import { Keyboard, Pressable, StyleSheet, TextInput, View } from "react-native";
 import { useDispatch } from "react-redux";
+import { DateAndTimeField } from "./DateAndTimeField";
 
 export function EditWorkoutSummaryScreen(
   props: ScreenProps<"EditWorkoutSummary">,
@@ -18,18 +19,48 @@ export function EditWorkoutSummaryScreen(
     props.route.params.workoutName,
   );
 
+  const [workoutStartDate, setWorkoutStartDate] = useState(
+    new Date(props.route.params.workoutStartDate),
+  );
+  const [workoutEndDate, setWorkoutEndDate] = useState(
+    new Date(props.route.params.workoutEndDate),
+  );
+
   function handleWorkoutNameChange(value: string) {
     setWorkoutName(value);
   }
 
-  function handleSave() {
-    if (!workoutName.length) {
-      return;
+  function handleWorkoutStartDateChange(newDate: Date) {
+    setWorkoutStartDate(newDate);
+    if (workoutEndDate < newDate) {
+      setWorkoutEndDate(newDate);
     }
+  }
+
+  function handleWorkoutEndDateChange(newDate: Date) {
+    setWorkoutEndDate(newDate);
+    if (workoutStartDate > newDate) {
+      setWorkoutStartDate(newDate);
+    }
+  }
+
+  function handleUpdateWorkoutDetails({
+    workoutId,
+    newWorkoutName,
+    newWorkoutStartDate,
+    newWorkoutEndDate,
+  }: {
+    workoutId: string;
+    newWorkoutName: string;
+    newWorkoutStartDate: Date;
+    newWorkoutEndDate: Date;
+  }) {
     dispatch(
       updateWorkoutDetails({
-        workoutId: props.route.params.workoutId,
-        newWorkoutName: workoutName,
+        workoutId,
+        newWorkoutName,
+        newWorkoutStartDate: newWorkoutStartDate.toISOString(),
+        newWorkoutEndDate: newWorkoutEndDate.toISOString(),
       }),
     );
     Keyboard.dismiss();
@@ -55,7 +86,7 @@ export function EditWorkoutSummaryScreen(
           <TextInput
             value={workoutName}
             onChangeText={handleWorkoutNameChange}
-            placeholder="Enter Workout Name"
+            placeholder="Workout on the fly"
             autoCapitalize="words"
             autoCorrect={false}
             placeholderTextColor={textColors.secondary}
@@ -79,12 +110,31 @@ export function EditWorkoutSummaryScreen(
             </Pressable>
           )}
         </View>
+        <DateAndTimeField
+          label="Start Date"
+          value={workoutStartDate}
+          onChange={handleWorkoutStartDateChange}
+        />
+        <DateAndTimeField
+          label="End Date"
+          value={workoutEndDate}
+          minimumDate={workoutStartDate}
+          onChange={handleWorkoutEndDateChange}
+        />
       </View>
-      <BaseButton
-        text="Save"
-        onPress={handleSave}
-        disabled={!workoutName.length}
-      />
+      <View style={styles.saveButtonContainer}>
+        <BaseButton
+          text="Save"
+          onPress={() =>
+            handleUpdateWorkoutDetails({
+              workoutId: props.route.params.workoutId,
+              newWorkoutName: workoutName,
+              newWorkoutStartDate: workoutStartDate,
+              newWorkoutEndDate: workoutEndDate,
+            })
+          }
+        />
+      </View>
     </Pressable>
   );
 }
@@ -120,5 +170,8 @@ const styles = StyleSheet.create({
     padding: 6,
     justifyContent: "center",
     alignItems: "center",
+  },
+  saveButtonContainer: {
+    marginTop: "auto",
   },
 });

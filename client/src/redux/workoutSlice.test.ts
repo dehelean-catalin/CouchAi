@@ -5,6 +5,7 @@ import reducer, {
   compleateWorkoutSet,
   deleteWorkoutSet,
   editWorkoutSet,
+  updateWorkoutDetails,
 } from "./workoutSlice";
 import { SetBuilder, WorkoutBuilder } from "./workoutMocks";
 
@@ -52,6 +53,113 @@ describe(completeWorkout.name, () => {
     );
 
     expect(state).toEqual(initialState);
+  });
+});
+
+describe(updateWorkoutDetails.name, () => {
+  test("it should update only the matching workout name and dates", () => {
+    const state = reducer(
+      {
+        workouts: [
+          WorkoutBuilder().build(),
+          WorkoutBuilder()
+            .withId("workout-2")
+            .withName("Leg Day")
+            .build(),
+        ],
+        sets: {},
+      },
+      updateWorkoutDetails({
+        workoutId: "workout-1",
+        newWorkoutName: "Updated workout",
+        newWorkoutStartDate: "2026-09-15T17:00:00.000Z",
+        newWorkoutEndDate: "2026-09-15T17:10:00.000Z",
+      }),
+    );
+
+    expect(state.workouts[0]).toMatchObject({
+      name: "Updated workout",
+      startDate: "2026-09-15T17:00:00.000Z",
+      endDate: "2026-09-15T17:10:00.000Z",
+    });
+    expect(state.workouts[1]).toMatchObject({
+      name: "Leg Day",
+      startDate: "2026-09-14T17:00:00.000Z",
+      endDate: "",
+    });
+  });
+
+  test.each(["", "   "])(
+    "it should preserve the existing name when the new name is blank (%j)",
+    (newWorkoutName) => {
+      const state = reducer(
+        { workouts: [WorkoutBuilder().build()], sets: {} },
+        updateWorkoutDetails({
+          workoutId: "workout-1",
+          newWorkoutName,
+          newWorkoutStartDate: "2026-09-15T17:00:00.000Z",
+          newWorkoutEndDate: "2026-09-15T17:10:00.000Z",
+        }),
+      );
+
+      expect(state.workouts[0]).toMatchObject({
+        name: "Push Day",
+        startDate: "2026-09-15T17:00:00.000Z",
+        endDate: "2026-09-15T17:10:00.000Z",
+      });
+    },
+  );
+
+  test("it should keep the workouts unchanged when the workout id does not exist", () => {
+    const initialState = {
+      workouts: [WorkoutBuilder().build()],
+      sets: {},
+    };
+
+    const state = reducer(
+      initialState,
+      updateWorkoutDetails({
+        workoutId: "missing-workout",
+        newWorkoutName: "Updated workout",
+        newWorkoutStartDate: "2026-09-15T17:00:00.000Z",
+        newWorkoutEndDate: "2026-09-15T17:10:00.000Z",
+      }),
+    );
+
+    expect(state).toEqual(initialState);
+  });
+
+  test("it should reject a start date later than the end date", () => {
+    expect(() =>
+      reducer(
+        { workouts: [WorkoutBuilder().build()], sets: {} },
+        updateWorkoutDetails({
+          workoutId: "workout-1",
+          newWorkoutName: "Updated workout",
+          newWorkoutStartDate: "2026-09-15T17:10:00.000Z",
+          newWorkoutEndDate: "2026-09-15T17:00:00.000Z",
+        }),
+      ),
+    ).toThrow("Invalid Date");
+  });
+
+  test("it should allow equal start and end dates", () => {
+    const date = "2026-09-15T17:00:00.000Z";
+    const state = reducer(
+      { workouts: [WorkoutBuilder().build()], sets: {} },
+      updateWorkoutDetails({
+        workoutId: "workout-1",
+        newWorkoutName: "Updated workout",
+        newWorkoutStartDate: date,
+        newWorkoutEndDate: date,
+      }),
+    );
+
+    expect(state.workouts[0]).toMatchObject({
+      name: "Updated workout",
+      startDate: date,
+      endDate: date,
+    });
   });
 });
 

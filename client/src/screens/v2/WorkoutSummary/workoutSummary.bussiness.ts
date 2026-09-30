@@ -29,15 +29,14 @@ export function calculateWorkoutDuration(startDate: string, endDate: string) {
     (Date.parse(endDate) - Date.parse(startDate)) / 1000;
 
   assertIsPositive(durationInSeconds);
-
   let seconds = Math.round(durationInSeconds);
   let minutes = 0;
   let hours = 0;
 
-  if (seconds > 60) {
+  if (seconds >= 60) {
     minutes = Math.floor(seconds / 60);
     seconds = Math.round(seconds % 60);
-    if (minutes > 60) {
+    if (minutes >= 60) {
       hours = Math.floor(minutes / 60);
       minutes = Math.round(minutes % 60);
     }

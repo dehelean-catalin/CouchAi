@@ -119,6 +119,19 @@ describe(calculateWorkoutDuration.name, () => {
     });
   });
 
+  test("it should display convert 60 seconds to one minute", () => {
+    const range = DateRangeBuilder()
+      .withStartDate("2026-09-14T17:00:00.000Z")
+      .withEndDate("2026-09-14T17:01:00.032Z")
+      .build();
+
+    expect(calculateWorkoutDuration(range.startDate, range.endDate)).toEqual({
+      seconds: 0,
+      minutes: 1,
+      hours: 0,
+    });
+  });
+
   test("it should display all three values when the duration spans hours, minutes, and seconds", () => {
     const range = DateRangeBuilder()
       .withStartDate("2026-09-14T17:00:00.000Z")

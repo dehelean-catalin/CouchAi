@@ -159,7 +159,12 @@ const workoutSlice = createSlice({
     },
     updateWorkoutDetails: (
       oldState,
-      action: PayloadAction<{ workoutId: string; newWorkoutName: string }>,
+      action: PayloadAction<{
+        workoutId: string;
+        newWorkoutName: string;
+        newWorkoutStartDate: string;
+        newWorkoutEndDate: string;
+      }>,
     ) => {
       const workoutToUpdate = oldState.workouts.find(
         (workout) => workout.id === action.payload.workoutId,
@@ -167,7 +172,16 @@ const workoutSlice = createSlice({
       if (!workoutToUpdate) {
         return oldState;
       }
-      workoutToUpdate.name = action.payload.newWorkoutName;
+      const { newWorkoutStartDate, newWorkoutEndDate, newWorkoutName } =
+        action.payload;
+      if (newWorkoutStartDate > newWorkoutEndDate) {
+        throw new Error("Invalid Date");
+      }
+      if (!!newWorkoutName.trim()) {
+        workoutToUpdate.name = newWorkoutName;
+      }
+      workoutToUpdate.startDate = newWorkoutStartDate;
+      workoutToUpdate.endDate = newWorkoutEndDate;
     },
     addSetToWorkoutExercise: (
       oldState,

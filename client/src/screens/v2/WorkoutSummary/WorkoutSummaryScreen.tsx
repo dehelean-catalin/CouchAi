@@ -26,17 +26,32 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
   const workoutSummary = useSelector((s: RootState) =>
     selectWorkoutSummary(s, workoutId),
   );
-  const workoutEndDate = useMemo(() => new Date().toISOString(), []);
+  const endDate = useMemo(
+    () => workout?.endDate || new Date().toISOString(),
+    [workout?.endDate],
+  );
 
-  function handleSave(id: string, endDate: string) {
-    dispatch(completeWorkout({ workoutId: id, endDate }));
+  function handleSave(id: string, workoutEndDate: string) {
+    dispatch(completeWorkout({ workoutId: id, endDate: workoutEndDate }));
     props.navigation.popToTop();
   }
 
-  function handleEditWorkoutDetails(id: string, workoutName: string) {
+  function handleEditWorkoutDetails({
+    id,
+    workoutName,
+    workoutStartDate,
+    workoutEndDate,
+  }: {
+    id: string;
+    workoutName: string;
+    workoutStartDate: string;
+    workoutEndDate: string;
+  }) {
     props.navigation.navigate(routes.EDIT_WORKOUT_SUMMARY, {
       workoutId: id,
       workoutName,
+      workoutStartDate,
+      workoutEndDate,
     });
   }
 
@@ -48,10 +63,7 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
     return null;
   }
 
-  const workoutDuration = calculateWorkoutDuration(
-    workout.startDate,
-    workoutEndDate,
-  );
+  const workoutDuration = calculateWorkoutDuration(workout.startDate, endDate);
 
   return (
     <BaseSafeAreaView>
@@ -60,7 +72,14 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
         <BaseButton
           text="Edit Name and Date"
           type="normal"
-          onPress={() => handleEditWorkoutDetails(workout.id, workout.name)}
+          onPress={() =>
+            handleEditWorkoutDetails({
+              id: workout.id,
+              workoutName: workout.name,
+              workoutStartDate: workout.startDate,
+              workoutEndDate: endDate,
+            })
+          }
         />
         <BaseCard flexDirection="column">
           <BaseText text="Statistics" type="primary_18" />
@@ -108,7 +127,7 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
       {props.route.params.action === "preview" && (
         <BaseButton
           text="Save"
-          onPress={() => handleSave(workoutId, workoutEndDate)}
+          onPress={() => handleSave(workoutId, endDate)}
         />
       )}
     </BaseSafeAreaView>
