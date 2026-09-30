@@ -8,6 +8,8 @@ import MoreVert from "@expo/material-symbols/more_horiz.xml";
 import PlusIcon from "@expo/material-symbols/add.xml";
 import MinusIcon from "@expo/material-symbols/remove.xml";
 import PencilIcon from "@expo/material-symbols/edit.xml";
+import CalendarIcon from "@expo/material-symbols/calendar_clock.xml";
+import ChevronRight from "@expo/material-symbols/chevron_right.xml";
 
 import { StyleSheet } from "react-native";
 import { useAppColors } from "@/theme/useAppColors";
@@ -57,6 +59,16 @@ const editIcon = Icon.select({
   android: PencilIcon,
 });
 
+const calendar = Icon.select({
+  ios: "calendar",
+  android: CalendarIcon,
+});
+
+const chevronRight = Icon.select({
+  ios: "chevron.right",
+  android: ChevronRight,
+});
+
 export interface BaseIconProps {
   name:
     | "trash"
@@ -67,11 +79,13 @@ export interface BaseIconProps {
     | "ellipsis"
     | "plus"
     | "minus"
-    | "edit";
+    | "edit"
+    | "calendar"
+    | "arrowRight";
 }
 
 export function BaseIcon(props: BaseIconProps) {
-  const { theme } = useAppColors();
+  const { theme, textColors } = useAppColors();
   let iconName = null;
   switch (props.name) {
     case "trash":
@@ -101,13 +115,24 @@ export function BaseIcon(props: BaseIconProps) {
     case "edit":
       iconName = editIcon;
       break;
+    case "calendar":
+      iconName = calendar;
+      break;
+    case "arrowRight":
+      iconName = chevronRight;
+      break;
     default:
       throw new Error("Invalid icon name");
   }
 
   return (
     <Host matchContents colorScheme={theme}>
-      <Icon name={iconName} style={styles.icon} size={16} />
+      <Icon
+        name={iconName}
+        style={styles.icon}
+        size={16}
+        color={textColors.secondary}
+      />
     </Host>
   );
 }

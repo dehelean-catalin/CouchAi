@@ -13,6 +13,7 @@ import { BaseButton } from "@/components/BaseButton";
 import { BaseIcon } from "@/components/icons";
 import { BaseCard } from "@/components/BaseCard";
 import { BaseSafeAreaView } from "@/components/BaseSafeArea";
+import { HomeScreenWorkoutCard } from "./HomeScreenWorkoutCard";
 
 export function HomeScreen(props: ScreenProps<"Home">) {
   const dispatch = useDispatch();
@@ -36,9 +37,12 @@ export function HomeScreen(props: ScreenProps<"Home">) {
       id: latestWorkout.id,
     });
   }
-  const completedWorkouts = workouts.filter(
-    (workout) => workout.status === "completed",
-  );
+
+  const completedWorkouts = workouts
+    .filter((workout) => workout.status === "completed")
+    .sort((a, b) => {
+      return new Date(b.endDate).getTime() - new Date(a.endDate).getTime();
+    });
 
   return (
     <BaseSafeAreaView>
@@ -70,17 +74,20 @@ export function HomeScreen(props: ScreenProps<"Home">) {
         <BaseButton text="Start new workout" onPress={handleStartWorkout} />
 
         {completedWorkouts.length > 0 && (
-          <View style={styles.recentActivityContainer}>
-            <BaseText text="Recent Activity" type="primary_18" />
-            {completedWorkouts.map((completedWorkout) => (
-              <BaseCard
-                key={completedWorkout.id}
-                onPress={() => handleViewWorkoutSummary(completedWorkout.id)}
-              >
-                <BaseText text={completedWorkout.name} type="primary" />
-              </BaseCard>
-            ))}
-          </View>
+          <>
+            <View style={styles.recentActivityHeader}>
+              <BaseText text="Recent Activity" type="primary_18" />
+            </View>
+            <View style={styles.recentActivityContainer}>
+              {completedWorkouts.map((completedWorkout) => (
+                <HomeScreenWorkoutCard
+                  key={completedWorkout.id}
+                  workout={completedWorkout}
+                  onPress={() => handleViewWorkoutSummary(completedWorkout.id)}
+                />
+              ))}
+            </View>
+          </>
         )}
       </ScrollView>
     </BaseSafeAreaView>
@@ -89,8 +96,11 @@ export function HomeScreen(props: ScreenProps<"Home">) {
 
 const styles = StyleSheet.create({
   recentActivityContainer: {
-    gap: 8,
-    marginTop: 8,
+    gap: 4,
+  },
+  recentActivityHeader: {
+    paddingTop: 12,
+    paddingBottom: 12,
   },
   icon: {
     marginLeft: "auto",

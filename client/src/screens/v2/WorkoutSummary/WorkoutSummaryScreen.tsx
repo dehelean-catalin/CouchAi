@@ -11,13 +11,10 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { BaseCard } from "@/components/BaseCard";
 import { useMemo } from "react";
-import {
-  calculateWorkoutStats,
-  calculateWorkoutDuration,
-  formatDuration,
-} from "./workoutSummary.bussiness";
+import { calculateWorkoutStats } from "./workoutSummary.bussiness";
 import { WorkoutSummaryExercise } from "./WorkoutSummaryExercise";
 import { BaseSafeAreaView } from "@/components/BaseSafeArea";
+import { calculateDuration, formatDuration } from "@/helper/dateFormatter";
 
 export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
   const { workoutId } = props.route.params;
@@ -63,7 +60,7 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
     return null;
   }
 
-  const workoutDuration = calculateWorkoutDuration(workout.startDate, endDate);
+  const workoutDuration = calculateDuration(workout.startDate, endDate);
 
   return (
     <BaseSafeAreaView>
