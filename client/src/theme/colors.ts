@@ -30,7 +30,7 @@ export const COLORS: Record<Theme, ColorValue> = {
     surface0: "rgb(16, 19, 23)",
     surface1: "rgb(51, 59, 72)",
 
-    surfaceShadow: "rgb(77, 86, 102)",
+    surfaceShadow: "rgb(96, 105, 121)",
 
     blue_0: BLUE_0,
     surface_blue: "rgba(16, 19, 23, 0.3)",

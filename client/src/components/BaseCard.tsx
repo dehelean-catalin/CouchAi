@@ -44,7 +44,6 @@ export function BaseCard({
 
 const styles = StyleSheet.create({
   card: {
-    alignItems: "center",
     gap: 12,
     borderRadius: 16,
     padding: 12,

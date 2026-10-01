@@ -20,7 +20,9 @@ export function HomeScreenWorkoutCard(props: HomeScreenWorkoutCardProps) {
           <BaseText text={formatDate(props.workout.endDate)} type="secondary" />
         </View>
       </View>
-      <BaseIcon name="chevronRight" />
+      <View style={styles.iconContainer}>
+        <BaseIcon name="chevronRight" />
+      </View>
     </BaseCard>
   );
 }
@@ -34,5 +36,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
+  },
+  iconContainer: {
+    justifyContent: "center",
   },
 });

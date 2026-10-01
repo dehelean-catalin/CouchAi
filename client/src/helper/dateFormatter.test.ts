@@ -144,9 +144,18 @@ describe(formatDate.name, () => {
     expect(formatDate("2024-03-15T00:00:00")).toBe("Mar 15, 2024");
   });
 
-  test("it should fortmat a date string as today, year", () => {
+  test("it should format a date string as today, year", () => {
     const year = new Date().getFullYear();
     expect(formatDate(new Date().toISOString())).toBe(`Today, ${year}`);
+  });
+  test("it should format a date string as day month, year - when shouldDisplayToday is disabled", () => {
+    const year = new Date().getFullYear();
+    const date = new Date().getDate();
+    const month = new Date().getMonth();
+
+    expect(formatDate(new Date().toISOString(), false)).toBe(
+      `${getMonthName(month)} ${date}, ${year}`,
+    );
   });
 });
 

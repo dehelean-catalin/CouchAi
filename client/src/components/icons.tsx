@@ -10,11 +10,14 @@ import MinusIcon from "@expo/material-symbols/remove.xml";
 import PencilIcon from "@expo/material-symbols/edit.xml";
 import CalendarIcon from "@expo/material-symbols/calendar_clock.xml";
 import ChevronRight from "@expo/material-symbols/chevron_right.xml";
+import CheckList from "@expo/material-symbols/checklist.xml";
+import Timer from "@expo/material-symbols/timer.xml";
+import Dumbell from "@expo/material-symbols/weight.xml";
 
 import { StyleSheet } from "react-native";
 import { useAppColors } from "@/theme/useAppColors";
 
-const iconsMap: Record<string, IconSelectSpec> = {
+const iconsMap = {
   house: {
     ios: "house",
     android: Home,
@@ -59,7 +62,19 @@ const iconsMap: Record<string, IconSelectSpec> = {
     ios: "chevron.right",
     android: ChevronRight,
   },
-};
+  timer: {
+    ios: "timer",
+    android: Timer,
+  },
+  checkList: {
+    ios: "checklist",
+    android: CheckList,
+  },
+  weight: {
+    ios: "dumbbell.fill",
+    android: Dumbell,
+  },
+} satisfies Record<string, IconSelectSpec>;
 
 export interface BaseIconProps {
   name: keyof typeof iconsMap;

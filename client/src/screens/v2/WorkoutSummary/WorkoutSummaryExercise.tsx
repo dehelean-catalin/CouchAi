@@ -1,7 +1,6 @@
-import { BaseCard } from "@/components/BaseCard";
-import { BaseChip } from "@/components/BaseChip";
 import { BaseText } from "@/components/BaseText";
 import { WorkoutExerciseSet } from "@/redux/workoutSlice";
+import { StyleSheet, View } from "react-native";
 
 interface WorkoutSummaryExerciseProps {
   set: WorkoutExerciseSet;
@@ -10,12 +9,21 @@ interface WorkoutSummaryExerciseProps {
 
 export function WorkoutSummaryExercise(props: WorkoutSummaryExerciseProps) {
   return (
-    <BaseCard>
-      <BaseChip value={`${props.index + 1}`} />
+    <View style={styles.container}>
+      <BaseText text={`Set ${props.index + 1}`} type="secondary" />
       <BaseText
-        text={`${props.set.weight} kg x ${props.set.reps} Reps`}
-        type="primary"
+        text={`${props.set.weight} kg x ${props.set.reps} reps`}
+        type="primary_regular_16"
       />
-    </BaseCard>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+    marginBottom: 4,
+  },
+});

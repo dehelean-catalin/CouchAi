@@ -63,7 +63,7 @@ export function HomeScreen(props: ScreenProps<"Home">) {
                 <BaseText text={workout.name} type="primary_18" />
               </View>
               <Pressable
-                style={styles.icon}
+                style={styles.clearIcon}
                 onPress={() => dispatch(deleteWorkout(workout.id))}
               >
                 <BaseIcon name="clear" />
@@ -102,7 +102,9 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 12,
   },
-  icon: {
+  clearIcon: {
+    justifyContent: "center",
     marginLeft: "auto",
+    paddingLeft: 16,
   },
 });

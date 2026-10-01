@@ -9,6 +9,7 @@ export interface BaseTextProps {
     | "secondary"
     | "primary_bold_16"
     | "primary_regular_16"
+    | "primary_bold_24"
     | "light";
   transform?: "uppercase";
 }
@@ -20,13 +21,16 @@ export function BaseText(props: BaseTextProps) {
 
   switch (props.type) {
     case "primary":
-      textStyle = { color: textColors.primary, fontSize: 14 };
+      textStyle = { color: textColors.primary, fontSize: 16 };
       break;
     case "primary_regular_16":
       textStyle = { color: textColors.primary, fontSize: 16 };
       break;
     case "primary_18":
       textStyle = { color: textColors.primary, fontSize: 18 };
+      break;
+    case "primary_bold_24":
+      textStyle = { color: textColors.primary, fontSize: 24, fontWeight: 600 };
       break;
     case "primary_bold_16":
       textStyle = { color: textColors.primary, fontSize: 16, fontWeight: 600 };

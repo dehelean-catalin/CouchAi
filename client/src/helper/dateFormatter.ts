@@ -64,7 +64,10 @@ export function getMonthName(month: number) {
   return monthName;
 }
 
-export function formatDate(dateAndTime: string) {
+export function formatDate(
+  dateAndTime: string,
+  shouldDisplayToday: boolean = true,
+) {
   const date = new Date(dateAndTime);
   const day = date.getDate();
   const month = date.getMonth();
@@ -75,7 +78,8 @@ export function formatDate(dateAndTime: string) {
   if (
     currentDate.getDate() === day &&
     currentDate.getMonth() === month &&
-    currentDate.getFullYear() === year
+    currentDate.getFullYear() === year &&
+    shouldDisplayToday
   ) {
     return `Today, ${year}`;
   }

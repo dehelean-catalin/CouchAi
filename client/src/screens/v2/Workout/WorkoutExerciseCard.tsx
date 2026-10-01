@@ -49,20 +49,22 @@ export function WorkoutExerciseCard({
           type="secondary"
         />
       </View>
-      <BaseMenu
-        items={[
-          {
-            label: "Replace",
-            icon: "replace",
-            action: replace,
-          },
-          {
-            label: "Delete",
-            icon: "trash",
-            action: remove,
-          },
-        ]}
-      />
+      <View style={styles.menuContainer}>
+        <BaseMenu
+          items={[
+            {
+              label: "Replace",
+              icon: "replace",
+              action: replace,
+            },
+            {
+              label: "Delete",
+              icon: "trash",
+              action: remove,
+            },
+          ]}
+        />
+      </View>
     </BaseCard>
   );
 }
@@ -70,5 +72,8 @@ export function WorkoutExerciseCard({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  menuContainer: {
+    justifyContent: "center",
   },
 });
