@@ -20,7 +20,7 @@ export function HomeScreenWorkoutCard(props: HomeScreenWorkoutCardProps) {
           <BaseText text={formatDate(props.workout.endDate)} type="secondary" />
         </View>
       </View>
-      <BaseIcon name="arrowRight" />
+      <BaseIcon name="chevronRight" />
     </BaseCard>
   );
 }
