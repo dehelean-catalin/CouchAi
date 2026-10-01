@@ -3,7 +3,7 @@ import { BaseMenu } from "@/components/BaseMenu";
 import { BaseText } from "@/components/BaseText";
 import { deleteWorkout } from "@/redux/workoutSlice";
 import { useDispatch } from "react-redux";
-import { ScreenProps } from "../routes";
+import routes, { ScreenProps } from "../routes";
 import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 
 export function WorkoutSummaryOptions(
@@ -37,14 +37,24 @@ function WorkoutSummaryHeaderOptions(props: {
   workoutId: string;
 }) {
   const dispatch = useDispatch();
+
   function handleDeleteWorkout(workoutId: string) {
     dispatch(deleteWorkout(workoutId));
     props.navigation.goBack();
   }
 
+  function handleEditWorkout(workoutId: string) {
+    props.navigation.navigate(routes.WORKOUT, { id: workoutId });
+  }
+
   return (
     <BaseMenu
       items={[
+        {
+          label: "Edit",
+          icon: "edit",
+          action: () => handleEditWorkout(props.workoutId),
+        },
         {
           label: "Delete",
           icon: "trash",

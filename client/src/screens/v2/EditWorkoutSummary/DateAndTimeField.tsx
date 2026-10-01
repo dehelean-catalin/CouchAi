@@ -49,6 +49,7 @@ export function DateAndTimeField(props: DateAndTimeFieldProps) {
         matchContents={{ vertical: true }}
         colorScheme={theme}
         seedColor={colors.blue_0}
+        style={styles.iosContainer}
       >
         <SwiftDatePicker
           title={props.label}
@@ -124,6 +125,9 @@ export function DateAndTimeField(props: DateAndTimeFieldProps) {
   );
 }
 const styles = StyleSheet.create({
+  iosContainer: {
+    marginTop: 12,
+  },
   container: {
     flexDirection: "row",
     alignItems: "center",
