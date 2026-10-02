@@ -5,9 +5,10 @@ import reducer, {
   compleateWorkoutSet,
   deleteWorkoutSet,
   editWorkoutSet,
+  performAgainThisWorkout,
   updateWorkoutDetails,
 } from "./workoutSlice";
-import { SetBuilder, WorkoutBuilder } from "./workoutMocks";
+import { completedWorkout, SetBuilder, WorkoutBuilder } from "./workoutMocks";
 
 describe(completeWorkout.name, () => {
   test("it should mark the matching workout as completed and set the end date", () => {
@@ -18,7 +19,6 @@ describe(completeWorkout.name, () => {
           WorkoutBuilder().build(),
           WorkoutBuilder()
             .withId("workout-2")
-            .withPlanId("plan-2")
             .withName("Leg Day")
             .withStartDate("2026-09-14T16:00:00.000Z")
             .build(),
@@ -390,5 +390,135 @@ describe(deleteWorkoutSet.name, () => {
     );
 
     expect(state.sets[exerciseId]).toEqual(initialState.sets[exerciseId]);
+  });
+});
+
+describe(performAgainThisWorkout.name, () => {
+  test("it should leave the state unchanged when the workout does not exist", () => {
+    const initialState = {
+      workouts: [WorkoutBuilder().build()],
+      sets: {},
+    };
+
+    const state = reducer(
+      initialState,
+      performAgainThisWorkout({
+        workoutIdToCopy: "missing-workout",
+        newWorkoutId: "workout-copy",
+      }),
+    );
+
+    expect(state).toBe(initialState);
+    expect(state).toEqual(initialState);
+  });
+
+  test("it should copy the workout details", () => {
+    const otherWorkout = WorkoutBuilder()
+      .withId("workout-2")
+      .withName("Leg Day")
+      .build();
+
+    const initialState = {
+      workouts: [completedWorkout, otherWorkout],
+      sets: {},
+    };
+
+    const state = reducer(
+      initialState,
+      performAgainThisWorkout({
+        workoutIdToCopy: completedWorkout.id,
+        newWorkoutId: "workout-copy",
+      }),
+    );
+
+    const copiedWorkout = state.workouts[2];
+
+    expect(state.workouts).toHaveLength(3);
+
+    expect(copiedWorkout.id).toBe("workout-copy");
+    expect(copiedWorkout.name).toBe(completedWorkout.name);
+    expect(copiedWorkout.status).toBe("in-progress");
+    expect(copiedWorkout.endDate).toBe("");
+    expect(copiedWorkout.startDate).not.toBe(completedWorkout.startDate);
+  });
+
+  test("it should copy workout exercise details", () => {
+    const originalWorkout = {
+      ...completedWorkout,
+      exercises: [
+        {
+          id: "id-1",
+          exerciseId: "exercise-1",
+          name: "Bench Press 1",
+          thumbnailUrl: "thumbnail-url-1",
+        },
+        {
+          id: "id-2",
+          exerciseId: "exercise-2",
+          name: "Bench Press 2",
+          thumbnailUrl: "thumbnail-url-2",
+        },
+      ],
+    };
+    const state = reducer(
+      {
+        workouts: [originalWorkout],
+        sets: {
+          "id-1": [
+            SetBuilder().withReps(10).withWeight(10).isCompleted(true).build(),
+            SetBuilder().withReps(12).withWeight(12).isCompleted(true).build(),
+          ],
+          "id-2": [
+            SetBuilder().withReps(8).withWeight(8).isCompleted(true).build(),
+            SetBuilder().withReps(20).withWeight(20).isCompleted(true).build(),
+          ],
+        },
+      },
+      performAgainThisWorkout({
+        workoutIdToCopy: completedWorkout.id,
+        newWorkoutId: "workout-copy",
+      }),
+    );
+
+    const copiedWorkout = state.workouts[1];
+
+    const copiedWorkoutSets1 = state.sets[copiedWorkout.exercises[0].id];
+    const copiedWorkoutSets2 = state.sets[copiedWorkout.exercises[1].id];
+
+    expect(state.workouts).toHaveLength(2);
+    expect(copiedWorkout.exercises[0].id).not.toBe("id-1");
+    expect(copiedWorkout.exercises[0].exerciseId).toBe("exercise-1");
+    expect(copiedWorkout.exercises[0].name).toBe("Bench Press 1");
+    expect(copiedWorkout.exercises[0].thumbnailUrl).toBe("thumbnail-url-1");
+    expect(copiedWorkout.exercises[0].thumbnailUrl).toBe("thumbnail-url-1");
+
+    expect(copiedWorkout.exercises[1].exerciseId).toBe("exercise-2");
+    expect(copiedWorkout.exercises[1].exerciseId).not.toBe("id-2");
+    expect(copiedWorkout.exercises[1].name).toBe("Bench Press 2");
+    expect(copiedWorkout.exercises[1].thumbnailUrl).toBe("thumbnail-url-2");
+
+    expect(copiedWorkoutSets1).toHaveLength(2);
+
+    expect(copiedWorkoutSets1[0].id).not.toBe("set-1");
+    expect(copiedWorkoutSets1[0].weight).toBe(10);
+    expect(copiedWorkoutSets1[0].reps).toBe(10);
+    expect(copiedWorkoutSets1[0].isCompleted).toBe(false);
+
+    expect(copiedWorkoutSets1[1].id).not.toBe("set-1");
+    expect(copiedWorkoutSets1[1].weight).toBe(12);
+    expect(copiedWorkoutSets1[1].reps).toBe(12);
+    expect(copiedWorkoutSets1[1].isCompleted).toBe(false);
+
+    expect(copiedWorkoutSets2).toHaveLength(2);
+
+    expect(copiedWorkoutSets2[0].id).not.toBe("set-1");
+    expect(copiedWorkoutSets2[0].weight).toBe(8);
+    expect(copiedWorkoutSets2[0].reps).toBe(8);
+    expect(copiedWorkoutSets2[0].isCompleted).toBe(false);
+
+    expect(copiedWorkoutSets2[1].id).not.toBe("set-1");
+    expect(copiedWorkoutSets2[1].weight).toBe(20);
+    expect(copiedWorkoutSets2[1].reps).toBe(20);
+    expect(copiedWorkoutSets2[1].isCompleted).toBe(false);
   });
 });

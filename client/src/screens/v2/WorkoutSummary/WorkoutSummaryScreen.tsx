@@ -4,6 +4,8 @@ import routes, { ScreenProps } from "@/navigation/routes";
 import { RootState } from "@/redux/store";
 import {
   completeWorkout,
+  generateRandomId,
+  performAgainThisWorkout,
   selectWorkout,
   selectWorkoutSummary,
 } from "@/redux/workoutSlice";
@@ -38,6 +40,11 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
   function handleSave(id: string, workoutEndDate: string) {
     dispatch(completeWorkout({ workoutId: id, endDate: workoutEndDate }));
     props.navigation.popToTop();
+  }
+
+  function handlePerformAgain(workoutIdToCopy: string, newWorkoutId: string) {
+    dispatch(performAgainThisWorkout({ workoutIdToCopy, newWorkoutId }));
+    props.navigation.replace(routes.WORKOUT, { id: newWorkoutId });
   }
 
   function handleEditWorkoutDetails({
@@ -164,6 +171,12 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
         <BaseButton
           text="Save"
           onPress={() => handleSave(workoutId, endDate)}
+        />
+      )}
+      {props.route.params.action === "review" && (
+        <BaseButton
+          text="Perform Again"
+          onPress={() => handlePerformAgain(workoutId, generateRandomId())}
         />
       )}
     </BaseSafeAreaView>

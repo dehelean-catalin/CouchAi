@@ -34,12 +34,10 @@ export function SetBuilder() {
 export function WorkoutBuilder() {
   const workout: WorkoutState = {
     id: "workout-1",
-    planId: "plan-1",
     name: "Push Day",
     status: "in-progress",
     startDate: "2026-09-14T17:00:00.000Z",
     endDate: "",
-    notes: "",
     exercises: [],
   };
 
@@ -56,10 +54,6 @@ export function WorkoutBuilder() {
       workout.name = name;
       return this;
     },
-    withPlanId(planId: string) {
-      workout.planId = planId;
-      return this;
-    },
     withStartDate(startDate: string) {
       workout.startDate = startDate;
       return this;
@@ -69,7 +63,12 @@ export function WorkoutBuilder() {
       return this;
     },
     build() {
-      return { ...workout };
+      return Object.freeze({ ...workout });
     },
   };
 }
+
+export const completedWorkout = WorkoutBuilder()
+  .withStatus("completed")
+  .withEndDate("2026-09-14T18:00:00.000Z")
+  .build();

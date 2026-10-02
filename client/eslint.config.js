@@ -60,4 +60,10 @@ module.exports = defineConfig([
       "no-fallthrough": "error",
     },
   },
+  {
+    files: ["**/*.test.*"],
+    rules: {
+      "max-lines": ["error", 1000],
+    },
+  },
 ]);

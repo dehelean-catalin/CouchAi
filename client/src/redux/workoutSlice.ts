@@ -5,12 +5,10 @@ type WorkoutStatus = "completed" | "in-progress" | "deleted" | null;
 
 export interface WorkoutState {
   id: string;
-  planId: string;
   name: string;
   status: WorkoutStatus;
   startDate: string;
   endDate: string;
-  notes: string;
   exercises: WorkoutExercise[];
 }
 
@@ -30,10 +28,8 @@ export interface WorkoutExerciseSet {
 
 const emptyWorkout: WorkoutState = {
   id: "",
-  planId: "",
   name: "",
   status: null,
-  notes: "",
   startDate: "",
   endDate: "",
   exercises: [],
@@ -79,6 +75,55 @@ const workoutSlice = createSlice({
         workoutToUpdate.endDate = action.payload.endDate;
       }
     },
+    performAgainThisWorkout(
+      oldState,
+      action: PayloadAction<{ workoutIdToCopy: string; newWorkoutId: string }>,
+    ) {
+      const copiedWorkout = oldState.workouts.find(
+        (workout) => workout.id === action.payload.workoutIdToCopy,
+      );
+      if (!copiedWorkout) {
+        return oldState;
+      }
+
+      const copiedExercises = copiedWorkout.exercises.map((exercise) => {
+        return {
+          ...exercise,
+          id: generateRandomId(),
+          parentId: exercise.id,
+        };
+      });
+
+      copiedExercises.forEach((copiedExercise) => {
+        const originalSets = oldState.sets[copiedExercise.parentId];
+        const copiedSets: WorkoutExerciseSet[] = originalSets.map(
+          (originalSet) => {
+            return {
+              ...originalSet,
+              id: generateRandomId(),
+              isCompleted: false,
+            };
+          },
+        );
+        oldState.sets[copiedExercise.id] = copiedSets;
+      });
+
+      oldState.workouts.push({
+        ...copiedWorkout,
+        id: action.payload.newWorkoutId,
+        status: "in-progress",
+        startDate: new Date().toISOString(),
+        endDate: "",
+        exercises: copiedExercises.map((copiedExercise) => {
+          return {
+            id: copiedExercise.id,
+            name: copiedExercise.name,
+            exerciseId: copiedExercise.exerciseId,
+            thumbnailUrl: copiedExercise.thumbnailUrl,
+          };
+        }),
+      });
+    },
     addExerciseToWorkout: (
       oldState,
       action: PayloadAction<{
@@ -91,7 +136,6 @@ const workoutSlice = createSlice({
       if (!exercises.length) {
         return oldState;
       }
-
       const workoutToUpdate = oldState.workouts.find(
         (workout) => workout.id === workoutId,
       );
@@ -258,6 +302,7 @@ export const {
   startWorkout,
   deleteWorkout,
   completeWorkout,
+  performAgainThisWorkout,
   addExerciseToWorkout,
   removeExerciseFromWorkout,
   replaceExerciseFromWorkout,
