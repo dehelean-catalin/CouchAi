@@ -10,12 +10,10 @@ import MinusIcon from "@expo/material-symbols/remove.xml";
 import PencilIcon from "@expo/material-symbols/edit.xml";
 import CalendarIcon from "@expo/material-symbols/calendar_clock.xml";
 import ChevronRight from "@expo/material-symbols/chevron_right.xml";
-import CheckList from "@expo/material-symbols/checklist.xml";
-import Timer from "@expo/material-symbols/timer.xml";
-import Dumbell from "@expo/material-symbols/weight.xml";
 
 import { StyleSheet } from "react-native";
 import { useAppColors } from "@/theme/useAppColors";
+import { useMemo } from "react";
 
 const iconsMap = {
   house: {
@@ -62,18 +60,6 @@ const iconsMap = {
     ios: "chevron.right",
     android: ChevronRight,
   },
-  timer: {
-    ios: "timer",
-    android: Timer,
-  },
-  checkList: {
-    ios: "checklist",
-    android: CheckList,
-  },
-  weight: {
-    ios: "dumbbell.fill",
-    android: Dumbell,
-  },
 } satisfies Record<string, IconSelectSpec>;
 
 export interface BaseIconProps {
@@ -82,11 +68,14 @@ export interface BaseIconProps {
 
 export function BaseIcon(props: BaseIconProps) {
   const { theme, textColors } = useAppColors();
-
+  const iconName = useMemo(
+    () => Icon.select(iconsMap[props.name]),
+    [props.name],
+  );
   return (
     <Host matchContents colorScheme={theme}>
       <Icon
-        name={Icon.select(iconsMap[props.name])}
+        name={iconName}
         style={styles.icon}
         size={16}
         color={textColors.secondary}

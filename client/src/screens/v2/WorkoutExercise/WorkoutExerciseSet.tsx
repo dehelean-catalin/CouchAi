@@ -71,16 +71,18 @@ export function WorkoutExcerciseWheightAndRepsSet(
             type="primary_regular_16"
           />
         </View>
-        <BaseMenu
-          items={[
-            { icon: "edit", label: "Edit", action: props.onEdit },
-            {
-              icon: "trash",
-              label: "Delete",
-              action: props.onDelete,
-            },
-          ]}
-        />
+        <View style={styles.completeSetMenu}>
+          <BaseMenu
+            items={[
+              { icon: "edit", label: "Edit", action: props.onEdit },
+              {
+                icon: "trash",
+                label: "Delete",
+                action: props.onDelete,
+              },
+            ]}
+          />
+        </View>
       </BaseCard>
     );
   }
@@ -142,12 +144,16 @@ export function WorkoutExcerciseWheightAndRepsSet(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
   },
   header: {
     width: "100%",
     paddingTop: 4,
     paddingBottom: 4,
     alignItems: "center",
+  },
+  completeSetMenu: {
+    justifyContent: "center",
   },
   menuContainer: {
     alignSelf: "flex-end",

@@ -25,7 +25,10 @@ export function WorkoutExerciseSetField(props: WorkoutExerciseSetFieldProps) {
         <BaseText text={props.label} type="primary_bold_16" />
       </View>
       <View style={styles.row}>
-        <Pressable style={iconStyle} onPress={props.onDecreasePress}>
+        <Pressable
+          style={[iconStyle, { borderColor: colors.surfaceShadow }]}
+          onPress={props.onDecreasePress}
+        >
           <BaseIcon name="minus" />
         </Pressable>
 
@@ -37,12 +40,15 @@ export function WorkoutExerciseSetField(props: WorkoutExerciseSetFieldProps) {
             styles.input,
             {
               backgroundColor: colors.surface1,
-              borderColor: colors.surface0,
+              borderColor: colors.surfaceShadow,
               color: textColors.primary,
             },
           ]}
         />
-        <Pressable style={iconStyle} onPress={props.onIncreasePress}>
+        <Pressable
+          style={[iconStyle, { borderColor: colors.surfaceShadow }]}
+          onPress={props.onIncreasePress}
+        >
           <BaseIcon name="plus" />
         </Pressable>
       </View>

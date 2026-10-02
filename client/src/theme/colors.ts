@@ -18,8 +18,8 @@ type Theme = "light" | "dark";
 
 export const COLORS: Record<Theme, ColorValue> = {
   light: {
-    surface0: "rgb(210, 217, 227)",
-    surface1: "rgb(255, 255, 255)",
+    surface0: "rgb(217, 224, 233)",
+    surface1: "rgb(240, 240, 245)",
 
     surfaceShadow: "rgb(86, 88, 92)",
 
@@ -28,7 +28,7 @@ export const COLORS: Record<Theme, ColorValue> = {
   },
   dark: {
     surface0: "rgb(16, 19, 23)",
-    surface1: "rgb(51, 59, 72)",
+    surface1: "rgb(31, 36, 45)",
 
     surfaceShadow: "rgb(96, 105, 121)",
 

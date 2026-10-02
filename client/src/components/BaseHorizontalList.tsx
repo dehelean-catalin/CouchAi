@@ -32,6 +32,7 @@ export function BaseHorizontalList<T extends BaseHorizontalListItem>(
       keyExtractor={(item) => item.id}
       renderItem={props.item}
       getItemLayout={handleItemLayout}
+      contentContainerStyle={styles.listContainer}
       ListEmptyComponent={() => {
         return (
           <View style={styles.emptyContainer}>
@@ -44,6 +45,9 @@ export function BaseHorizontalList<T extends BaseHorizontalListItem>(
 }
 
 const styles = StyleSheet.create({
+  listContainer: {
+    gap: 8,
+  },
   emptyContainer: {
     alignItems: "center",
     padding: 12,

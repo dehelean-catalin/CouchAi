@@ -69,32 +69,34 @@ export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
                 <BaseText text="Rest Time" type="secondary" />
               </View>
             </View>
-            {sets.map((set, index) => {
-              const { exerciseId } = props.route.params;
-              return (
-                <WorkoutExcerciseWheightAndRepsSet
-                  key={set.id}
-                  data={set}
-                  index={index}
-                  onComplete={({ weight, reps }) =>
-                    dispatch(
-                      compleateWorkoutSet({
-                        weight,
-                        reps,
-                        setId: set.id,
-                        exerciseId,
-                      }),
-                    )
-                  }
-                  onEdit={() =>
-                    dispatch(editWorkoutSet({ exerciseId, setId: set.id }))
-                  }
-                  onDelete={() =>
-                    dispatch(deleteWorkoutSet({ exerciseId, setId: set.id }))
-                  }
-                />
-              );
-            })}
+            <View style={styles.setListContainer}>
+              {sets.map((set, index) => {
+                const { exerciseId } = props.route.params;
+                return (
+                  <WorkoutExcerciseWheightAndRepsSet
+                    key={set.id}
+                    data={set}
+                    index={index}
+                    onComplete={({ weight, reps }) =>
+                      dispatch(
+                        compleateWorkoutSet({
+                          weight,
+                          reps,
+                          setId: set.id,
+                          exerciseId,
+                        }),
+                      )
+                    }
+                    onEdit={() =>
+                      dispatch(editWorkoutSet({ exerciseId, setId: set.id }))
+                    }
+                    onDelete={() =>
+                      dispatch(deleteWorkoutSet({ exerciseId, setId: set.id }))
+                    }
+                  />
+                );
+              })}
+            </View>
             <View style={styles.addButtonContainer}>
               <BaseIcon name="plus" />
               <BaseButton
@@ -125,6 +127,9 @@ const styles = StyleSheet.create({
   },
   thumbnailContainer: {
     borderRadius: 12,
+  },
+  setListContainer: {
+    gap: 8,
   },
   addButtonContainer: {
     flexDirection: "row",

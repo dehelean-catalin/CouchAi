@@ -97,37 +97,38 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
         </View>
 
         <BaseCard flexDirection="column">
-          <View
-            style={[
-              styles.sectionHeader,
-              { borderBottomColor: colors.surfaceShadow },
-            ]}
-          >
-            <BaseText text="Statistics" type="primary_18" />
-          </View>
           <View style={styles.statsRow}>
-            <BaseIcon name="timer" />
-            <View style={styles.statsItem}>
+            <View
+              style={[
+                styles.statsItem,
+                styles.statsItemBorder,
+                { borderColor: colors.surfaceShadow },
+              ]}
+            >
               <BaseText text="Duration" type="secondary" />
               <BaseText
                 text={formatDuration(workoutDuration)}
-                type="primary_bold_16"
+                type="primary_bold_24"
               />
             </View>
-            <BaseIcon name="checkList" />
-            <View style={styles.statsItem}>
+            <View
+              style={[
+                styles.statsItem,
+                styles.statsItemBorder,
+                { borderColor: colors.surfaceShadow },
+              ]}
+            >
               <BaseText text="Volume" type="secondary" />
               <BaseText
                 text={`${calculateWorkoutStats(workoutSummary).totalSets} sets`}
-                type="primary_bold_16"
+                type="primary_bold_24"
               />
             </View>
-            <BaseIcon name="weight" />
             <View style={styles.statsItem}>
               <BaseText text="Weight" type="secondary" />
               <BaseText
                 text={`${calculateWorkoutStats(workoutSummary).totalWeight} kg`}
-                type="primary_bold_16"
+                type="primary_bold_24"
               />
             </View>
           </View>
@@ -135,19 +136,23 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
 
         {workoutSummary.map((summary) => {
           return (
-            <BaseCard flexDirection="column" key={summary.exercise.id}>
-              <View
-                style={[
-                  styles.sectionHeader,
-                  { borderBottomColor: colors.surfaceShadow },
-                ]}
-              >
-                <BaseText type="primary_bold_16" text={summary.exercise.name} />
+            <View key={summary.exercise.id}>
+              <View style={styles.sectionHeader}>
+                <BaseText
+                  type="primary_regular_16"
+                  text={summary.exercise.name}
+                />
               </View>
-              {summary.sets.map((set, index) => (
-                <WorkoutSummaryExercise key={set.id} set={set} index={index} />
-              ))}
-            </BaseCard>
+              <View style={styles.setContainer}>
+                {summary.sets.map((set, index) => (
+                  <WorkoutSummaryExercise
+                    key={set.id}
+                    set={set}
+                    index={index}
+                  />
+                ))}
+              </View>
+            </View>
           );
         })}
       </ScrollView>
@@ -188,10 +193,17 @@ const styles = StyleSheet.create({
   },
   statsItem: {
     marginRight: 16,
+    gap: 4,
+  },
+  statsItemBorder: {
+    paddingRight: 20,
+    borderRightWidth: 1,
   },
   sectionHeader: {
-    marginBottom: 4,
-    paddingBottom: 8,
-    borderBottomWidth: 1,
+    paddingTop: 12,
+    paddingBottom: 12,
+  },
+  setContainer: {
+    gap: 8,
   },
 });

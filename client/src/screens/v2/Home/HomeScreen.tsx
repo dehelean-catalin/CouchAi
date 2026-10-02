@@ -47,30 +47,31 @@ export function HomeScreen(props: ScreenProps<"Home">) {
   return (
     <BaseSafeAreaView>
       <ScrollView>
-        {workouts
-          .filter((w) => w.status === "in-progress")
-          .map((workout) => (
-            <BaseCard
-              key={workout.id}
-              onPress={() =>
-                props.navigation.navigate(routes.WORKOUT, {
-                  id: workout.id,
-                })
-              }
-            >
-              <View>
-                <BaseText text="Resume" type="secondary" />
-                <BaseText text={workout.name} type="primary_18" />
-              </View>
-              <Pressable
-                style={styles.clearIcon}
-                onPress={() => dispatch(deleteWorkout(workout.id))}
+        <View style={styles.inProgressContainer}>
+          {workouts
+            .filter((w) => w.status === "in-progress")
+            .map((workout) => (
+              <BaseCard
+                key={workout.id}
+                onPress={() =>
+                  props.navigation.navigate(routes.WORKOUT, {
+                    id: workout.id,
+                  })
+                }
               >
-                <BaseIcon name="clear" />
-              </Pressable>
-            </BaseCard>
-          ))}
-
+                <View>
+                  <BaseText text="Resume" type="secondary" />
+                  <BaseText text={workout.name} type="primary_18" />
+                </View>
+                <Pressable
+                  style={styles.clearIcon}
+                  onPress={() => dispatch(deleteWorkout(workout.id))}
+                >
+                  <BaseIcon name="clear" />
+                </Pressable>
+              </BaseCard>
+            ))}
+        </View>
         <BaseButton text="Start new workout" onPress={handleStartWorkout} />
 
         {completedWorkouts.length > 0 && (
@@ -95,12 +96,16 @@ export function HomeScreen(props: ScreenProps<"Home">) {
 }
 
 const styles = StyleSheet.create({
-  recentActivityContainer: {
-    gap: 4,
+  inProgressContainer: {
+    gap: 8,
+    marginBottom: 12,
   },
   recentActivityHeader: {
     paddingTop: 12,
     paddingBottom: 12,
+  },
+  recentActivityContainer: {
+    gap: 8,
   },
   clearIcon: {
     justifyContent: "center",
