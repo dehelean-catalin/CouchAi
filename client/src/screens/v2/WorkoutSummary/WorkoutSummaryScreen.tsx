@@ -144,13 +144,17 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
                 />
               </View>
               <View style={styles.setContainer}>
-                {summary.sets.map((set, index) => (
-                  <WorkoutSummaryExercise
-                    key={set.id}
-                    set={set}
-                    index={index}
-                  />
-                ))}
+                {summary.sets.length > 0 ? (
+                  summary.sets.map((set, index) => (
+                    <WorkoutSummaryExercise
+                      key={set.id}
+                      set={set}
+                      index={index}
+                    />
+                  ))
+                ) : (
+                  <BaseText text="No completed sets" type="secondary" />
+                )}
               </View>
             </View>
           );

@@ -35,10 +35,6 @@ export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
     dispatch(addSetToWorkoutExercise({ exerciseId }));
   }
 
-  if (!sets || sets?.length === 0) {
-    return null;
-  }
-
   return (
     <BaseSafeAreaView>
       <KeyboardAvoidingView
@@ -70,7 +66,7 @@ export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
               </View>
             </View>
             <View style={styles.setListContainer}>
-              {sets.map((set, index) => {
+              {sets?.map((set, index) => {
                 const { exerciseId } = props.route.params;
                 return (
                   <WorkoutExcerciseWheightAndRepsSet

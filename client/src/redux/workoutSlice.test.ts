@@ -62,10 +62,7 @@ describe(updateWorkoutDetails.name, () => {
       {
         workouts: [
           WorkoutBuilder().build(),
-          WorkoutBuilder()
-            .withId("workout-2")
-            .withName("Leg Day")
-            .build(),
+          WorkoutBuilder().withId("workout-2").withName("Leg Day").build(),
         ],
         sets: {},
       },
@@ -177,24 +174,66 @@ describe(addSetToWorkoutExercise.name, () => {
     expect(state.sets[exerciseId][0].isCompleted).toBe(false);
   });
 
-  test("it should append a new working set to an existing exercise set list", () => {
+  test("it should copy the previous uncompleted set and add it to the list", () => {
     const exerciseId = "exerciseMockId";
     const state = reducer(
       {
         workouts: [],
         sets: {
           [exerciseId]: [
-            { id: "exerciseMockId2", weight: 0, reps: 0, isCompleted: false },
+            { id: "exerciseMockId2", weight: 20, reps: 10, isCompleted: false },
+            { id: "exerciseMockId3", weight: 25, reps: 15, isCompleted: false },
           ],
         },
       },
       addSetToWorkoutExercise({ exerciseId }),
     );
 
-    expect(state.sets[exerciseId]).toHaveLength(2);
-    expect(state.sets[exerciseId][1].reps).toBe(0);
-    expect(state.sets[exerciseId][1].weight).toBe(0);
-    expect(state.sets[exerciseId][1].isCompleted).toBe(false);
+    expect(state.sets[exerciseId]).toHaveLength(3);
+    expect(state.sets[exerciseId][2].reps).toBe(15);
+    expect(state.sets[exerciseId][2].weight).toBe(25);
+    expect(state.sets[exerciseId][2].isCompleted).toBe(false);
+  });
+
+  test("it should copy the previous completed set and add it to the list", () => {
+    const exerciseId = "exerciseMockId";
+    const state = reducer(
+      {
+        workouts: [],
+        sets: {
+          [exerciseId]: [
+            { id: "exerciseMockId2", weight: 20, reps: 10, isCompleted: false },
+            { id: "exerciseMockId3", weight: 25, reps: 15, isCompleted: true },
+          ],
+        },
+      },
+      addSetToWorkoutExercise({ exerciseId }),
+    );
+
+    expect(state.sets[exerciseId]).toHaveLength(3);
+    expect(state.sets[exerciseId][2].reps).toBe(15);
+    expect(state.sets[exerciseId][2].weight).toBe(25);
+    expect(state.sets[exerciseId][2].isCompleted).toBe(false);
+  });
+
+  test("it should not update the list when exercise is not found", () => {
+    const exerciseId = "exerciseMockId";
+    const state = reducer(
+      {
+        workouts: [],
+        sets: {
+          [exerciseId]: [
+            { id: "exerciseMockId2", weight: 20, reps: 10, isCompleted: false },
+          ],
+        },
+      },
+      addSetToWorkoutExercise({ exerciseId: "otherExerciseId" }),
+    );
+
+    expect(state.sets[exerciseId]).toHaveLength(1);
+    expect(state.sets[exerciseId][0].reps).toBe(10);
+    expect(state.sets[exerciseId][0].weight).toBe(20);
+    expect(state.sets[exerciseId][0].isCompleted).toBe(false);
   });
 });
 

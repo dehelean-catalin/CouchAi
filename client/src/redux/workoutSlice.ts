@@ -187,9 +187,21 @@ const workoutSlice = createSlice({
       oldState,
       action: PayloadAction<{ exerciseId: string }>,
     ) => {
-      oldState.sets[action.payload.exerciseId].push(
-        generateInitialWorkingExerciseSet(),
-      );
+      const sets = oldState.sets[action.payload.exerciseId];
+      if (!sets) {
+        return;
+      }
+      if (sets.length === 0) {
+        sets.push(generateInitialWorkingExerciseSet());
+        return;
+      }
+      const previousSet = sets[sets.length - 1];
+      sets.push({
+        id: generateRandomId(),
+        isCompleted: false,
+        weight: previousSet.weight,
+        reps: previousSet.reps,
+      });
     },
     compleateWorkoutSet(
       oldState,
