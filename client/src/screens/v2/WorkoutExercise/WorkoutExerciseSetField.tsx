@@ -20,7 +20,7 @@ export function WorkoutExerciseSetField(props: WorkoutExerciseSetFieldProps) {
   ];
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.surface_blue }]}>
+    <View style={[styles.container, { backgroundColor: colors.surface0 }]}>
       <View style={styles.label}>
         <BaseText text={props.label} type="primary_bold_16" />
       </View>

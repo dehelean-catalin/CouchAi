@@ -3,7 +3,6 @@ interface ColorValue {
   surface1: string;
   surfaceShadow: string;
   blue_0: string;
-  surface_blue: string;
 }
 
 interface TextColorValue {
@@ -24,7 +23,6 @@ export const COLORS: Record<Theme, ColorValue> = {
     surfaceShadow: "rgb(86, 88, 92)",
 
     blue_0: BLUE_0,
-    surface_blue: "rgb(233, 242, 253)",
   },
   dark: {
     surface0: "rgb(16, 19, 23)",
@@ -33,7 +31,6 @@ export const COLORS: Record<Theme, ColorValue> = {
     surfaceShadow: "rgb(96, 105, 121)",
 
     blue_0: BLUE_0,
-    surface_blue: "rgba(16, 19, 23, 0.3)",
   },
 };
 
