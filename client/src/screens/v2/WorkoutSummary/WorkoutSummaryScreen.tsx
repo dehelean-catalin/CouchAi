@@ -13,7 +13,6 @@ import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { BaseCard } from "@/components/BaseCard";
 import { useMemo } from "react";
-import { calculateWorkoutStats } from "./workoutSummary.bussiness";
 import { WorkoutSummaryExercise } from "./WorkoutSummaryExercise";
 import { BaseSafeAreaView } from "@/components/BaseSafeArea";
 import {
@@ -23,6 +22,7 @@ import {
 } from "@/helper/dateFormatter";
 import { BaseIcon } from "@/components/icons";
 import { useAppColors } from "@/theme/useAppColors";
+import { calculateWorkoutTotalSetsAndReps } from "@/helper/workoutFormatter";
 
 export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
   const { workoutId } = props.route.params;
@@ -77,6 +77,8 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
   const timeStamp = formatTimestamp(
     calculateTimestampInSeconds(workout.startDate, endDate),
   );
+  const { totalSets, totalWeight } =
+    calculateWorkoutTotalSetsAndReps(workoutSummary);
 
   return (
     <BaseSafeAreaView>
@@ -125,17 +127,11 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
               ]}
             >
               <BaseText text="Volume" type="secondary" />
-              <BaseText
-                text={`${calculateWorkoutStats(workoutSummary).totalSets} sets`}
-                type="primary_bold_24"
-              />
+              <BaseText text={`${totalSets} sets`} type="primary_bold_24" />
             </View>
             <View style={styles.statsItem}>
               <BaseText text="Weight" type="secondary" />
-              <BaseText
-                text={`${calculateWorkoutStats(workoutSummary).totalWeight} kg`}
-                type="primary_bold_24"
-              />
+              <BaseText text={`${totalWeight} kg`} type="primary_bold_24" />
             </View>
           </View>
         </BaseCard>
@@ -159,7 +155,9 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
                     />
                   ))
                 ) : (
+                  <BaseCard>
                   <BaseText text="No completed sets" type="secondary" />
+                  </BaseCard>
                 )}
               </View>
             </View>

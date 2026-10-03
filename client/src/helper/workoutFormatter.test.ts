@@ -1,8 +1,8 @@
 import { describe, expect, test } from "@jest/globals";
 import { SetBuilder } from "@/redux/workoutMocks";
-import { calculateWorkoutStats } from "./workoutSummary.bussiness";
+import { calculateWorkoutTotalSetsAndReps } from "./workoutFormatter";
 
-describe(calculateWorkoutStats.name, () => {
+describe(calculateWorkoutTotalSetsAndReps.name, () => {
   test("it should sum only valid set totals and count all sets", () => {
     const workouts = [
       {
@@ -39,7 +39,7 @@ describe(calculateWorkoutStats.name, () => {
       },
     ];
 
-    expect(calculateWorkoutStats(workouts)).toEqual({
+    expect(calculateWorkoutTotalSetsAndReps(workouts)).toEqual({
       totalWeight: 10 * 5 + 20 * 8,
       totalSets: 4,
     });
@@ -65,7 +65,7 @@ describe(calculateWorkoutStats.name, () => {
       },
     ];
 
-    expect(calculateWorkoutStats(workouts)).toEqual({
+    expect(calculateWorkoutTotalSetsAndReps(workouts)).toEqual({
       totalWeight: 0,
       totalSets: 2,
     });
@@ -81,7 +81,7 @@ describe(calculateWorkoutStats.name, () => {
       },
     ];
 
-    expect(calculateWorkoutStats(workouts)).toEqual({
+    expect(calculateWorkoutTotalSetsAndReps(workouts)).toEqual({
       totalWeight: 0,
       totalSets: 0,
     });

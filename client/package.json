@@ -68,8 +68,21 @@
       "src/redux/**/*.{ts,tsx}"
     ],
     "coverageReporters": [
-      "text",
+      [
+        "text",
+        {
+          "skipFull": true
+        }
+      ],
       "lcov"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 60,
+        "functions": 60,
+        "lines": 60,
+        "statements": 60
+      }
+    }
   }
 }

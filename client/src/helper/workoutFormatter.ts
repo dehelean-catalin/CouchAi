@@ -1,6 +1,6 @@
 import { WorkoutExerciseSet } from "@/redux/workoutSlice";
 
-export function calculateWorkoutStats(
+export function calculateWorkoutTotalSetsAndReps(
   workoutExercises: { sets: WorkoutExerciseSet[] }[],
 ) {
   let totalSets = 0;
