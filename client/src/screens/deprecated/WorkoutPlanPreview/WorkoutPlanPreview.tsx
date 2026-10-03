@@ -14,7 +14,7 @@ import { Button, Text, useTheme } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useDispatch, useSelector } from "react-redux";
 import DefaultImage from "../../../assets/barbell.png";
-import { RootState } from "../../redux/store";
+import { RootState } from "../../../redux/store";
 import RightHeader from "./RightHeader";
 import WokoutPlanPreviewCard from "./WokoutPlanPreviewCard";
 

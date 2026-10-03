@@ -6,8 +6,8 @@ import React, { useState } from "react";
 import { Pressable } from "react-native";
 import { IconButton, Menu } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteExercise } from "../../redux/exerciseReducer";
-import { RootState } from "../../redux/store";
+import { deleteExercise } from "../../../redux/exerciseReducer";
+import { RootState } from "../../../redux/store";
 
 const ExerciseDetailsHeader = () => {
   const dispatch = useDispatch();

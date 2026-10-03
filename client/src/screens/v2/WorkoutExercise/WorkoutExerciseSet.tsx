@@ -8,11 +8,12 @@ import { BaseChip } from "@/components/BaseChip";
 import { BaseMenu } from "@/components/BaseMenu";
 import { StyleSheet, View } from "react-native";
 import {
-  computeValidWeight,
-  decreasePositiveValue,
-  increasePositiveValue,
+  decreaseByAmount,
+  convertToNumericInput,
+  convertZeroToEmptyString,
+  increaseByAmount,
   toFixedSize,
-} from "./numericInput";
+} from "../../../helper/numericFormatter";
 
 interface WorkoutExcerciseWheightAndRepsSetProps {
   index: number;
@@ -36,29 +37,24 @@ export function WorkoutExcerciseWheightAndRepsSet(
       return toFixedSize(formattedValue, prev, MAX_DIGITS);
     });
   }
-
-  function handleWeightDecrease() {
-    setWeight((currentValue) =>
-      decreasePositiveValue(currentValue, WEIGHT_AMOUNT),
-    );
-  }
-
-  function handleWeightIncrease() {
-    setWeight((currentValue) =>
-      increasePositiveValue(currentValue, WEIGHT_AMOUNT),
-    );
-  }
-
   function handleChangeReps(value: string) {
     setReps((prev) => toFixedSize(value, prev, MAX_DIGITS));
   }
 
+  function handleWeightDecrease() {
+    setWeight((currentValue) => decreaseByAmount(currentValue, WEIGHT_AMOUNT));
+  }
+
+  function handleWeightIncrease() {
+    setWeight((currentValue) => increaseByAmount(currentValue, WEIGHT_AMOUNT));
+  }
+
   function handleRepsDecrease() {
-    setReps((currentValue) => decreasePositiveValue(currentValue, 1));
+    setReps((currentValue) => decreaseByAmount(currentValue, 1));
   }
 
   function handleRepsIncrease() {
-    setReps((currentValue) => increasePositiveValue(currentValue, 1));
+    setReps((currentValue) => increaseByAmount(currentValue, 1));
   }
 
   if (props.data.isCompleted) {
@@ -110,7 +106,7 @@ export function WorkoutExcerciseWheightAndRepsSet(
         </View>
         <WorkoutExerciseSetField
           label="Weight"
-          value={weight}
+          value={convertZeroToEmptyString(weight)}
           keyboardType="decimal-pad"
           onChange={handleChangeWeight}
           onIncreasePress={handleWeightIncrease}
@@ -118,7 +114,7 @@ export function WorkoutExcerciseWheightAndRepsSet(
         />
         <WorkoutExerciseSetField
           label="Reps"
-          value={reps}
+          value={convertZeroToEmptyString(reps)}
           keyboardType="number-pad"
           onChange={handleChangeReps}
           onIncreasePress={handleRepsIncrease}
@@ -128,12 +124,14 @@ export function WorkoutExcerciseWheightAndRepsSet(
           text="Compleate"
           type="rounded"
           onPress={() => {
-            const validWeight = computeValidWeight(weight);
+            const validWeight = convertToNumericInput(weight, 3);
+            const validReps = convertToNumericInput(reps);
             props.onComplete({
               weight: validWeight,
-              reps: Number(reps),
+              reps: validReps,
             });
             setWeight(validWeight.toString());
+            setReps(validReps.toString());
           }}
         />
       </BaseCard>

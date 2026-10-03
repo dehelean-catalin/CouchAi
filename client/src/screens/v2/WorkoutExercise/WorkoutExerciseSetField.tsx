@@ -2,7 +2,6 @@ import { BaseText } from "@/components/BaseText";
 import { BaseIcon } from "@/components/icons";
 import { useAppColors } from "@/theme/useAppColors";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
-import { ZERO } from "./constants";
 
 interface WorkoutExerciseSetFieldProps {
   label: string;
@@ -37,7 +36,7 @@ export function WorkoutExerciseSetField(props: WorkoutExerciseSetFieldProps) {
           value={props.value}
           onChangeText={props.onChange}
           keyboardType={props.keyboardType}
-          placeholder={ZERO.toString()}
+          placeholder="0"
           style={[
             styles.input,
             {

@@ -1,10 +1,10 @@
 import routes, { RootStackParamList } from "@/navigation/routes";
-import CreateExerciseScreen from "@/screens/CreateExercise/CreateExerciseScreen";
-import { ExerciseDetailsScreen } from "@/screens/ExerciseDetails/ExerciseDetailsScreen";
+import CreateExerciseScreen from "@/screens/deprecated/CreateExercise/CreateExerciseScreen";
+import { ExerciseDetailsScreen } from "@/screens/deprecated/ExerciseDetails/ExerciseDetailsScreen";
 import { ExercisesScreen } from "@/screens/v2/Exercises/ExercisesScreen";
-import { WorkoutPlansScreen } from "@/screens/Plans/PlansScreen";
-import { WorkoutPlanForm } from "@/screens/WorkoutPlanForm/WorkoutPlanForm";
-import WorkoutPlanPreview from "@/screens/WorkoutPlanPreview/WorkoutPlanPreview";
+import { WorkoutPlansScreen } from "@/screens/deprecated/Plans/PlansScreen";
+import { WorkoutPlanForm } from "@/screens/deprecated/WorkoutPlanForm/WorkoutPlanForm";
+import WorkoutPlanPreview from "@/screens/deprecated/WorkoutPlanPreview/WorkoutPlanPreview";
 import WorkoutPreview from "@/screens/WorkoutPreview/WorkoutPreview";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
