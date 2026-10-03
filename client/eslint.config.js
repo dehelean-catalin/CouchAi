@@ -1,13 +1,18 @@
 // https://docs.expo.dev/guides/using-eslint/
-const { defineConfig } = require("eslint/config");
+const { defineConfig, globalIgnores } = require("eslint/config");
 const expoConfig = require("eslint-config-expo/flat");
 const reactNative = require("eslint-plugin-react-native");
 
 module.exports = defineConfig([
   expoConfig,
+  globalIgnores([
+    "dist/*",
+    "node_modules/*",
+    ".expo/*",
+    "src/screens/deprecated/**/*",
+  ]),
   {
     plugins: { "react-native": reactNative },
-    ignores: ["dist/*", "node_modules/*", ".expo/*"],
     rules: {
       "no-console": "error",
       "no-unused-vars": "off",
