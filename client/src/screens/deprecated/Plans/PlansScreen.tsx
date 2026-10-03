@@ -1,8 +1,8 @@
 import routes from "@/navigation/routes";
 import { WorkoutPlan } from "@/model/workoutModel";
 import { RootState } from "@/redux/store";
-import { workoutFormActions } from "@/redux/workoutFormReducer";
-import { initializeWorkoutPlans } from "@/redux/workoutPlanReducer";
+import { workoutFormActions } from "@/redux/deprecated/workoutFormReducer";
+import { initializeWorkoutPlans } from "@/redux/deprecated/workoutPlanReducer";
 import { findAllPlansByCategory } from "@/service/planService";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { FC, useEffect } from "react";

@@ -5,7 +5,7 @@ import React, { FC } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Menu, Text, useTheme } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import { workoutFormActions } from "../../../redux/workoutFormReducer";
+import { workoutFormActions } from "../../../redux/deprecated/workoutFormReducer";
 
 type Props = {
   id: string;

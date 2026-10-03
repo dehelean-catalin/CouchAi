@@ -4,7 +4,7 @@ import { FC, useState } from "react";
 import { Pressable } from "react-native";
 import { IconButton, Menu } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import { deleteWorkoutPlan } from "../../../redux/workoutPlanReducer";
+import { deleteWorkoutPlan } from "../../../redux/deprecated/workoutPlanReducer";
 
 const RightHeader: FC<{ id: string }> = ({ id }) => {
   const dispatch = useDispatch();

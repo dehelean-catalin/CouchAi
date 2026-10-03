@@ -1,13 +1,13 @@
 import { WorkoutDay, WorkoutPlan } from "@/model/workoutModel";
 import { RootState } from "@/redux/store";
-import { workoutFormActions } from "@/redux/workoutFormReducer";
+import { workoutFormActions } from "@/redux/deprecated/workoutFormReducer";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { FC, useLayoutEffect, useRef, useState } from "react";
 import { Animated, FlatList, StyleSheet, View } from "react-native";
 import { Button, IconButton, Text, useTheme } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import CustomTextInput from "../../components/CustomTextInput";
-import { createWorkoutPlan } from "../../../redux/workoutPlanReducer";
+import { createWorkoutPlan } from "../../../redux/deprecated/workoutPlanReducer";
 import DiscardChangesDialog from "./DiscardChangesDialog";
 import Pagination from "./Pagination";
 import { WorkoutDayCard } from "./WorkoutDayCard";

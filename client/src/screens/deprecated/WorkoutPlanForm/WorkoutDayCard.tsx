@@ -9,7 +9,7 @@ import { Button, Chip, Menu, Text, useTheme } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import CustomMenu from "../../components/CustomMenu";
 import CustomTextInput from "../../components/CustomTextInput";
-import { workoutFormActions } from "../../../redux/workoutFormReducer";
+import { workoutFormActions } from "../../../redux/deprecated/workoutFormReducer";
 import CustomCard from "./CustomCard";
 
 type Props = {
