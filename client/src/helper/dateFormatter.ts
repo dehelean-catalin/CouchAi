@@ -1,11 +1,16 @@
 import { assertIsPositive } from "./assert";
 
-export function calculateDuration(startDate: string, endDate: string) {
-  const durationInSeconds =
-    (Date.parse(endDate) - Date.parse(startDate)) / 1000;
+export function calculateTimestampInSeconds(
+  startDate: string,
+  endDate: string,
+) {
+  return (Date.parse(endDate) - Date.parse(startDate)) / 1000;
+}
 
-  assertIsPositive(durationInSeconds);
-  let seconds = Math.round(durationInSeconds);
+export function formatTimestamp(timestampInSeconds: number) {
+  assertIsPositive(timestampInSeconds);
+
+  let seconds = Math.round(timestampInSeconds);
   let minutes = 0;
   let hours = 0;
 
@@ -18,18 +23,6 @@ export function calculateDuration(startDate: string, endDate: string) {
     }
   }
 
-  return { seconds, minutes, hours };
-}
-
-export function formatDuration({
-  seconds,
-  minutes,
-  hours,
-}: {
-  seconds: number;
-  minutes: number;
-  hours: number;
-}) {
   assertIsPositive(seconds);
   assertIsPositive(minutes);
   assertIsPositive(hours);

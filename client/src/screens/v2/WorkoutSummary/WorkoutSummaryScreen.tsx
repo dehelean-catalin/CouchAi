@@ -17,9 +17,9 @@ import { calculateWorkoutStats } from "./workoutSummary.bussiness";
 import { WorkoutSummaryExercise } from "./WorkoutSummaryExercise";
 import { BaseSafeAreaView } from "@/components/BaseSafeArea";
 import {
-  calculateDuration,
+  formatTimestamp,
+  calculateTimestampInSeconds,
   formatDate,
-  formatDuration,
 } from "@/helper/dateFormatter";
 import { BaseIcon } from "@/components/icons";
 import { useAppColors } from "@/theme/useAppColors";
@@ -74,7 +74,9 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
     return null;
   }
 
-  const workoutDuration = calculateDuration(workout.startDate, endDate);
+  const timeStamp = formatTimestamp(
+    calculateTimestampInSeconds(workout.startDate, endDate),
+  );
 
   return (
     <BaseSafeAreaView>
@@ -113,10 +115,7 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
               ]}
             >
               <BaseText text="Duration" type="secondary" />
-              <BaseText
-                text={formatDuration(workoutDuration)}
-                type="primary_bold_24"
-              />
+              <BaseText text={timeStamp} type="primary_bold_24" />
             </View>
             <View
               style={[

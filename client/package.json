@@ -11,7 +11,7 @@
     "lint": "expo lint",
     "prepare": "husky",
     "test": "jest",
-    "test-watch": "jest --watchAll"
+    "coverage": "jest --coverage"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -61,6 +61,15 @@
     "preset": "jest-expo",
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?|react-navigation|@react-navigation|expo|@expo|@expo-google-fonts|@reduxjs/toolkit|immer|react-redux|redux))"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/helper/**/*.{ts,tsx}",
+      "src/redux/**/*.{ts,tsx}"
+    ],
+    "coverageReporters": [
+      "text",
+      "lcov"
     ]
   }
 }
