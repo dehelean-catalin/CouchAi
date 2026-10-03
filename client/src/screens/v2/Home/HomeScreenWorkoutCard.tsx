@@ -1,12 +1,19 @@
 import { BaseCard } from "@/components/BaseCard";
 import { BaseText } from "@/components/BaseText";
-import { BaseIcon } from "@/components/icons";
-import { formatDate } from "@/helper/dateFormatter";
-import { WorkoutState } from "@/redux/workoutSlice";
-import { StyleSheet, View } from "react-native";
+import { BaseIcon, BaseIconProps } from "@/components/icons";
+
+import { Pressable, StyleSheet, View } from "react-native";
 
 interface HomeScreenWorkoutCardProps {
-  workout: WorkoutState;
+  title: string;
+  content: (
+    | { type: "text"; value: string }
+    | { type: "icon"; value: BaseIconProps["name"] }
+  )[];
+  iconRight: {
+    name: BaseIconProps["name"];
+    action?: () => void;
+  };
   onPress: () => void;
 }
 
@@ -14,14 +21,34 @@ export function HomeScreenWorkoutCard(props: HomeScreenWorkoutCardProps) {
   return (
     <BaseCard onPress={props.onPress}>
       <View style={styles.container}>
-        <BaseText text={props.workout.name} type="primary" />
+        <BaseText text={props.title} type="primary" numberOfLines={2} />
         <View style={styles.content}>
-          <BaseIcon name="calendar" />
-          <BaseText text={formatDate(props.workout.endDate)} type="secondary" />
+          {props.content.map((item) => {
+            switch (item.type) {
+              case "icon":
+                return <BaseIcon key={item.value} name={item.value} />;
+              case "text":
+                return (
+                  <BaseText
+                    key={item.value}
+                    text={item.value}
+                    type="secondary"
+                  />
+                );
+              default:
+                throw new Error(`Type is not allowed`);
+            }
+          })}
         </View>
       </View>
       <View style={styles.iconContainer}>
-        <BaseIcon name="chevronRight" />
+        {props.iconRight.action ? (
+          <Pressable onPress={props.iconRight.action}>
+            <BaseIcon name={props.iconRight.name} />
+          </Pressable>
+        ) : (
+          <BaseIcon name={props.iconRight.name} />
+        )}
       </View>
     </BaseCard>
   );
@@ -29,8 +56,8 @@ export function HomeScreenWorkoutCard(props: HomeScreenWorkoutCardProps) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     gap: 4,
-    marginRight: "auto",
   },
   content: {
     flexDirection: "row",
@@ -39,5 +66,6 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     justifyContent: "center",
+    paddingLeft: 8,
   },
 });

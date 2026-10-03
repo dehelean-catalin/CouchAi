@@ -85,26 +85,29 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
       <ScrollView>
         <View style={styles.header}>
           <View style={styles.title}>
-            <BaseText text={workout.name} type="primary_bold_24" />
-            <Pressable
-              onPress={() =>
-                handleEditWorkoutDetails({
-                  id: workout.id,
-                  workoutName: workout.name,
-                  workoutStartDate: workout.startDate,
-                  workoutEndDate: endDate,
-                })
-              }
-              style={styles.editIcon}
-            >
-              <BaseIcon name="edit" />
-            </Pressable>
+            <BaseText
+              text={workout.name}
+              type="primary_bold_24"
+              numberOfLines={2}
+            />
+            <View style={styles.dateContainer}>
+              <BaseIcon name="calendar" />
+              <BaseText text={formatDate(endDate, false)} type="secondary" />
+            </View>
           </View>
-
-          <View style={styles.dateContainer}>
-            <BaseIcon name="calendar" />
-            <BaseText text={formatDate(endDate, false)} type="secondary" />
-          </View>
+          <Pressable
+            onPress={() =>
+              handleEditWorkoutDetails({
+                id: workout.id,
+                workoutName: workout.name,
+                workoutStartDate: workout.startDate,
+                workoutEndDate: endDate,
+              })
+            }
+            style={styles.editIcon}
+          >
+            <BaseIcon name="edit" />
+          </Pressable>
         </View>
 
         <BaseCard flexDirection="column">
@@ -191,11 +194,13 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
 
 const styles = StyleSheet.create({
   header: {
+    flexDirection: "row",
     paddingTop: 8,
     marginBottom: 16,
   },
   title: {
-    flexDirection: "row",
+    flex: 1,
+    flexDirection: "column",
     justifyContent: "space-between",
     marginBottom: 4,
   },

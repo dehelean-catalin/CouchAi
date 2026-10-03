@@ -6,14 +6,13 @@ import {
   WorkoutState,
 } from "@/redux/workoutSlice";
 import React from "react";
-import { Pressable, StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { BaseText } from "@/components/BaseText";
 import { BaseButton } from "@/components/BaseButton";
-import { BaseIcon } from "@/components/icons";
-import { BaseCard } from "@/components/BaseCard";
 import { BaseSafeAreaView } from "@/components/BaseSafeArea";
 import { HomeScreenWorkoutCard } from "./HomeScreenWorkoutCard";
+import { formatDate } from "@/helper/dateFormatter";
 
 export function HomeScreen(props: ScreenProps<"Home">) {
   const dispatch = useDispatch();
@@ -51,25 +50,20 @@ export function HomeScreen(props: ScreenProps<"Home">) {
           {workouts
             .filter((w) => w.status === "in-progress")
             .map((workout) => (
-              <BaseCard
+              <HomeScreenWorkoutCard
                 key={workout.id}
+                title={workout.name}
                 onPress={() =>
                   props.navigation.navigate(routes.WORKOUT, {
                     id: workout.id,
                   })
                 }
-              >
-                <View>
-                  <BaseText text="Resume" type="secondary" />
-                  <BaseText text={workout.name} type="primary_18" />
-                </View>
-                <Pressable
-                  style={styles.clearIcon}
-                  onPress={() => dispatch(deleteWorkout(workout.id))}
-                >
-                  <BaseIcon name="clear" />
-                </Pressable>
-              </BaseCard>
+                content={[{ type: "text", value: "Click to Resume" }]}
+                iconRight={{
+                  name: "clear",
+                  action: () => dispatch(deleteWorkout(workout.id)),
+                }}
+              />
             ))}
         </View>
         <BaseButton text="Start new workout" onPress={handleStartWorkout} />
@@ -83,7 +77,15 @@ export function HomeScreen(props: ScreenProps<"Home">) {
               {completedWorkouts.map((completedWorkout) => (
                 <HomeScreenWorkoutCard
                   key={completedWorkout.id}
-                  workout={completedWorkout}
+                  title={completedWorkout.name}
+                  iconRight={{ name: "chevronRight" }}
+                  content={[
+                    { type: "icon", value: "calendar" },
+                    {
+                      type: "text",
+                      value: formatDate(completedWorkout.endDate),
+                    },
+                  ]}
                   onPress={() => handleViewWorkoutSummary(completedWorkout.id)}
                 />
               ))}
@@ -106,10 +108,5 @@ const styles = StyleSheet.create({
   },
   recentActivityContainer: {
     gap: 8,
-  },
-  clearIcon: {
-    justifyContent: "center",
-    marginLeft: "auto",
-    paddingLeft: 16,
   },
 });
