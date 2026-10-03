@@ -122,16 +122,25 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
             <View
               style={[
                 styles.statsItem,
+                styles.statsItemWidth,
                 styles.statsItemBorder,
                 { borderColor: colors.surfaceShadow },
               ]}
             >
               <BaseText text="Volume" type="secondary" />
-              <BaseText text={`${totalSets} sets`} type="primary_bold_24" />
+              <BaseText
+                text={`${totalSets} sets`}
+                type="primary_bold_24"
+                numberOfLines={2}
+              />
             </View>
-            <View style={styles.statsItem}>
+            <View style={[styles.statsItem, styles.statsItemWidth]}>
               <BaseText text="Weight" type="secondary" />
-              <BaseText text={`${totalWeight} kg`} type="primary_bold_24" />
+              <BaseText
+                text={`${totalWeight} kg`}
+                type="primary_bold_24"
+                numberOfLines={2}
+              />
             </View>
           </View>
         </BaseCard>
@@ -208,6 +217,9 @@ const styles = StyleSheet.create({
   statsItem: {
     marginRight: 16,
     gap: 4,
+  },
+  statsItemWidth: {
+    maxWidth: "30%",
   },
   statsItemBorder: {
     paddingRight: 20,
