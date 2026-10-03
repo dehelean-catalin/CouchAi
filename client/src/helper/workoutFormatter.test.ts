@@ -3,7 +3,7 @@ import { SetBuilder } from "@/redux/workoutMocks";
 import { calculateWorkoutTotalSetsAndReps } from "./workoutFormatter";
 
 describe(calculateWorkoutTotalSetsAndReps.name, () => {
-  test("it should sum only valid set totals and count all sets", () => {
+  test("it should calculate completed sets", () => {
     const workouts = [
       {
         sets: [
@@ -12,6 +12,12 @@ describe(calculateWorkoutTotalSetsAndReps.name, () => {
             .withWeight(10)
             .withReps(5)
             .isCompleted(true)
+            .build(),
+          SetBuilder()
+            .setId("set-1")
+            .withWeight(10)
+            .withReps(5)
+            .isCompleted(false)
             .build(),
           SetBuilder()
             .setId("set-2")
@@ -35,6 +41,12 @@ describe(calculateWorkoutTotalSetsAndReps.name, () => {
             .withReps(8)
             .isCompleted(true)
             .build(),
+          SetBuilder()
+            .setId("set-4")
+            .withWeight(0)
+            .withReps(8)
+            .isCompleted(false)
+            .build(),
         ],
       },
     ];
@@ -45,7 +57,7 @@ describe(calculateWorkoutTotalSetsAndReps.name, () => {
     });
   });
 
-  test("it should return zero totals for workouts with no valid sets", () => {
+  test("it should return zero weight for workouts with no valid sets", () => {
     const workouts = [
       {
         sets: [

@@ -156,7 +156,7 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
                   ))
                 ) : (
                   <BaseCard>
-                  <BaseText text="No completed sets" type="secondary" />
+                    <BaseText text="No sets logged" type="secondary" />
                   </BaseCard>
                 )}
               </View>

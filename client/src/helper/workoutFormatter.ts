@@ -8,11 +8,11 @@ export function calculateWorkoutTotalSetsAndReps(
     if (sets.length === 0) {
       return total;
     }
-    totalSets += sets.length;
     const exerciseTotal = sets.reduce((exerciseSum, set) => {
-      if (set.weight === 0 || set.reps === 0) {
+      if (!set.isCompleted) {
         return exerciseSum;
       }
+      totalSets++;
       return set.weight * set.reps + exerciseSum;
     }, 0);
     return total + exerciseTotal;
