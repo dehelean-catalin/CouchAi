@@ -1,7 +1,8 @@
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
+import { EMPTY_WORKOUT_NAME } from "./constants";
 
-type WorkoutStatus = "completed" | "in-progress" | "deleted" | null;
+type WorkoutStatus = "completed" | "in-progress" | "deleted";
 
 export interface WorkoutState {
   id: string;
@@ -28,8 +29,8 @@ export interface WorkoutExerciseSet {
 
 const emptyWorkout: WorkoutState = {
   id: "",
-  name: "",
-  status: null,
+  name: EMPTY_WORKOUT_NAME,
+  status: "in-progress",
   startDate: "",
   endDate: "",
   exercises: [],
@@ -51,7 +52,6 @@ const workoutSlice = createSlice({
         ...emptyWorkout,
         id: generateRandomId(),
         name: "Workout on the fly",
-        status: "in-progress",
         startDate: new Date().toISOString(),
       });
     },
@@ -221,8 +221,9 @@ const workoutSlice = createSlice({
       if (newWorkoutStartDate > newWorkoutEndDate) {
         throw new Error("Invalid Date");
       }
-      if (!!newWorkoutName.trim()) {
-        workoutToUpdate.name = newWorkoutName;
+      const trimmedWorkoutName = newWorkoutName.trim();
+      if (trimmedWorkoutName) {
+        workoutToUpdate.name = trimmedWorkoutName;
       }
       workoutToUpdate.startDate = newWorkoutStartDate;
       workoutToUpdate.endDate = newWorkoutEndDate;

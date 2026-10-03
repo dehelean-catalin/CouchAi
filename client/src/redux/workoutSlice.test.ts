@@ -3,12 +3,67 @@ import reducer, {
   addSetToWorkoutExercise,
   completeWorkout,
   compleateWorkoutSet,
+  deleteWorkout,
   deleteWorkoutSet,
   editWorkoutSet,
   performAgainThisWorkout,
   updateWorkoutDetails,
+  startWorkout,
 } from "./workoutSlice";
 import { completedWorkout, SetBuilder, WorkoutBuilder } from "./workoutMocks";
+import { EMPTY_WORKOUT_NAME } from "./constants";
+
+describe(startWorkout.name, () => {
+  test("it should start the workout", () => {
+    const state = reducer(
+      { workouts: [WorkoutBuilder().build()], sets: {} },
+      startWorkout(),
+    );
+
+    const newWorkout = state.workouts[1];
+
+    expect(newWorkout.name).not.toBe("");
+    expect(newWorkout.name).toBe(EMPTY_WORKOUT_NAME);
+    expect(newWorkout.status).toBe("in-progress");
+    expect(newWorkout.startDate).not.toBe("");
+    expect(newWorkout.endDate).toBe("");
+  });
+});
+
+describe(deleteWorkout.name, () => {
+  test("it should workout as deleted", () => {
+    const state = reducer(
+      {
+        workouts: [
+          WorkoutBuilder().build(),
+          WorkoutBuilder().withId("workout-2").withName("Leg Day").build(),
+        ],
+        sets: {},
+      },
+      deleteWorkout("workout-1"),
+    );
+
+    expect(state.workouts[0]).toMatchObject({
+      id: "workout-1",
+      status: "deleted",
+    });
+    expect(state.workouts[1]).toMatchObject({
+      id: "workout-2",
+      status: "in-progress",
+    });
+  });
+
+  test("it should keep the workouts unchanged when the workout id does not exist", () => {
+    const initialState = {
+      workouts: [WorkoutBuilder().build()],
+      sets: {},
+    };
+
+    const state = reducer(initialState, deleteWorkout("missing-workout"));
+
+    expect(state).toEqual(initialState);
+  });
+});
 
 describe(completeWorkout.name, () => {
   test("it should mark the matching workout as completed and set the end date", () => {

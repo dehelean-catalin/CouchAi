@@ -8,15 +8,17 @@ import { useState } from "react";
 import { Keyboard, Pressable, StyleSheet, TextInput, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { DateAndTimeField } from "./DateAndTimeField";
+import { EMPTY_WORKOUT_NAME } from "@/redux/constants";
 
 export function EditWorkoutSummaryScreen(
   props: ScreenProps<"EditWorkoutSummary">,
 ) {
   const dispatch = useDispatch();
+  const { workoutName: workoutNameProp } = props.route.params;
   const { colors, textColors } = useAppColors();
   const [isFocused, setIsFocused] = useState(false);
   const [workoutName, setWorkoutName] = useState(
-    props.route.params.workoutName,
+    workoutNameProp === EMPTY_WORKOUT_NAME ? "" : workoutNameProp,
   );
 
   const [workoutStartDate, setWorkoutStartDate] = useState(
@@ -27,6 +29,9 @@ export function EditWorkoutSummaryScreen(
   );
 
   function handleWorkoutNameChange(value: string) {
+    if (value.length > 200) {
+      return;
+    }
     setWorkoutName(value);
   }
 
@@ -86,7 +91,7 @@ export function EditWorkoutSummaryScreen(
           <TextInput
             value={workoutName}
             onChangeText={handleWorkoutNameChange}
-            placeholder="Workout on the fly"
+            placeholder={EMPTY_WORKOUT_NAME}
             autoCapitalize="words"
             autoCorrect={false}
             placeholderTextColor={textColors.secondary}
