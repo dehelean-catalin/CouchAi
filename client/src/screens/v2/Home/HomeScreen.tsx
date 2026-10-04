@@ -49,6 +49,7 @@ export function HomeScreen(props: ScreenProps<"Home">) {
         <View style={styles.inProgressContainer}>
           {workouts
             .filter((w) => w.status === "in-progress")
+            .sort((a, b) => Date.parse(b.startDate) - Date.parse(a.startDate))
             .map((workout) => (
               <HomeScreenWorkoutCard
                 key={workout.id}
@@ -74,21 +75,25 @@ export function HomeScreen(props: ScreenProps<"Home">) {
               <BaseText text="Recent Activity" type="primary_18" />
             </View>
             <View style={styles.recentActivityContainer}>
-              {completedWorkouts.map((completedWorkout) => (
-                <HomeScreenWorkoutCard
-                  key={completedWorkout.id}
-                  title={completedWorkout.name}
-                  iconRight={{ name: "chevronRight" }}
-                  content={[
-                    { type: "icon", value: "calendar" },
-                    {
-                      type: "text",
-                      value: formatDate(completedWorkout.endDate),
-                    },
-                  ]}
-                  onPress={() => handleViewWorkoutSummary(completedWorkout.id)}
-                />
-              ))}
+              {completedWorkouts
+                .sort((a, b) => Date.parse(b.endDate) - Date.parse(a.endDate))
+                .map((completedWorkout) => (
+                  <HomeScreenWorkoutCard
+                    key={completedWorkout.id}
+                    title={completedWorkout.name}
+                    iconRight={{ name: "chevronRight" }}
+                    content={[
+                      { type: "icon", value: "calendar" },
+                      {
+                        type: "text",
+                        value: formatDate(completedWorkout.endDate),
+                      },
+                    ]}
+                    onPress={() =>
+                      handleViewWorkoutSummary(completedWorkout.id)
+                    }
+                  />
+                ))}
             </View>
           </>
         )}
