@@ -9,7 +9,7 @@ import {
   selectWorkout,
   selectWorkoutSummary,
 } from "@/redux/workoutSlice";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { BaseCard } from "@/components/BaseCard";
 import { useMemo } from "react";
@@ -95,7 +95,19 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
               <BaseText text={formatDate(endDate, false)} type="secondary" />
             </View>
           </View>
-          <Pressable
+          <BaseButton
+            leftIcon="edit"
+            type="normal"
+            onPress={() =>
+              handleEditWorkoutDetails({
+                id: workout.id,
+                workoutName: workout.name,
+                workoutStartDate: workout.startDate,
+                workoutEndDate: endDate,
+              })
+            }
+          />
+          {/* <Pressable
             onPress={() =>
               handleEditWorkoutDetails({
                 id: workout.id,
@@ -107,7 +119,7 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
             style={styles.editIcon}
           >
             <BaseIcon name="edit" />
-          </Pressable>
+          </Pressable> */}
         </View>
 
         <BaseCard flexDirection="column">
@@ -195,6 +207,7 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
 const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
+    alignItems: "flex-start",
     paddingTop: 8,
     marginBottom: 16,
   },
@@ -203,12 +216,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     marginBottom: 4,
-  },
-  editIcon: {
-    height: 32,
-    width: 32,
-    alignItems: "center",
-    justifyContent: "center",
   },
   dateContainer: {
     flexDirection: "row",

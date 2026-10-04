@@ -1,5 +1,4 @@
 import { BaseButton } from "@/components/BaseButton";
-import { BaseIcon } from "@/components/icons";
 import { BaseText } from "@/components/BaseText";
 import { ScreenProps } from "@/navigation/routes";
 import { updateWorkoutDetails } from "@/redux/workoutSlice";
@@ -107,12 +106,11 @@ export function EditWorkoutSummaryScreen(
             ]}
           />
           {workoutName.length > 0 && (
-            <Pressable
+            <BaseButton
+              leftIcon="clear"
+              type="normal"
               onPress={() => setWorkoutName("")}
-              style={styles.clearButton}
-            >
-              <BaseIcon name="clear" />
-            </Pressable>
+            />
           )}
         </View>
         <DateAndTimeField
@@ -171,11 +169,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: 12,
   },
-  clearButton: {
-    padding: 6,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
   saveButtonContainer: {
     marginTop: "auto",
   },

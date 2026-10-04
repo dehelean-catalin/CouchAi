@@ -19,7 +19,6 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import { BaseIcon } from "@/components/icons";
 import { BaseText } from "@/components/BaseText";
 import { BaseThumbnail } from "@/components/BaseThumbnail";
 import { RootState } from "@/redux/store";
@@ -93,14 +92,12 @@ export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
                 );
               })}
             </View>
-            <View style={styles.addButtonContainer}>
-              <BaseIcon name="plus" />
-              <BaseButton
-                text="Add Set"
-                type="normal"
-                onPress={() => handleAddSet(props.route.params.exerciseId)}
-              />
-            </View>
+            <BaseButton
+              text="Add Set"
+              type="normal"
+              leftIcon="plus"
+              onPress={() => handleAddSet(props.route.params.exerciseId)}
+            />
           </Pressable>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -115,8 +112,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 12,
     gap: 12,
+    marginBottom: 4,
   },
   headerContent: {
     gap: 2,
@@ -127,12 +124,8 @@ const styles = StyleSheet.create({
   setListContainer: {
     gap: 8,
   },
-  addButtonContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   scrollViewContent: {
     marginBottom: 240,
+    gap: 8,
   },
 });

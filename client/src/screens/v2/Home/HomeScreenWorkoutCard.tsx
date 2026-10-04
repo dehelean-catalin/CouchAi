@@ -1,8 +1,9 @@
+import { BaseButton } from "@/components/BaseButton";
 import { BaseCard } from "@/components/BaseCard";
 import { BaseText } from "@/components/BaseText";
 import { BaseIcon, BaseIconProps } from "@/components/icons";
 
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 interface HomeScreenWorkoutCardProps {
   title: string;
@@ -42,13 +43,11 @@ export function HomeScreenWorkoutCard(props: HomeScreenWorkoutCardProps) {
         </View>
       </View>
       <View style={styles.iconContainer}>
-        {props.iconRight.action ? (
-          <Pressable onPress={props.iconRight.action}>
-            <BaseIcon name={props.iconRight.name} />
-          </Pressable>
-        ) : (
-          <BaseIcon name={props.iconRight.name} />
-        )}
+        <BaseButton
+          type="normal"
+          leftIcon={props.iconRight.name}
+          onPress={props.iconRight.action}
+        />
       </View>
     </BaseCard>
   );

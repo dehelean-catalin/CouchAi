@@ -1,20 +1,27 @@
 import { BaseText, BaseTextProps } from "@/components/BaseText";
 import { useAppColors } from "@/theme/useAppColors";
 import { Pressable, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { BaseIcon, BaseIconProps } from "./icons";
 
 interface BaseFloatingButtonProps {
-  text: string;
+  text?: string;
   disabled?: boolean;
   type?: "fill" | "normal" | "rounded";
-  onPress: () => void;
+  leftIcon?: BaseIconProps["name"];
+  onPress?: () => void;
 }
 
 export function BaseButton({
   text,
   type = "fill",
   disabled,
+  leftIcon,
   onPress: press,
 }: BaseFloatingButtonProps) {
+  if (!type && !text) {
+    throw new Error("Missing Required Props: text or leftIcon");
+  }
+
   const { colors } = useAppColors();
   let buttonStyle: StyleProp<ViewStyle> = null;
   let textType: BaseTextProps["type"] = "primary_bold_16";
@@ -38,15 +45,19 @@ export function BaseButton({
       disabled={disabled}
       onPress={press}
     >
-      <BaseText text={text} type={textType} />
+      {leftIcon && <BaseIcon name={leftIcon} />}
+      {text && <BaseText text={text} type={textType} />}
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
     padding: 8,
     borderRadius: 16,
-    alignItems: "center",
   },
 });

@@ -1,7 +1,7 @@
+import { BaseButton } from "@/components/BaseButton";
 import { BaseText } from "@/components/BaseText";
-import { BaseIcon } from "@/components/icons";
 import { useAppColors } from "@/theme/useAppColors";
-import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 
 interface WorkoutExerciseSetFieldProps {
   label: string;
@@ -25,12 +25,13 @@ export function WorkoutExerciseSetField(props: WorkoutExerciseSetFieldProps) {
         <BaseText text={props.label} type="primary_bold_16" />
       </View>
       <View style={styles.row}>
-        <Pressable
-          style={[iconStyle, { borderColor: colors.surfaceShadow }]}
-          onPress={props.onDecreasePress}
-        >
-          <BaseIcon name="minus" />
-        </Pressable>
+        <View style={[iconStyle, { borderColor: colors.surfaceShadow }]}>
+          <BaseButton
+            leftIcon="minus"
+            type="normal"
+            onPress={props.onDecreasePress}
+          />
+        </View>
 
         <TextInput
           value={props.value}
@@ -46,12 +47,13 @@ export function WorkoutExerciseSetField(props: WorkoutExerciseSetFieldProps) {
             },
           ]}
         />
-        <Pressable
-          style={[iconStyle, { borderColor: colors.surfaceShadow }]}
-          onPress={props.onIncreasePress}
-        >
-          <BaseIcon name="plus" />
-        </Pressable>
+        <View style={[iconStyle, { borderColor: colors.surfaceShadow }]}>
+          <BaseButton
+            leftIcon="plus"
+            type="normal"
+            onPress={props.onIncreasePress}
+          />
+        </View>
       </View>
     </View>
   );
