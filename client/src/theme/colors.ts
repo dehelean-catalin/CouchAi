@@ -2,6 +2,7 @@ interface ColorValue {
   surface0: string;
   surface1: string;
   surfaceShadow: string;
+  pressable_surface_1: string;
   blue_0: string;
 }
 
@@ -19,7 +20,7 @@ export const COLORS: Record<Theme, ColorValue> = {
   light: {
     surface0: "rgb(217, 224, 233)",
     surface1: "rgb(240, 240, 245)",
-
+    pressable_surface_1: "rgb(213, 213, 213)",
     surfaceShadow: "rgb(86, 88, 92)",
 
     blue_0: BLUE_0,
@@ -27,7 +28,7 @@ export const COLORS: Record<Theme, ColorValue> = {
   dark: {
     surface0: "rgb(16, 19, 23)",
     surface1: "rgb(31, 36, 45)",
-
+    pressable_surface_1: "rgb(50, 57, 72)",
     surfaceShadow: "rgb(96, 105, 121)",
 
     blue_0: BLUE_0,

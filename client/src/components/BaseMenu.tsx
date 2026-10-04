@@ -63,7 +63,15 @@ export function BaseMenu(props: BaseMenuProps) {
 
   return (
     <View ref={ref}>
-      <Pressable onPress={handleOpenMenu} style={styles.iconBadge}>
+      <Pressable
+        onPress={handleOpenMenu}
+        style={({ pressed }) => [
+          styles.iconBadge,
+          {
+            backgroundColor: pressed ? colors.pressable_surface_1 : "inherit",
+          },
+        ]}
+      >
         <BaseIcon name="ellipsis" />
       </Pressable>
       <Modal
@@ -92,7 +100,14 @@ export function BaseMenu(props: BaseMenuProps) {
               <Pressable
                 key={key}
                 onPress={menuItem.action}
-                style={styles.menuItem}
+                style={({ pressed }) => [
+                  styles.menuItem,
+                  {
+                    backgroundColor: pressed
+                      ? colors.pressable_surface_1
+                      : "inherit",
+                  },
+                ]}
               >
                 <BaseText text={menuItem.label} type="primary" />
                 <BaseIcon name={menuItem.icon} />
@@ -107,13 +122,12 @@ export function BaseMenu(props: BaseMenuProps) {
 
 const styles = StyleSheet.create({
   iconBadge: {
-    padding: 12,
-    paddingRight: 4,
+    padding: 8,
+    borderRadius: 4,
   },
   container: {
     position: "absolute",
     borderRadius: 8,
-    padding: 8,
     shadowOpacity: 0.5,
     shadowOffset: { width: 0, height: 2 },
     elevation: 4,
@@ -128,6 +142,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     gap: 12,
-    padding: 8,
+    padding: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
   },
 });
