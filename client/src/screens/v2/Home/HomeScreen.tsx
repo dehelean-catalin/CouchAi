@@ -13,6 +13,7 @@ import { BaseButton } from "@/components/BaseButton";
 import { BaseSafeAreaView } from "@/components/BaseSafeArea";
 import { HomeScreenWorkoutCard } from "./HomeScreenWorkoutCard";
 import { formatDate } from "@/helper/dateFormatter";
+import { DraggableList } from "./Test";
 
 export function HomeScreen(props: ScreenProps<"Home">) {
   const dispatch = useDispatch();
