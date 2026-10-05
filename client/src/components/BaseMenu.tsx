@@ -99,7 +99,10 @@ export function BaseMenu(props: BaseMenuProps) {
             {props.items.map((menuItem, key) => (
               <Pressable
                 key={key}
-                onPress={menuItem.action}
+                onPress={() => {
+                  setIsOpen(false);
+                  menuItem.action();
+                }}
                 style={({ pressed }) => [
                   styles.menuItem,
                   {
