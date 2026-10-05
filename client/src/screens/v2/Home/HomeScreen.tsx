@@ -43,15 +43,15 @@ export function HomeScreen(props: ScreenProps<"Home">) {
     .sort((a, b) => {
       return new Date(b.endDate).getTime() - new Date(a.endDate).getTime();
     });
+  const inProgressWorkouts = workouts
+    .filter((w) => w.status === "in-progress")
+    .sort((a, b) => Date.parse(b.startDate) - Date.parse(a.startDate));
 
   return (
     <BaseSafeAreaView>
       <ScrollView>
         <View style={styles.inProgressContainer}>
-          {workouts
-            .filter((w) => w.status === "in-progress")
-            .sort((a, b) => Date.parse(b.startDate) - Date.parse(a.startDate))
-            .map((workout) => (
+        {inProgressWorkouts.map((workout) => (
               <HomeScreenWorkoutCard
                 key={workout.id}
                 title={workout.name}
@@ -67,8 +67,8 @@ export function HomeScreen(props: ScreenProps<"Home">) {
                 }}
               />
             ))}
-        </View>
         <BaseButton text="Start new workout" onPress={handleStartWorkout} />
+      </View>
 
         {completedWorkouts.length > 0 && (
           <>
@@ -90,9 +90,7 @@ export function HomeScreen(props: ScreenProps<"Home">) {
                         value: formatDate(completedWorkout.endDate),
                       },
                     ]}
-                    onPress={() =>
-                      handleViewWorkoutSummary(completedWorkout.id)
-                    }
+                  onPress={() => handleViewWorkoutSummary(completedWorkout.id)}
                   />
                 ))}
             </View>
@@ -106,13 +104,14 @@ export function HomeScreen(props: ScreenProps<"Home">) {
 const styles = StyleSheet.create({
   inProgressContainer: {
     gap: 8,
-    marginBottom: 12,
+    marginTop: 12,
   },
   recentActivityHeader: {
-    paddingTop: 12,
+    paddingTop: 20,
     paddingBottom: 12,
   },
   recentActivityContainer: {
     gap: 8,
+    marginBottom: 12,
   },
 });
