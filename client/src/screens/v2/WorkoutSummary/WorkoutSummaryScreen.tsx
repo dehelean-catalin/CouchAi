@@ -107,19 +107,6 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
               })
             }
           />
-          {/* <Pressable
-            onPress={() =>
-              handleEditWorkoutDetails({
-                id: workout.id,
-                workoutName: workout.name,
-                workoutStartDate: workout.startDate,
-                workoutEndDate: endDate,
-              })
-            }
-            style={styles.editIcon}
-          >
-            <BaseIcon name="edit" />
-          </Pressable> */}
         </View>
 
         <BaseCard flexDirection="column">
