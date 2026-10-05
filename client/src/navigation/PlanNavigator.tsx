@@ -5,7 +5,6 @@ import { ExercisesScreen } from "@/screens/v2/Exercises/ExercisesScreen";
 import { WorkoutPlansScreen } from "@/screens/deprecated/Plans/PlansScreen";
 import { WorkoutPlanForm } from "@/screens/deprecated/WorkoutPlanForm/WorkoutPlanForm";
 import WorkoutPlanPreview from "@/screens/deprecated/WorkoutPlanPreview/WorkoutPlanPreview";
-import WorkoutPreview from "@/screens/WorkoutPreview/WorkoutPreview";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 
@@ -41,11 +40,6 @@ export default function PlanNavigator() {
       <Stack.Screen
         name={routes.WORKOUT_PREVIEW}
         component={WorkoutPlanPreview}
-        options={options}
-      />
-      <Stack.Screen
-        name={routes.WORKOUT_DAY_PREVIEW}
-        component={WorkoutPreview}
         options={options}
       />
     </Stack.Navigator>

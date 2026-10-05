@@ -1,5 +1,5 @@
 import CustomImageBackground from "@/components/CustomImageBackground";
-import { CustomPicker } from "@/components/CustomPicker";
+import { CustomPicker } from "@/screens/deprecated/CreateExercise/CustomPicker";
 import CustomTextInput from "@/components/CustomTextInput";
 import routes from "@/navigation/routes";
 import {

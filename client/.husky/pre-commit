@@ -1,6 +1,4 @@
-echo "🔍 Running pre-commit checks..."
-
-echo "🧹 Running ESLint..."
-npx lint-staged
-
-echo "✅ Pre-commit checks passed!"
+#!/usr/bin/env sh
+echo "HOOK RUNNING"
+cd client
+npm run lint
