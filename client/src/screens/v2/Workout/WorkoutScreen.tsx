@@ -12,7 +12,6 @@ import { BaseHorizontalList } from "@/components/BaseHorizontalList";
 import { BaseButton } from "@/components/BaseButton";
 import { BaseSafeAreaView } from "@/components/BaseSafeArea";
 import { WorkoutTimerHeader } from "./WorkoutTimerHeader";
-import { DraggableList } from "../Home/Test";
 
 export function WorkoutScreen(props: ScreenProps<"Workout">) {
   const { id } = props.route.params;
@@ -94,8 +93,7 @@ export function WorkoutScreen(props: ScreenProps<"Workout">) {
 
   return (
     <BaseSafeAreaView>
-      <DraggableList items={workout.exercises} />
-      {/* <BaseHorizontalList<WorkoutExercise>
+      <BaseHorizontalList<WorkoutExercise>
         data={workout.exercises}
         item={({ item: exercise, index }) => (
           <WorkoutExerciseCard
@@ -118,7 +116,7 @@ export function WorkoutScreen(props: ScreenProps<"Workout">) {
           />
         )}
         emptyComponentText="Search for an exercise"
-      /> */}
+      />
       <BaseButton
         text="Add exercise"
         onPress={() => handleAddExercise(workout.id)}

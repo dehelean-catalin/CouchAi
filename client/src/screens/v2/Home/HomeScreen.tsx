@@ -13,7 +13,6 @@ import { BaseButton } from "@/components/BaseButton";
 import { BaseSafeAreaView } from "@/components/BaseSafeArea";
 import { HomeScreenWorkoutCard } from "./HomeScreenWorkoutCard";
 import { formatDate } from "@/helper/dateFormatter";
-import { DraggableList } from "./Test";
 
 export function HomeScreen(props: ScreenProps<"Home">) {
   const dispatch = useDispatch();
@@ -51,24 +50,24 @@ export function HomeScreen(props: ScreenProps<"Home">) {
     <BaseSafeAreaView>
       <ScrollView>
         <View style={styles.inProgressContainer}>
-        {inProgressWorkouts.map((workout) => (
-              <HomeScreenWorkoutCard
-                key={workout.id}
-                title={workout.name}
-                onPress={() =>
-                  props.navigation.navigate(routes.WORKOUT, {
-                    id: workout.id,
-                  })
-                }
-                content={[{ type: "text", value: "Click to Resume" }]}
-                iconRight={{
-                  name: "clear",
-                  action: () => dispatch(deleteWorkout(workout.id)),
-                }}
-              />
-            ))}
-        <BaseButton text="Start new workout" onPress={handleStartWorkout} />
-      </View>
+          {inProgressWorkouts.map((workout) => (
+            <HomeScreenWorkoutCard
+              key={workout.id}
+              title={workout.name}
+              onPress={() =>
+                props.navigation.navigate(routes.WORKOUT, {
+                  id: workout.id,
+                })
+              }
+              content={[{ type: "text", value: "Click to Resume" }]}
+              iconRight={{
+                name: "clear",
+                action: () => dispatch(deleteWorkout(workout.id)),
+              }}
+            />
+          ))}
+          <BaseButton text="Start new workout" onPress={handleStartWorkout} />
+        </View>
 
         {completedWorkouts.length > 0 && (
           <>
@@ -90,7 +89,9 @@ export function HomeScreen(props: ScreenProps<"Home">) {
                         value: formatDate(completedWorkout.endDate),
                       },
                     ]}
-                  onPress={() => handleViewWorkoutSummary(completedWorkout.id)}
+                    onPress={() =>
+                      handleViewWorkoutSummary(completedWorkout.id)
+                    }
                   />
                 ))}
             </View>
