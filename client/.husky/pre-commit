@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
-echo "HOOK RUNNING"
-cd client
+set -e
+
+cd "$(dirname "$0")/.."
+
 npm run lint
