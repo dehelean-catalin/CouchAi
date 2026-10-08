@@ -10,6 +10,8 @@ interface TextColorValue {
   primary: string;
   secondary: string;
   light: string;
+  green: string;
+  error: string;
 }
 
 const BLUE_0 = "rgb(51, 146, 234)";
@@ -43,11 +45,14 @@ export const textColors: Record<Theme, TextColorValue> = {
     primary: PRIMARY_DARK_TEXT_COLOR,
     secondary: "rgb(80, 80, 80)",
     light: PRIMARY_LIGHT_TEXT_COLOR,
+    green: "rgb(21, 168, 45)",
+    error: "rgb(209, 48, 48)",
   },
   dark: {
     primary: PRIMARY_LIGHT_TEXT_COLOR,
     secondary: "rgba(229, 229, 229,0.6)",
-
     light: PRIMARY_LIGHT_TEXT_COLOR,
+    green: "rgb(73, 166, 89)",
+    error: "rgb(209, 48, 48)",
   },
 };

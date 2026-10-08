@@ -20,9 +20,10 @@ export function HomeScreen(props: ScreenProps<"Home">) {
     (s) => s.workout.workouts,
   );
 
-  function handleViewWorkoutSummary(workoutId: string) {
+  function handleViewWorkoutSummary(workoutId: string, parentId: string) {
     props.navigation.navigate(routes.WORKOUT_SUMMARY, {
       workoutId,
+      parentId,
       action: "review",
     });
   }
@@ -57,6 +58,7 @@ export function HomeScreen(props: ScreenProps<"Home">) {
               onPress={() =>
                 props.navigation.navigate(routes.WORKOUT, {
                   id: workout.id,
+                  parentId: workout.parentId,
                 })
               }
               content={[{ type: "text", value: "Click to Resume" }]}
@@ -90,7 +92,10 @@ export function HomeScreen(props: ScreenProps<"Home">) {
                       },
                     ]}
                     onPress={() =>
-                      handleViewWorkoutSummary(completedWorkout.id)
+                      handleViewWorkoutSummary(
+                        completedWorkout.id,
+                        completedWorkout.parentId,
+                      )
                     }
                   />
                 ))}

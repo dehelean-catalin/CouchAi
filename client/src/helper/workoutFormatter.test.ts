@@ -1,8 +1,12 @@
 import { describe, expect, test } from "@jest/globals";
 import { SetBuilder } from "@/redux/workoutMocks";
-import { calculateWorkoutTotalSetsAndReps } from "./workoutFormatter";
+import {
+  calculateDeltaForSets,
+  calculateDeltaForWeight,
+  calculateWorkoutVolume,
+} from "./workoutFormatter";
 
-describe(calculateWorkoutTotalSetsAndReps.name, () => {
+describe(calculateWorkoutVolume.name, () => {
   test("it should calculate completed sets", () => {
     const workouts = [
       {
@@ -51,7 +55,7 @@ describe(calculateWorkoutTotalSetsAndReps.name, () => {
       },
     ];
 
-    expect(calculateWorkoutTotalSetsAndReps(workouts)).toEqual({
+    expect(calculateWorkoutVolume(workouts)).toEqual({
       totalWeight: 10 * 5 + 20 * 8,
       totalSets: 4,
     });
@@ -77,7 +81,7 @@ describe(calculateWorkoutTotalSetsAndReps.name, () => {
       },
     ];
 
-    expect(calculateWorkoutTotalSetsAndReps(workouts)).toEqual({
+    expect(calculateWorkoutVolume(workouts)).toEqual({
       totalWeight: 0,
       totalSets: 2,
     });
@@ -93,9 +97,38 @@ describe(calculateWorkoutTotalSetsAndReps.name, () => {
       },
     ];
 
-    expect(calculateWorkoutTotalSetsAndReps(workouts)).toEqual({
+    expect(calculateWorkoutVolume(workouts)).toEqual({
       totalWeight: 0,
       totalSets: 0,
     });
+  });
+});
+
+describe(calculateDeltaForSets.name, () => {
+  test("it should delta between workout sets count and parent sets", () => {
+    expect(calculateDeltaForSets(10, null)).toBe(0);
+    expect(calculateDeltaForSets(10, 0)).toBe(10);
+    expect(calculateDeltaForSets(0, 10)).toBe(-10);
+    expect(calculateDeltaForSets(10, 3)).toBe(7);
+    expect(calculateDeltaForSets(2, 6)).toBe(-4);
+  });
+});
+
+describe(calculateDeltaForWeight.name, () => {
+  test("it should return zero when weight or parent weight are zero or null", () => {
+    expect(calculateDeltaForWeight(0, 100)).toBe(0);
+    expect(calculateDeltaForWeight(100, 0)).toBe(0);
+    expect(calculateDeltaForWeight(0, 0)).toBe(0);
+    expect(calculateDeltaForWeight(100, 100)).toBe(0);
+    expect(calculateDeltaForWeight(100, null)).toBe(0);
+  });
+
+  test("it should return negative delta when parent weight is greated than workout weight", () => {
+    expect(calculateDeltaForWeight(75, 100)).toBe(-25);
+    expect(calculateDeltaForWeight(74.33, 100)).toBe(-25.7);
+  });
+  test("it should return positive delta when workout weight is greated than parent weight", () => {
+    expect(calculateDeltaForWeight(125, 100)).toBe(25);
+    expect(calculateDeltaForWeight(134.5, 100)).toBe(34.5);
   });
 });

@@ -1,5 +1,4 @@
-import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "./store";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { EMPTY_WORKOUT_NAME } from "./constants";
 
 type WorkoutStatus = "completed" | "in-progress" | "deleted";
@@ -10,6 +9,7 @@ export interface WorkoutState {
   status: WorkoutStatus;
   startDate: string;
   endDate: string;
+  parentId: string;
   exercises: WorkoutExercise[];
 }
 
@@ -33,6 +33,7 @@ const emptyWorkout: WorkoutState = {
   status: "in-progress",
   startDate: "",
   endDate: "",
+  parentId: "",
   exercises: [],
 };
 
@@ -77,16 +78,19 @@ const workoutSlice = createSlice({
     },
     performAgainThisWorkout(
       oldState,
-      action: PayloadAction<{ workoutIdToCopy: string; newWorkoutId: string }>,
+      action: PayloadAction<{
+        originalWorkoutId: string;
+        newWorkoutId: string;
+      }>,
     ) {
-      const copiedWorkout = oldState.workouts.find(
-        (workout) => workout.id === action.payload.workoutIdToCopy,
+      const originalWorkout = oldState.workouts.find(
+        (workout) => workout.id === action.payload.originalWorkoutId,
       );
-      if (!copiedWorkout) {
+      if (!originalWorkout) {
         return oldState;
       }
 
-      const copiedExercises = copiedWorkout.exercises.map((exercise) => {
+      const copiedExercises = originalWorkout.exercises.map((exercise) => {
         return {
           ...exercise,
           id: generateRandomId(),
@@ -109,8 +113,9 @@ const workoutSlice = createSlice({
       });
 
       oldState.workouts.push({
-        ...copiedWorkout,
+        ...originalWorkout,
         id: action.payload.newWorkoutId,
+        parentId: originalWorkout.id,
         status: "in-progress",
         startDate: new Date().toISOString(),
         endDate: "",
@@ -323,26 +328,3 @@ export function generateRandomId(): string {
 function generateInitialWorkingExerciseSet() {
   return { id: generateRandomId(), isCompleted: false, weight: 0, reps: 0 };
 }
-
-const selectSets = (state: RootState) => state.workout.sets;
-
-export const selectSetsForExercise = createSelector(
-  [selectSets, (_, exerciseId: string) => exerciseId],
-  (s, exerciseId): WorkoutExerciseSet[] | undefined => s[exerciseId],
-);
-
-export const selectWorkout = createSelector(
-  [
-    (state: RootState) => state.workout.workouts,
-    (_, workoutId: string) => workoutId,
-  ],
-  (workouts, workoutId) => workouts.find((workout) => workout.id === workoutId),
-);
-
-export const selectWorkoutSummary = createSelector(
-  [selectWorkout, selectSets],
-  (workout, sets) =>
-    workout?.exercises.map((exercise) => {
-      return { exercise, sets: sets[exercise.id] };
-    }),
-);

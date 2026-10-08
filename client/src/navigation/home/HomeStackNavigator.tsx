@@ -53,6 +53,7 @@ export function HomeStackNavigator() {
               onPress={() =>
                 navigation.navigate(routes.WORKOUT_SUMMARY, {
                   workoutId: route.params.id,
+                  parentId: route.params.parentId,
                   action: "preview",
                 })
               }

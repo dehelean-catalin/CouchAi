@@ -7,7 +7,6 @@ import {
   compleateWorkoutSet,
   deleteWorkoutSet,
   editWorkoutSet,
-  selectSetsForExercise,
 } from "@/redux/workoutSlice";
 import { WorkoutExcerciseWheightAndRepsSet } from "./WorkoutExerciseSet";
 import {
@@ -23,6 +22,7 @@ import { BaseText } from "@/components/BaseText";
 import { BaseThumbnail } from "@/components/BaseThumbnail";
 import { RootState } from "@/redux/store";
 import { BaseSafeAreaView } from "@/components/BaseSafeArea";
+import { selectSetsForExercise } from "@/redux/workoutSelector";
 
 export function WorkoutExerciseScreen(props: ScreenProps<"WorkoutExercise">) {
   const dispatch = useDispatch();

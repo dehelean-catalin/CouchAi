@@ -6,8 +6,6 @@ import {
   completeWorkout,
   generateRandomId,
   performAgainThisWorkout,
-  selectWorkout,
-  selectWorkoutSummary,
 } from "@/redux/workoutSlice";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,15 +20,27 @@ import {
 } from "@/helper/dateFormatter";
 import { BaseIcon } from "@/components/icons";
 import { useAppColors } from "@/theme/useAppColors";
-import { calculateWorkoutTotalSetsAndReps } from "@/helper/workoutFormatter";
+import {
+  calculateDeltaForSets,
+  calculateDeltaForWeight,
+  calculateWorkoutVolume,
+} from "@/helper/workoutFormatter";
+import { WorkoutSummaryStat } from "./WorkoutSummaryStat";
+import {
+  selectParentWorkoutSummary,
+  selectWorkout,
+  selectWorkoutSummary,
+} from "@/redux/workoutSelector";
 
 export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
   const { workoutId } = props.route.params;
-  const { colors } = useAppColors();
   const dispatch = useDispatch();
   const workout = useSelector((s: RootState) => selectWorkout(s, workoutId));
   const workoutSummary = useSelector((s: RootState) =>
     selectWorkoutSummary(s, workoutId),
+  );
+  const parentWorkoutSummary = useSelector((s: RootState) =>
+    selectParentWorkoutSummary(s, props.route.params.parentId),
   );
   const endDate = useMemo(
     () => workout?.endDate || new Date().toISOString(),
@@ -42,9 +52,17 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
     props.navigation.popToTop();
   }
 
-  function handlePerformAgain(workoutIdToCopy: string, newWorkoutId: string) {
-    dispatch(performAgainThisWorkout({ workoutIdToCopy, newWorkoutId }));
-    props.navigation.replace(routes.WORKOUT, { id: newWorkoutId });
+  function handlePerformAgain(originalWorkoutId: string, newWorkoutId: string) {
+    dispatch(
+      performAgainThisWorkout({
+        originalWorkoutId,
+        newWorkoutId,
+      }),
+    );
+    props.navigation.replace(routes.WORKOUT, {
+      id: newWorkoutId,
+      parentId: originalWorkoutId,
+    });
   }
 
   function handleEditWorkoutDetails({
@@ -77,8 +95,15 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
   const timeStamp = formatTimestamp(
     calculateTimestampInSeconds(workout.startDate, endDate),
   );
-  const { totalSets, totalWeight } =
-    calculateWorkoutTotalSetsAndReps(workoutSummary);
+  const { totalSets, totalWeight } = calculateWorkoutVolume(workoutSummary);
+
+  const { totalSets: parentTotalSets, totalWeight: parentTotalWeight } =
+    parentWorkoutSummary
+      ? calculateWorkoutVolume(parentWorkoutSummary)
+      : { totalSets: null, totalWeight: null };
+
+  const deltaSets = calculateDeltaForSets(totalSets, parentTotalSets);
+  const deltaWeight = calculateDeltaForWeight(totalWeight, parentTotalWeight);
 
   return (
     <BaseSafeAreaView>
@@ -111,39 +136,28 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
 
         <BaseCard flexDirection="column">
           <View style={styles.statsRow}>
-            <View
-              style={[
-                styles.statsItem,
-                styles.statsItemBorder,
-                { borderColor: colors.surfaceShadow },
-              ]}
-            >
-              <BaseText text="Duration" type="secondary" />
-              <BaseText text={timeStamp} type="primary_bold_24" />
-            </View>
-            <View
-              style={[
-                styles.statsItem,
-                styles.statsItemWidth,
-                styles.statsItemBorder,
-                { borderColor: colors.surfaceShadow },
-              ]}
-            >
-              <BaseText text="Volume" type="secondary" />
-              <BaseText
-                text={`${totalSets} sets`}
-                type="primary_bold_24"
-                numberOfLines={2}
-              />
-            </View>
-            <View style={[styles.statsItem, styles.statsItemWidth]}>
-              <BaseText text="Weight" type="secondary" />
-              <BaseText
-                text={`${totalWeight} kg`}
-                type="primary_bold_24"
-                numberOfLines={2}
-              />
-            </View>
+            <WorkoutSummaryStat
+              label="Duration"
+              value={timeStamp}
+              fixedWidth={false}
+              progress={0}
+              symbol="percentage"
+            />
+            <Divider />
+            <WorkoutSummaryStat
+              label="Volume"
+              value={`${totalSets} ${totalSets === 1 ? "set" : "sets"}`}
+              progress={deltaSets}
+              fixedWidth={true}
+            />
+            <Divider />
+            <WorkoutSummaryStat
+              label="Weight"
+              value={`${totalWeight} kg`}
+              fixedWidth={true}
+              progress={deltaWeight}
+              symbol="percentage"
+            />
           </View>
         </BaseCard>
 
@@ -191,6 +205,13 @@ export function WorkoutSummaryScreen(props: ScreenProps<"WorkoutSummary">) {
   );
 }
 
+function Divider() {
+  const { colors } = useAppColors();
+  return (
+    <View style={[styles.divier, { backgroundColor: colors.surfaceShadow }]} />
+  );
+}
+
 const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
@@ -213,22 +234,15 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-between",
   },
-  statsItem: {
-    marginRight: 16,
-    gap: 4,
-  },
-  statsItemWidth: {
-    maxWidth: "30%",
-  },
-  statsItemBorder: {
-    paddingRight: 20,
-    borderRightWidth: 1,
-  },
   sectionHeader: {
     paddingTop: 12,
     paddingBottom: 12,
   },
   setContainer: {
     gap: 8,
+  },
+  divier: {
+    height: "100%",
+    minWidth: 1,
   },
 });

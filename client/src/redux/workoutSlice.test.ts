@@ -458,7 +458,7 @@ describe(performAgainThisWorkout.name, () => {
     const state = reducer(
       initialState,
       performAgainThisWorkout({
-        workoutIdToCopy: "missing-workout",
+        originalWorkoutId: "missing-workout",
         newWorkoutId: "workout-copy",
       }),
     );
@@ -481,7 +481,7 @@ describe(performAgainThisWorkout.name, () => {
     const state = reducer(
       initialState,
       performAgainThisWorkout({
-        workoutIdToCopy: completedWorkout.id,
+        originalWorkoutId: completedWorkout.id,
         newWorkoutId: "workout-copy",
       }),
     );
@@ -491,6 +491,7 @@ describe(performAgainThisWorkout.name, () => {
     expect(state.workouts).toHaveLength(3);
 
     expect(copiedWorkout.id).toBe("workout-copy");
+    expect(copiedWorkout.parentId).toBe("workout-1");
     expect(copiedWorkout.name).toBe(completedWorkout.name);
     expect(copiedWorkout.status).toBe("in-progress");
     expect(copiedWorkout.endDate).toBe("");
@@ -530,7 +531,7 @@ describe(performAgainThisWorkout.name, () => {
         },
       },
       performAgainThisWorkout({
-        workoutIdToCopy: completedWorkout.id,
+        originalWorkoutId: completedWorkout.id,
         newWorkoutId: "workout-copy",
       }),
     );

@@ -1,4 +1,8 @@
-import { WorkoutExerciseSet, WorkoutState } from "./workoutSlice";
+import {
+  WorkoutExercise,
+  WorkoutExerciseSet,
+  WorkoutState,
+} from "./workoutSlice";
 
 export function SetBuilder() {
   const set: WorkoutExerciseSet = {
@@ -38,6 +42,7 @@ export function WorkoutBuilder() {
     status: "in-progress",
     startDate: "2026-09-14T17:00:00.000Z",
     endDate: "",
+    parentId: "",
     exercises: [],
   };
 
@@ -62,6 +67,15 @@ export function WorkoutBuilder() {
       workout.endDate = endDate;
       return this;
     },
+    withParentId(parentId: string) {
+      workout.parentId = parentId;
+      return this;
+    },
+    addExercise(exercise: WorkoutExercise) {
+      workout.exercises.push(exercise);
+      return this;
+    },
+
     build() {
       return Object.freeze({ ...workout });
     },

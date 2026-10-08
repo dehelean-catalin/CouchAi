@@ -10,7 +10,9 @@ export interface BaseTextProps {
     | "primary_bold_16"
     | "primary_regular_16"
     | "primary_bold_24"
-    | "light";
+    | "light"
+    | "success_bold_14"
+    | "error_bold_14";
   transform?: "uppercase";
   numberOfLines?: 1 | 2;
 }
@@ -44,7 +46,12 @@ export function BaseText({
       };
       break;
     case "primary_bold_24":
-      textStyle = { color: textColors.primary, fontSize: 24, fontWeight: 600 };
+      textStyle = {
+        color: textColors.primary,
+        fontSize: 24,
+        lineHeight: 28,
+        fontWeight: 600,
+      };
       break;
     case "secondary":
       textStyle = { color: textColors.secondary, fontSize: 14, lineHeight: 18 };
@@ -57,6 +64,24 @@ export function BaseText({
         fontWeight: 600,
       };
       break;
+    case "success_bold_14": {
+      textStyle = {
+        color: textColors.green,
+        fontSize: 14,
+        lineHeight: 18,
+        fontWeight: 600,
+      };
+      break;
+    }
+    case "error_bold_14": {
+      textStyle = {
+        color: textColors.error,
+        fontSize: 14,
+        lineHeight: 18,
+        fontWeight: 600,
+      };
+      break;
+    }
     default:
       textStyle = { color: textColors.primary, fontSize: 14 };
   }

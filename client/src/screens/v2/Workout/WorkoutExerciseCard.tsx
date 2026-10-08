@@ -1,12 +1,13 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { BaseMenu } from "../../../components/BaseMenu";
-import { selectSetsForExercise, WorkoutExercise } from "@/redux/workoutSlice";
+import { WorkoutExercise } from "@/redux/workoutSlice";
 import { BaseText } from "@/components/BaseText";
 import { BaseCard } from "@/components/BaseCard";
 import { BaseChip } from "@/components/BaseChip";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { selectSetsForExercise } from "@/redux/workoutSelector";
 
 interface WorkoutSessionCardProps {
   index: number;

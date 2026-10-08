@@ -34,7 +34,7 @@ export type ExerciseListAction =
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type RootStackParamList = {
   Home: undefined;
-  Workout: { id: string };
+  Workout: { id: string; parentId?: string };
   WorkoutExercise: {
     workoutId: string;
     exerciseId: string;
@@ -47,6 +47,7 @@ export type RootStackParamList = {
   };
   WorkoutSummary: {
     workoutId: string;
+    parentId?: string;
     action: "preview" | "review";
   };
   EditWorkoutSummary: {
