@@ -23,6 +23,7 @@
     "@reduxjs/toolkit": "^2.12.0",
     "babel-preset-expo": "~57.0.0",
     "expo": "~57.0.26",
+    "expo-build-properties": "~57.0.22",
     "expo-checkbox": "~57.0.0",
     "expo-image": "~57.0.4",
     "expo-status-bar": "~57.0.1",

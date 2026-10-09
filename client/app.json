@@ -6,9 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -27,7 +25,18 @@
     },
     "plugins": [
       "expo-image",
-      "expo-status-bar"
+      "expo-status-bar",
+      "expo-build-properties",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "buildArchs": ["arm64-v8a"],
+            "gifEnabled": false,
+            "webpEnabled": false
+          }
+        }
+      ]
     ],
     "extra": {
       "eas": {
