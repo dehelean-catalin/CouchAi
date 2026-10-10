@@ -43,14 +43,18 @@ export default function BottomTabNavigator() {
           name="Main"
           component={HomeStackNavigator}
           options={{
-            tabBarIcon: () => <BaseIcon name="house" />,
+            tabBarIcon: ({ focused }) => (
+              <BaseIcon name="house" focused={focused} />
+            ),
           }}
         />
         <Tab.Screen
           name="MainProfile"
           component={ProfileStackNavigator}
           options={{
-            tabBarIcon: () => <BaseIcon name="person" />,
+            tabBarIcon: ({ focused }) => (
+              <BaseIcon name="person" focused={focused} />
+            ),
           }}
         />
       </Tab.Navigator>

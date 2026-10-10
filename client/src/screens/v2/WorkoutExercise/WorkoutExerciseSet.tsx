@@ -6,7 +6,7 @@ import { useState } from "react";
 import { WorkoutExerciseSetField } from "./WorkoutExerciseSetField";
 import { BaseChip } from "@/components/BaseChip";
 import { BaseMenu } from "@/components/BaseMenu";
-import { StyleSheet, View } from "react-native";
+import { Keyboard, StyleSheet, View } from "react-native";
 import {
   decreaseByAmount,
   convertToNumericInput,
@@ -132,6 +132,7 @@ export function WorkoutExcerciseWheightAndRepsSet(
             });
             setWeight(validWeight.toString());
             setReps(validReps.toString());
+            Keyboard.dismiss();
           }}
         />
       </BaseCard>

@@ -68,7 +68,9 @@ export function BaseMenu(props: BaseMenuProps) {
         style={({ pressed }) => [
           styles.iconBadge,
           {
-            backgroundColor: pressed ? colors.pressable_surface_1 : "inherit",
+            backgroundColor: pressed
+              ? colors.pressable_surface_1
+              : "transparent",
           },
         ]}
       >
@@ -77,6 +79,8 @@ export function BaseMenu(props: BaseMenuProps) {
       <Modal
         visible={isOpen}
         onRequestClose={handleRequestClose}
+        statusBarTranslucent
+        navigationBarTranslucent
         transparent
         animationType="fade"
       >

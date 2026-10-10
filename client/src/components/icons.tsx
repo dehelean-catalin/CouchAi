@@ -30,6 +30,7 @@ const icons = {
 
 export interface BaseIconProps {
   name: keyof typeof icons;
+  focused?: boolean;
 }
 
 export function BaseIcon(props: BaseIconProps) {
@@ -38,5 +39,10 @@ export function BaseIcon(props: BaseIconProps) {
   const LucideIcon = icons[props.name];
   assertIsDefined(LucideIcon);
 
-  return <LucideIcon size={20} color={textColors.secondary} />;
+  return (
+    <LucideIcon
+      size={20}
+      color={props.focused ? textColors.primary : textColors.secondary}
+    />
+  );
 }
