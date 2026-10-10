@@ -37,8 +37,6 @@ export function WorkoutExerciseSetField(props: WorkoutExerciseSetFieldProps) {
           value={props.value}
           onChangeText={props.onChange}
           keyboardType={props.keyboardType}
-          placeholder="0"
-          placeholderTextColor={textColors.secondary}
           style={[
             styles.input,
             {
